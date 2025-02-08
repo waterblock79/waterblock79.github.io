@@ -1,0 +1,278 @@
+<!DOCTYPE html>
+<html lang="zh">
+   <head>
+      <title>高中物理必修一运动学相关公式及推导整理 - Waterblock79's website</title>
+      <meta name="viewport" content="width=device-width,initial-scale=1" />
+      <link rel="stylesheet" type="text/css" href="/assets/styles.css" />
+      <script
+         type="module"
+         src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"
+      ></script>
+      <script
+         nomodule
+         src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"
+      ></script>
+      <link
+         rel="stylesheet"
+         href="https://unpkg.com/katex@0.16.8/dist/katex.min.css"
+      />
+      <script
+         defer
+         src="https://unpkg.com/katex@0.16.8/dist/katex.min.js"
+      ></script>
+      <script
+         defer
+         src="https://unpkg.com/katex@0.16.8/dist/contrib/auto-render.min.js"
+         onload="renderMathInElement(document.body, {delimiters: [{left: '$$', right: '$$', display: true},{left: '$', right: '$'}]});"
+      ></script>
+      <!-- Google tag (gtag.js) -->
+      <script
+         async
+         src="https://www.googletagmanager.com/gtag/js?id=G-YFC9SHL1Q7"
+      ></script>
+      <script>
+         window.dataLayer = window.dataLayer || [];
+         function gtag() {
+            dataLayer.push(arguments);
+         }
+         gtag("js", new Date());
+         gtag("config", "G-YFC9SHL1Q7");
+      </script>
+      <link
+         rel="stylesheet"
+         href="//unpkg.com/@highlightjs/cdn-assets@11.7.0/styles/default.min.css"
+         id="highlightjs-css"
+      />
+      <script>
+         if (window.matchMedia("(prefers-color-scheme: dark)").matches) {
+            document.querySelector("#highlightjs-css").href =
+               "https://unpkg.com/@highlightjs/cdn-assets@11.7.0/styles/atom-one-dark.min.css";
+         }
+      </script>
+      <script src="//unpkg.com/@highlightjs/cdn-assets@11.7.0/highlight.min.js"></script>
+      <style>
+         @media screen and (max-width: 512px) {
+            body {
+               padding: 1.5em 0;
+            }
+            .post-header {
+               justify-content: center;
+            }
+            .post-header .back {
+               display: none;
+            }
+            .post-content {
+               box-shadow: none;
+               padding: 1.5em 0;
+            }
+            ul {
+               padding-inline-start: 1em;
+            }
+         }
+
+         body {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+         }
+
+         .post-content {
+            max-width: 50em;
+            width: 100%;
+         }
+
+         .post-header {
+            max-width: 56em;
+         }
+      </style>
+   </head>
+   <body>
+      <a class="post-header" href="/">
+         <div class="back">❮ 返回</div>
+         <div class="site">waterblock79 的小站</div>
+      </a>
+      <div class="card post-content">
+         <div class="title">高中物理必修一运动学相关公式及推导整理</div>
+         <div class="subtitle">
+            <ion-icon name="time"></ion-icon>
+            <span class="time">2022-07-21 16:54</span>
+            
+            <ion-icon name="pricetag"></ion-icon>
+             
+            <span class="tag">学习</span>
+            
+         </div>
+         <div class="content"><h2>匀变速直线运动</h2>
+<p><strong>沿着一条直线，且加速度不变的运动，叫做匀变速直线运动。</strong></p>
+<p>规定 $v$ 为速度，$v_0$ 为初速度，$a$ 为加速度，$t$ 为时间，$x$ 为位移。</p>
+<p>根据加速度的定义式 $a=\frac{\Delta v}{\Delta t}$ 可以由初速度 $v_0$、加速度 $a$ 和时间 $t$ 推得末速度 $v$。</p>
+<p>$$
+v=v_0+at
+$$</p>
+<p>下图（左）是物体的速度 - 时间图像，我们发现图像与坐标轴围成的图形面积代表物体在这段时间内所做的位移（下图（右）），由梯形面积公式求得的阴影部分面积即为物体在这段时间内所做的位移：</p>
+<p><strong>（第 43 页拓展学习）</strong></p>
+<p>$$
+x=\frac{t (v+v_0)}{2}
+$$</p>
+<p>由此可以推得：</p>
+<p>$$
+\begin{equation*}
+      \begin{alignat*}{2}
+         x &amp;= \frac{t (v+v_0)}{2} \\
+            &amp;= \frac{t (v_0+at+v_0)}{2} \\
+            &amp;= \frac{t (2v_0 + at)}{2} \\
+            &amp;= \frac{2v_0t+at^2}{2} \\
+            &amp;= v_0t+\frac{1}{2}at^2
+      \end{alignat*}
+\end{equation*}
+$$</p>
+<p>由上面推得的 $x=v_0t+\frac{1}{2}at^2$，还可以推得 $v^2-v_0^2=2ax$：</p>
+<p>$$
+   \because v=v_0+at \\
+   \therefore t=\frac{v-v_0}{a} \\
+   \therefore x=v_0\frac{v-v0}{a}+\frac{1}{2}a(\frac{v-v0}{a})^2 \\
+   \therefore x=\frac{vv_0-v_0^2}{a}+\frac{(v-v0)^2}{2a} \\
+   \therefore x=\frac{\bcancel{2vv_0}-2v_0^2}{2a}+\frac{v^2\bcancel{-2vv_0}+v_0^2}{2a} \\
+   \therefore x=\frac{v^2-v_0^2}{2a} \\
+   \therefore v^2-v_0^2=2ax
+$$</p>
+<p><strong>现在有一条做匀加速直线运动的纸带，打点计时器每隔 $T$ 打一个点，每个点间间距为 $x_n$：</strong></p>
+<p>时间过去了$T$，现在纸上有两个点，可以计算出第一个点和第二个间的距离 $x_1$ 为：$x_1=v_0T+\frac{1}{2}aT^2$。</p>
+<p>那当时间过去了$2T$，纸上有三个点，第一个点到第三个点间的距离 $x_1+x_2$ 为：$x_1=v_0(2T)+\frac{1}{2}a(2T)^2$ ，即 $x_1=2v_0T+2aT^2$ 。</p>
+<p>用同样的方法也可以计算出 $x_1+x_2+x_3=v_0(3T)+\frac{1}{2}a(3T)^2=3v_0T+\frac{9}{2}aT^2$ 等等。</p>
+<p>现在用 $(x_1+x_2)-(x_1)$ 就可以计算出 $x_2$ 了：</p>
+<p>$$
+\begin{equation*}
+      \begin{alignat*}{2}
+         x_2 &amp;= x_1+x_2-x_1 \\
+            &amp;= 2v_0T+2aT^2 - (v_0T+\frac{1}{2}aT^2) \\
+            &amp;= v_0T +\frac{3}{2}aT^2 \\
+      \end{alignat*}
+\end{equation*}
+$$</p>
+<p>同理，也可以计算出 $x_3=v_0T +\frac{5}{2}aT^2$ 等等。</p>
+<p>将 $x_2-x_1$、$x_3-x_2$ ，就可以发现它们都是等于一个固定的 $aT^2$。</p>
+<p>因此：</p>
+<p>$$x_2-x_1 = x_3-x_2 = ... = x_n-x_{n-1} = aT^2$$</p>
+<h3>自由落体运动</h3>
+<p><strong>物体只在重力作用下从静止开始下落的运动，叫做自由落体运动。</strong></p>
+<p>在同一地点，一些物体自由下落的加速度都相同，这个加速度叫作<strong>自由落体加速度</strong>，也叫做<strong>重力加速度</strong>，通常用 $g$ 表示，一般运算中可以取 $9.8m/s^2$ 或 $10m/s^2$。</p>
+<p>由匀变速直线运动推导得出的公式、自由落体运动的定义，可以推得和自由落体运动有关的三个公式：</p>
+<p>自由落体运动中：$v_0 = 0$，$a=g$。</p>
+<p>$$
+\because v^2-v_0^2=2ax\\
+\therefore v^2 = 2gx
+$$</p>
+<p>$$
+\because x = v_0t+\frac{1}{2}at^2 \\
+\therefore x = \frac{1}{2}gt^2
+$$</p>
+<p>$$
+\because v=v_0+at \\ \therefore v=gt
+$$</p>
+<h3>初速度为 0 时速度、位移、时间的比例关系</h3>
+<p><strong>当 $v_0 = 0$ 时：</strong></p>
+<ol>
+<li><p>若 $1T$ 秒末时的速度为 $v_1$、$2T$ 秒末时的速度为 $v_2$，以此类推。由 $v=v_0+at$ ，变形为 $v=naT$ 可得比例关系：</p>
+<p>$v_1:v_2:v_3:......:v_n = 1:2:3:......:n$</p>
+</li>
+<li><p>若前 $1T$ 秒内的位移为 $x_Ⅰ$、前 $2T$ 秒内的位移为 $x_Ⅱ$，以此类推。由 $x=v_0t+\frac{1}{2}at^2$，变形为 $x=\frac{1}{2}a(nT)^2$ 可得比例关系：</p>
+<p>$v_Ⅰ:v_Ⅱ:v_Ⅲ:...... = 1:4:9:......$</p>
+</li>
+<li><p>由 2 中得到的比例关系，将 $x_Ⅲ-x_Ⅱ$、$x_Ⅱ-x_Ⅰ$、$x_Ⅰ-0$ 可得第 $3T$ 秒内的位移 $x_3$、第 $2T$ 秒内的位移 $x_2$、第 $T$ 秒内的位移 $x_1$，可得比例关系：</p>
+<p>$x_1:x_2:x_3 = 1:3:5:...$</p>
+<p>相关例题：</p>
+<blockquote>
+<p>物体由静止开始做匀加速直线运动，若第 1s 内物体通过的位移是 s，则第 3s 内通过的位移是（C）</p>
+<p>A. 3s    B. 4s    C. 5s    D.9s</p>
+<p>（学习·探究·诊断 P38 8.）</p>
+</blockquote>
+<p>由上方比例关系易得。</p>
+</li>
+</ol>
+<p>若将物体的运动轨迹分成许多长度相等的份，每份长度为 $X$ 米：</p>
+<ol>
+<li><p>若第 $nX$ 米处的速度为 $v_N$。</p>
+<p>由 $v^2=2ax$ 可得 $v=\sqrt{2ax}=\sqrt{2anX}=\sqrt{2aX}\cdot\sqrt{n}$，便易得 $v_N$ 比例关系：</p>
+<p>$v_Ⅰ: v_Ⅱ : v_Ⅲ : ... = \sqrt{1} : \sqrt{2} : \sqrt{3} : ...$</p>
+</li>
+<li><p>若物体运动前 $nX$ 米用了 $t_N$。</p>
+<p>由 $x=\frac{1}{2}at^2$ ，可得 $t^2=\frac{2x}{a}$，代入得 $t=\sqrt{\frac{2nX}{a}}=\sqrt{\frac{2X}{a}}\cdot\sqrt{\frac{n}{a}}$，易得比例关系</p>
+<p>$t_Ⅰ: t_Ⅱ : t_Ⅲ : ... = \sqrt{1} : \sqrt{2} : \sqrt{3} : ...$</p>
+</li>
+<li><p>若在第 $n$ 份内的运动花费了 $t_n$。</p>
+<p>由 4.2 可得：$t_n=t_N-t_{N-1}$，易得比例关系：</p>
+<p>$t_1: t_2 : t_3 : ... = \sqrt{1} : \sqrt{2}-\sqrt{1} : \sqrt{3}-\sqrt{2} : ...$</p>
+<p>相关题目：</p>
+<blockquote>
+<p>将自由落体运动分成位移相等的 4 段，物体通过最后一段位移所用的时间为 2.0s，那么物体通过第 1 段位移所用的时间为（D）</p>
+<p>A. 0.5s    B. 1.7s    C. 8.0s    D. 7.5s</p>
+<p>（学习·探究·诊断 P40 8.）</p>
+</blockquote>
+<p>物体通过最后一段花费时间 $t_4 = 2.0s$，与通过第一段花费时间 $t_1$ 的关系为：</p>
+<p>$t_4:t_1 =\sqrt{4}-\sqrt{3}:1$，</p>
+<p>则 $t_1=\frac{t_4}{2-\sqrt{3}}=\frac{2}{2-\sqrt{3}}s$，约等于 7.5 秒。</p>
+</li>
+</ol>
+<h3>平均速度、中间位置速度和中间时刻速度</h3>
+<p>已知物体做匀变速直线运动，初速度为 $v_0$，末速度为 $v$，则：</p>
+<p>$$
+\because x=\frac{(v+v_0)t}{2}, \overline{v}=\frac{x}{t} \\
+\therefore \overline{v}=\frac{\frac{(v+v_0)t}{2}}{t}=\frac{v+v_0}{2}
+$$</p>
+<p>得到平均速度 $\overline{v} = \frac{v+v_0}{2}$。</p>
+<p>而物体的中间时刻速度 $v_\frac{t}{2}$ ：</p>
+<p>$$
+\therefore t_\frac{t}{2} = \frac{t}{2} \\
+\because v=v_0+at \\
+\therefore v-v_0=at, \\
+       v_\frac{t}{2} = v_0 + at_\frac{t}{2} = v_0 + \frac{1}{2}at \\
+\therefore v_\frac{t}{2} = \frac{1}{2}(v-v_0) + v_0 = \frac{v+v_0}{2}
+$$</p>
+<p>可得中间时刻速度 $v_\frac{2}{t} = \frac{v+v_0}{2}$。</p>
+<p>通过联立两个 $v^2-v_0^2=2ax$ 也可以求得中间位移速度 $v_\frac{2}{x}$：</p>
+<p>$$
+\therefore x_\frac{x}{2}=\frac{x}{2} \\
+\therefore v_\frac{x}{2}^2 - v_0^2 = 2a\frac{x}{2}, \\
+v^2 - v_\frac{x}{2}^2 = 2a\frac{x}{2} \\
+\therefore v_\frac{x}{2}^2 -v_0^2 = v^2 - v_\frac{x}{2}^2 \\
+\therefore 2 v_\frac{x}{2}^2 = v_0^2 + v^2 \\
+\therefore v_\frac{x}{2} = \sqrt{\frac{v_0^2+v^2}{2}}
+$$</p>
+<p>则有 $v_\frac{x}{2} = \sqrt{\frac{v_0^2+v^2}{2}}$。</p>
+<h3>Tips</h3>
+<ol>
+<li>对于“求最后 1s 内物体的位移”类型的题目，应采用<strong>逆向思维</strong>，比如这个物体在做匀<strong>减</strong>速直线运动，那就把这个题目反着做，当做“求匀<strong>加</strong>速直线运动的物体第 1 秒内的位移”。</li>
+</ol>
+</div>
+      </div>
+      <script>
+         hljs.highlightAll();
+      </script>
+      <script>
+         // 单行图片
+         document.querySelectorAll('.post-content > .content p > img:only-child').forEach((img) => {
+            // 确定确实为 only child（而不是文字夹带 img）
+            if (img.parentNode.childNodes.length > 1) return;
+            // 设置 img 及其父元素 class
+            img.parentElement.classList.add('figure');
+            img.classList.add('only-child');
+            // 添加 alt
+            const alt = document.createElement('div');
+            alt.classList.add('image-alt');
+            alt.innerText = img.getAttribute('alt');
+            img.parentElement.append(alt);
+         });
+         // 图片放大
+         document.querySelectorAll('.post-content > .content img').forEach((img) => {
+            img.addEventListener('click', () => {
+               window.open(img.getAttribute('src'));
+            })
+         });
+         // 为标题添加 id
+         document.querySelectorAll('h1, h2, h3').forEach((title) => {
+            title.id = title.innerText;
+         })
+      </script>
+   </body>
+</html>

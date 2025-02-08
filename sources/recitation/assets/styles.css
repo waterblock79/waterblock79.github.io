@@ -1,0 +1,322 @@
+@import url("https://fonts.googleapis.com/css2?family=Noto+Sans+SC&display=swap");
+
+body {
+   background: #E8E7E3;
+   display: flex;
+   align-items: center;
+   justify-content: center;
+   font-family: "Noto Sans SC";
+}
+
+#app {
+   left: 0;
+   top: 0;
+   width: 100%;
+   height: 100%;
+   display: flex;
+   justify-content: center;
+   align-items: center;
+   overflow: hidden;
+}
+
+#app .main {
+   height: 60%;
+   max-height: 24em;
+   display: flex;
+   align-items: center;
+   flex-direction: column;
+   gap: 2em;
+}
+
+#app .main .title {
+   font-size: 1.5rem;
+   letter-spacing: 0.5em;
+   padding-left: 0.5em;
+   user-select: none;
+   display: flex;
+   align-items: center;
+   flex-direction: column;
+}
+
+#app .main .subtitle {
+   font-size: 0.75rem;
+}
+
+#app .main .searching {
+   padding: 0.5em 1em;
+   font-size: 1rem;
+   border: none;
+   border-radius: 8px;
+   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+   transition: box-shadow 0.2s;
+   background: hsl(48, 10%, 96%);
+}
+
+#app .main .logs {
+   font-size: 0.85em;
+   width: 100%;
+   min-height: 10em;
+   overflow-y: scroll;
+   font-family: 'Courier New', Courier, monospace;
+}
+
+#app .main .logs>div {
+   display: flex;
+   justify-content: space-between;
+}
+
+#app .main .searching:focus,
+#app .main .searching:hover {
+   outline: none;
+   box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
+}
+
+#app .main .searchPrediction {
+   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+   border-radius: 8px;
+   background: hsl(48, 10%, 96%);
+   display: flex;
+   flex-direction: column;
+   min-width: 16em;
+   transition: height 0.2s;
+   overflow: hidden;
+   overflow-y: scroll;
+   max-height: 20em;
+   user-select: none;
+   max-width: 80%;
+   z-index: 9999;
+}
+
+#app .main .searchPrediction .prediction {
+   padding: 0.5em 1em;
+   border-radius: 8px;
+   transition: background 0.2s;
+}
+
+#app .main .searchPrediction .prediction:hover {
+   background: hsl(48, 10%, 96%);
+}
+
+#app .main .banner {
+   font-size: 0.8em;
+   max-width: 30em;
+   text-align: center;
+   opacity: 0.75;
+}
+
+.align-center {
+   text-align: center;
+}
+
+a {
+   text-decoration: none !important;
+   color: teal !important;
+   cursor: pointer;
+}
+
+#app .poem,
+#app .reciting,
+#app .modal {
+   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+   border-radius: 8px;
+   background: hsl(48, 10%, 98%);
+   padding: 0.5em 2em;
+   text-wrap: wrap;
+   height: 80%;
+   width: 36em;
+   max-width: 80%;
+   overflow-y: scroll;
+   position: absolute;
+   z-index: 99999;
+}
+
+#app .poem .title,
+#app .modal .title {
+   font-weight: 600;
+   font-size: 1.25em;
+}
+
+#app .poem .content>p {
+   padding: 1em;
+   background: hsl(48, 10%, 98%);
+   transition: background 0.15s;
+   border-radius: 8px;
+   cursor: pointer;
+}
+
+#app .poem .content>p:hover {
+   background: hsl(48, 10%, 94%);
+}
+
+.secondary {
+   opacity: 0.6;
+   font-size: 0.8em;
+}
+
+#app .poem pre.secondary {
+   text-wrap: wrap;
+   padding: 0 2em;
+}
+
+#app .reciting {
+   display: flex;
+   flex-direction: column;
+   align-items: center;
+   justify-content: center;
+   overflow: hidden;
+}
+
+#app .reciting>div {
+   margin: 0.75rem 0;
+   line-height: 2rem;
+   font-size: 1.5rem;
+   user-select: none;
+}
+
+#app .reciting>div.current {
+   font-weight: 600;
+}
+
+#app .reciting>div.hide {
+   background: #E8E7E3;
+   color: #E8E7E3;
+   border-radius: 8px;
+   padding: 0 0.25em;
+   animation: 4s linear 0s infinite alternate covered;
+}
+
+#app .reciting>div.hide .hint {
+   color: rgba(0, 128, 128, 0.5);
+   opacity: 0.8;
+}
+
+#app .reciting>div.pass {
+   opacity: 0.5;
+}
+
+@keyframes cover {
+   0% {
+      background: #E8E7E3;
+   }
+
+   100% {
+      background: hsl(48, 10%, 92%);
+   }
+}
+
+#app .reciting>div.placeholder {
+   margin-top: 0;
+   margin-bottom: calc(var(--height) * 3.5rem);
+   transition: margin 0.2s;
+}
+
+#app .modal {
+   display: flex;
+   flex-direction: column;
+   justify-content: space-between;
+   padding: 2em;
+   gap: 2em;
+}
+
+#app .modal > img {
+   width: calc(100% - 2em);
+   margin: 0 auto;
+   border-radius: 8px;
+}
+
+#app .modal .content {
+   display: flex;
+   flex-direction: column;
+   gap: 1em;
+}
+
+#app .modal .operate {
+   margin: 2em;
+   display: flex;
+   gap: 5%;
+   justify-content: center;
+   line-height: 2em;
+   align-items: center;
+}
+
+#app .modal .operate img {
+   width: calc(50% - 1em);
+   border-radius: 8px;
+}
+
+
+::-webkit-scrollbar {
+   width: 6px;
+   height: 6px;
+}
+
+::-webkit-scrollbar-corner {
+   background-color: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+   background-color: #dddddd;
+   border-radius: 6px;
+}
+
+.opacity-enter-active,
+.opacity-leave-active {
+   transition: opacity 0.25s;
+}
+
+.opacity-enter-from,
+.opacity-leave-to {
+   opacity: 0;
+}
+
+.v-enter-active,
+.v-leave-active {
+   transition: margin 0.25s;
+}
+
+.v-enter-from {
+   position: absolute;
+   margin-left: 200%;
+}
+
+.v-leave-to {
+   position: absolute;
+   margin-right: 200%;
+}
+
+pre {
+   text-wrap: wrap;
+}
+
+button {
+   background: #fff;
+   border: none;
+   font-size: 0.9rem;
+   padding: 0.25em 0.75em;
+   border-radius: 4px;
+   cursor: pointer;
+   transition: box-shadow 0.2s;
+   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.16);
+}
+
+button:hover {
+   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.16);
+}
+
+hr {
+   border: 0.5px rgba(0, 0, 0, 0.25) solid;
+}
+
+u {
+   text-decoration: none;
+   border-bottom: 1px solid rgba(0, 0, 0, 0.5);
+}
+
+kbd {
+   background: #686868;
+   color: #fff;
+   line-height: 1.5em;
+   padding: 0.25em;
+   border-bottom: #aaaaaa solid 0.25em;
+   border-radius: 2px;
+}

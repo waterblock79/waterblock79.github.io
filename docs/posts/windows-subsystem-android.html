@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html lang="zh">
+   <head>
+      <title>Windows Subsystem for Android 体验 - Waterblock79's website</title>
+      <meta name="viewport" content="width=device-width,initial-scale=1" />
+      <link rel="stylesheet" type="text/css" href="/assets/styles.css" />
+      <script
+         type="module"
+         src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"
+      ></script>
+      <script
+         nomodule
+         src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"
+      ></script>
+      <link
+         rel="stylesheet"
+         href="https://unpkg.com/katex@0.16.8/dist/katex.min.css"
+      />
+      <script
+         defer
+         src="https://unpkg.com/katex@0.16.8/dist/katex.min.js"
+      ></script>
+      <script
+         defer
+         src="https://unpkg.com/katex@0.16.8/dist/contrib/auto-render.min.js"
+         onload="renderMathInElement(document.body, {delimiters: [{left: '$$', right: '$$', display: true},{left: '$', right: '$'}]});"
+      ></script>
+      <!-- Google tag (gtag.js) -->
+      <script
+         async
+         src="https://www.googletagmanager.com/gtag/js?id=G-YFC9SHL1Q7"
+      ></script>
+      <script>
+         window.dataLayer = window.dataLayer || [];
+         function gtag() {
+            dataLayer.push(arguments);
+         }
+         gtag("js", new Date());
+         gtag("config", "G-YFC9SHL1Q7");
+      </script>
+      <link
+         rel="stylesheet"
+         href="//unpkg.com/@highlightjs/cdn-assets@11.7.0/styles/default.min.css"
+         id="highlightjs-css"
+      />
+      <script>
+         if (window.matchMedia("(prefers-color-scheme: dark)").matches) {
+            document.querySelector("#highlightjs-css").href =
+               "https://unpkg.com/@highlightjs/cdn-assets@11.7.0/styles/atom-one-dark.min.css";
+         }
+      </script>
+      <script src="//unpkg.com/@highlightjs/cdn-assets@11.7.0/highlight.min.js"></script>
+      <style>
+         @media screen and (max-width: 512px) {
+            body {
+               padding: 1.5em 0;
+            }
+            .post-header {
+               justify-content: center;
+            }
+            .post-header .back {
+               display: none;
+            }
+            .post-content {
+               box-shadow: none;
+               padding: 1.5em 0;
+            }
+            ul {
+               padding-inline-start: 1em;
+            }
+         }
+
+         body {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+         }
+
+         .post-content {
+            max-width: 50em;
+            width: 100%;
+         }
+
+         .post-header {
+            max-width: 56em;
+         }
+      </style>
+   </head>
+   <body>
+      <a class="post-header" href="/">
+         <div class="back">❮ 返回</div>
+         <div class="site">waterblock79 的小站</div>
+      </a>
+      <div class="card post-content">
+         <div class="title">Windows Subsystem for Android 体验</div>
+         <div class="subtitle">
+            <ion-icon name="time"></ion-icon>
+            <span class="time">2021-10-24 16:35</span>
+            
+            <ion-icon name="pricetag"></ion-icon>
+             
+            <span class="tag">Windows</span>
+            
+            <span class="tag">Android</span>
+            
+         </div>
+         <div class="content"><p>2021 年 6 月，Windows 11 发布，画了一个「在 Windows 下运行 Android」的大饼。</p>
+<p>10 月 21 日，Windows Subsystem for Android（适用于 Android™ 的 Windows 子系统，以下简称 WSA ）终于发布。</p>
+<p><img src="windows-subsystem-android/wsa_opening.png" alt="WSA 的启动页面"></p>
+<p><img src="windows-subsystem-android/wsa_setting.png" alt="WSA 的设置页面"></p>
+<p>如图所见，这是 WSA 的启动页面和设置界面，给人的第一印象是和系统结合的程度还是不错的。</p>
+<p>WSA 暂时还不支持直接打开 APK 文件，但我们可以通过 ADB 来安装任意软件。</p>
+<ol>
+<li><p>如果你还没有配置 Platform tools，请在<a href="https://dl.google.com/android/repository/platform-tools_r31.0.3-windows.zip">这里</a>下载，解压，并在命令行中进入解压过后的文件夹。</p>
+</li>
+<li><p>进入 WSA 设置页面，开启「开发人员模式」，并重新进入 WSA 设置页面，记住 “可以在 127.0.0.1:xxxxx 上连接 ADB”中间的一串 IP 地址（通常是 <code>127.0.0.1:58526</code>，以设置中显示为准）。</p>
+</li>
+<li><p>在命令行中执行：</p>
+<pre><code>adb connect &lt;IP地址&gt;
+adb install &lt;你的 APK 文件路径&gt;
+</code></pre>
+<ul>
+<li>在文件资源管理器中复制 APK 文件，在命令行中可以直接粘贴出它的路径。</li>
+<li>若出现「由于目标计算机积极拒绝，无法连接。 (10061)」，请尝试关闭并重新开启开发人员模式。</li>
+</ul>
+</li>
+<li><p><img src="windows-subsystem-android/wsa_coolapk_in_list.png" alt="在文件列表中的酷安"></p>
+<p>惊喜的发现，酷安（或者什么其他软件你所安装的）已经被添加到你的应用列表中了！并且可以像 Windows 应用一样打开。</p>
+</li>
+</ol>
+<p>一些应用遵循开发规范，可以进行任意的缩放，体验比较好：</p>
+<p><img src="windows-subsystem-android/wsa_coolapk.png" alt="酷安在桌面"></p>
+<p>但是它的劣势还是比较明显的，</p>
+<ul>
+<li><p>电脑应用的操作逻辑与移动应用有很大的不同，使用起来还是会有隔阂。</p>
+</li>
+<li><p>内存占用比较大，且目前对 GPU 的适配不太好，不能做到充分利用 GPU。</p>
+<p><img src="windows-subsystem-android/wsa_ram_coolapk.png" alt="WSA 下的酷安 RAM 消耗">
+<img src="windows-subsystem-android/wsa_ram_minecraft.png" alt="WSA 下的 Minecraft"></p>
+</li>
+</ul>
+<p>​		图为使用酷安时的资源消耗和使用 WSA 游玩 Minecraft。虽然可以使用键盘操控移动，但转动视角仍需使用鼠标拖动，并且伴有明显的卡顿和反应落后。</p>
+<p>最后，你可以通过下方的两种方式安装 WSA：</p>
+<ul>
+<li><p>MSIXBUNDLE</p>
+<p>通过在 <a href="https://store.rg-adguard.net/">Online link generator for Microsoft Store</a> 填入 WSA 于应用商店的网址：<a href="https://www.microsoft.com/en-us/p/windows-subsystem-for-android/9p3395vx91nr?activetab=pivot:overviewtab"><code>https://www.microsoft.com/en-us/p/windows-subsystem-for-android/9p3395vx91nr?activetab=pivot:overviewtab</code></a> ，并搜索（✔），在列表中找到 WSA 的 .msixbundle 安装文件：<code>MicrosoftCorporationII.WindowsSubsystemForAndroid_1.7.163.0_neutral_~_8wekyb3d8bbwe.msixbundle</code></p>
+<p>，点击以下载。</p>
+<p>下载完成后，打开 Powershell ，执行命令：</p>
+<pre><code>add-appxpackage &lt; .msixbundle 文件路径&gt;
+</code></pre>
+<p>待进度条走完便可在应用列表中找到 WSA，点击即可启动。</p>
+</li>
+<li><p>应用商店</p>
+<p>确保你的电脑设置中的地区设置为「美国区」（目前只对美国区用户开放测试，转区并不繁琐，也不需要验证，设置一下即可），<a href="https://www.microsoft.com/en-us/p/windows-subsystem-for-android/9p3395vx91nr?activetab=pivot:overviewtab">在商店中打开  WSA </a>，即可跳转到商店，点击安装。</p>
+</li>
+</ul>
+</div>
+      </div>
+      <script>
+         hljs.highlightAll();
+      </script>
+      <script>
+         // 单行图片
+         document.querySelectorAll('.post-content > .content p > img:only-child').forEach((img) => {
+            // 确定确实为 only child（而不是文字夹带 img）
+            if (img.parentNode.childNodes.length > 1) return;
+            // 设置 img 及其父元素 class
+            img.parentElement.classList.add('figure');
+            img.classList.add('only-child');
+            // 添加 alt
+            const alt = document.createElement('div');
+            alt.classList.add('image-alt');
+            alt.innerText = img.getAttribute('alt');
+            img.parentElement.append(alt);
+         });
+         // 图片放大
+         document.querySelectorAll('.post-content > .content img').forEach((img) => {
+            img.addEventListener('click', () => {
+               window.open(img.getAttribute('src'));
+            })
+         });
+         // 为标题添加 id
+         document.querySelectorAll('h1, h2, h3').forEach((title) => {
+            title.id = title.innerText;
+         })
+      </script>
+   </body>
+</html>

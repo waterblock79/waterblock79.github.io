@@ -1,0 +1,21 @@
+{
+  "name": "waterblock79.github.io",
+  "version": "1.0.0",
+  "description": "Waterblock79's site",
+  "main": "app.js",
+  "repository": "git@github.com:waterblock79/waterblock79.github.io.git",
+  "author": "waterblock79 <waterblock79@outlook.com>",
+  "license": "MIT",
+  "type": "module",
+  "scripts": {
+    "generate": "node app.js"
+  },
+  "dependencies": {
+    "dayjs": "^1.11.13",
+    "ejs": "^3.1.9",
+    "katex": "^0.16.8",
+    "marked": "^6.0.0",
+    "yaml": "^2.3.1"
+  },
+  "devDependencies": {}
+}

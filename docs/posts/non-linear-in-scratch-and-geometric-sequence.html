@@ -1,0 +1,403 @@
+<!DOCTYPE html>
+<html lang="zh">
+   <head>
+      <title>Scratch 中的非线性移动和构造等比数列 - Waterblock79's website</title>
+      <meta name="viewport" content="width=device-width,initial-scale=1" />
+      <link rel="stylesheet" type="text/css" href="/assets/styles.css" />
+      <script
+         type="module"
+         src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"
+      ></script>
+      <script
+         nomodule
+         src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"
+      ></script>
+      <link
+         rel="stylesheet"
+         href="https://unpkg.com/katex@0.16.8/dist/katex.min.css"
+      />
+      <script
+         defer
+         src="https://unpkg.com/katex@0.16.8/dist/katex.min.js"
+      ></script>
+      <script
+         defer
+         src="https://unpkg.com/katex@0.16.8/dist/contrib/auto-render.min.js"
+         onload="renderMathInElement(document.body, {delimiters: [{left: '$$', right: '$$', display: true},{left: '$', right: '$'}]});"
+      ></script>
+      <!-- Google tag (gtag.js) -->
+      <script
+         async
+         src="https://www.googletagmanager.com/gtag/js?id=G-YFC9SHL1Q7"
+      ></script>
+      <script>
+         window.dataLayer = window.dataLayer || [];
+         function gtag() {
+            dataLayer.push(arguments);
+         }
+         gtag("js", new Date());
+         gtag("config", "G-YFC9SHL1Q7");
+      </script>
+      <link
+         rel="stylesheet"
+         href="//unpkg.com/@highlightjs/cdn-assets@11.7.0/styles/default.min.css"
+         id="highlightjs-css"
+      />
+      <script>
+         if (window.matchMedia("(prefers-color-scheme: dark)").matches) {
+            document.querySelector("#highlightjs-css").href =
+               "https://unpkg.com/@highlightjs/cdn-assets@11.7.0/styles/atom-one-dark.min.css";
+         }
+      </script>
+      <script src="//unpkg.com/@highlightjs/cdn-assets@11.7.0/highlight.min.js"></script>
+      <style>
+         @media screen and (max-width: 512px) {
+            body {
+               padding: 1.5em 0;
+            }
+            .post-header {
+               justify-content: center;
+            }
+            .post-header .back {
+               display: none;
+            }
+            .post-content {
+               box-shadow: none;
+               padding: 1.5em 0;
+            }
+            ul {
+               padding-inline-start: 1em;
+            }
+         }
+
+         body {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+         }
+
+         .post-content {
+            max-width: 50em;
+            width: 100%;
+         }
+
+         .post-header {
+            max-width: 56em;
+         }
+      </style>
+   </head>
+   <body>
+      <a class="post-header" href="/">
+         <div class="back">❮ 返回</div>
+         <div class="site">waterblock79 的小站</div>
+      </a>
+      <div class="card post-content">
+         <div class="title">Scratch 中的非线性移动和构造等比数列</div>
+         <div class="subtitle">
+            <ion-icon name="time"></ion-icon>
+            <span class="time">2024-05-05 14:25</span>
+            
+            <ion-icon name="pricetag"></ion-icon>
+             
+            <span class="tag">Scratch</span>
+            
+            <span class="tag">学习</span>
+            
+         </div>
+         <div class="content"><p><strong>一个奇思妙想，欢迎交流！</strong></p>
+<h2>太长不看版</h2>
+<p>对于从 $(x_0, 0)$ 运动到 $(x_1, 0)$、每帧横坐标增加 $p \cdot (x_1 - x)$ 的非线性运动，角色横坐标 $x$ 和时间（经过的帧数）$t$ 之间有：</p>
+<p>$$
+x(t) = (x_1-x_0)\cdot(p-1)\cdot(1-p)^{t-1}+x_1
+$$</p>
+<p>以从 $(0, 0)$ 运动到 $(100, 0)$、每帧横坐标增加 $\frac{100 - x}{10}$ 为例：
+$$
+x(t) = -90 \cdot (\frac{9}{10})^{t-1} + 100
+$$</p>
+<h2>介绍</h2>
+<p>在动画中合理的使用非线性移动可以使动画看起来更加自然、舒适。在 Scratch 中最常用的非线性移动（之一）是这样的：</p>
+<p><img src="./non-linear-in-scratch-and-geometric-sequence/non-linear-movement.gif" alt="Scratch 中的非线性移动"></p>
+<p><img src="non-linear-in-scratch-and-geometric-sequence/example.png" alt="Scratch 中的非线性移动代码"></p>
+<p><strong>我们以上图所展示的运动为例，角色从 $(0, 0)$ 位置非线性的移动到了 $(100, 0)$ 的位置，每帧（每次循环）都会使横坐标增加 $\frac{100 - x}{10}$，因此距离目标位置越远运动速度越快、越近运动速度越慢，是一种非线性运动</strong>.<br>下面我们将探究角色横坐标 $x$ 随时间 $t$ 变化而变化的规律.</p>
+<p><img src="non-linear-in-scratch-and-geometric-sequence/x-t.png" alt="x - t 关系图像"></p>
+<h2>推导</h2>
+<p>我们规定第一帧（经过一次循环）时 $t = 1$、第两帧时为 $t = 2$ ......</p>
+<p>以上面提到的非线性运动为例，如果 $t = n$ 时角色的横坐标 $x$ 为 $a_n$，则：</p>
+<p>$$
+a_1 = 0 + \frac{100 - 0}{10} = 10 \\
+$$
+$$
+a_n = a_{n-1} + \frac{100 - a_{n-1}}{10} = \frac{9}{10} a_{n-1} + 10
+$$</p>
+<p>如果通项公式形如 $a_{n} = A \cdot a_{n-1} + B$（$A, B \in R$），我们可以<strong>构造等比数列</strong>：</p>
+<blockquote>
+<p>$$
+对于 \ a_{n} = A \cdot a_{n-1} + B\\
+\therefore a_{n} = q \cdot a_{n-1} + (q - 1) \cdot t\\
+\therefore a_n + t = q \cdot ( a_{n-1} + t ) \\
+\therefore \frac{a_n + t}{a_{n-1} + t} = q  \\
+可得公比为 \ q \ 的等比数列 \  {a_n + t}
+$$ </p>
+</blockquote>
+<p>$$
+\therefore a_n = \frac{9}{10} \cdot a_{n-1} + (\frac{9}{10} - 1) \cdot (-100) \\[0.5em]
+\therefore a_n - 100 = \frac{9}{10} \cdot (a_{n-1} -100) \\[0.5em]
+\therefore \frac{a_n - 100}{a_{n-1} - 100} = \frac{9}{10}
+$$</p>
+<p>现在我们得到了一个公比为 $\frac{9}{10}$ 的等比数列 ${a_n - 100}$.</p>
+<p>$$
+\because a_1 = 10 \\
+\therefore a_1 - 100 = -90
+$$</p>
+<p>数列 ${a_n - 100}$ 的首项为 $-90$，我们可以得到它的通项公式：</p>
+<p>$$
+a_n - 100 = -90 \cdot (\frac{9}{10})^{n-1}
+$$</p>
+<p>因此：</p>
+<p>$$
+a_n = -90 \cdot (\frac{9}{10})^{n-1} + 100
+$$</p>
+<p><strong>所以对于这种情况，$x(t) = -90 \cdot (\frac{9}{10})^{t-1} + 100$.</strong></p>
+<p><strong>更进一步，对于从 $(x_0, 0)$ 运动到 $(x_1, 0)$、每帧横坐标增加 $p \cdot (x_1 - x)$ 的非线性运动，有：</strong></p>
+<p>$$
+a_1 = x_0 + p \cdot (x_1 - x_0) \\
+\begin{align*}
+a_n &amp;= a_{n-1} + p \cdot (x_1 - a_{n-1}) \\
+    &amp;= (1-p) \cdot a_{n-1} + p \cdot x_1
+\end{align*}
+$$</p>
+<p>因此：</p>
+<p>$$
+\begin{align}
+&amp; \therefore q = 1-p, \ t = \frac{p \cdot x_1}{1-p-1}=-x_1 \\
+&amp; \therefore \frac{a_n - x_1}{a_{n-1} - x_1} = 1-p \\
+&amp; \begin{align*}
+\therefore a_1 - x_1 &amp;= x_0 - x_1 + p \cdot (x_1 - x_0) \\
+          &amp;= (x_1 - x_0) \cdot (p - 1) \\
+\end{align*} \\
+&amp; \therefore a_n - x_1 = (x_1 - x_0) \cdot (p - 1) \cdot(1-p)^{t-1} \\
+&amp; \therefore x(t) = (x_1-x_0)\cdot(p-1)\cdot(1-p)^{t-1}+x_1
+\end{align}
+$$</p>
+<p>使用表格验证，符合预期：</p>
+<table>
+<thead>
+<tr>
+<th align="left">t</th>
+<th align="left">Scratch 非线性移动中获取到的数据</th>
+<th align="left">使用 $x = -90 \cdot (\frac{9}{10})^{t-1} + 100$ 计算得的数据</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="left">1</td>
+<td align="left">10</td>
+<td align="left">10</td>
+</tr>
+<tr>
+<td align="left">2</td>
+<td align="left">19</td>
+<td align="left">19</td>
+</tr>
+<tr>
+<td align="left">3</td>
+<td align="left">27.1</td>
+<td align="left">27.1</td>
+</tr>
+<tr>
+<td align="left">4</td>
+<td align="left">34.39</td>
+<td align="left">34.39</td>
+</tr>
+<tr>
+<td align="left">5</td>
+<td align="left">40.951</td>
+<td align="left">40.951</td>
+</tr>
+<tr>
+<td align="left">6</td>
+<td align="left">46.8559</td>
+<td align="left">46.8559</td>
+</tr>
+<tr>
+<td align="left">7</td>
+<td align="left">52.17031</td>
+<td align="left">52.17031</td>
+</tr>
+<tr>
+<td align="left">8</td>
+<td align="left">56.953279</td>
+<td align="left">56.953279</td>
+</tr>
+<tr>
+<td align="left">9</td>
+<td align="left">61.2579511</td>
+<td align="left">61.2579511</td>
+</tr>
+<tr>
+<td align="left">10</td>
+<td align="left">65.13215599</td>
+<td align="left">65.13215599</td>
+</tr>
+<tr>
+<td align="left">11</td>
+<td align="left">68.61894039</td>
+<td align="left">68.61894039</td>
+</tr>
+<tr>
+<td align="left">12</td>
+<td align="left">71.75704635</td>
+<td align="left">71.75704635</td>
+</tr>
+<tr>
+<td align="left">13</td>
+<td align="left">74.58134172</td>
+<td align="left">74.58134172</td>
+</tr>
+<tr>
+<td align="left">14</td>
+<td align="left">77.12320755</td>
+<td align="left">77.12320755</td>
+</tr>
+<tr>
+<td align="left">15</td>
+<td align="left">79.41088679</td>
+<td align="left">79.41088679</td>
+</tr>
+<tr>
+<td align="left">16</td>
+<td align="left">81.46979811</td>
+<td align="left">81.46979811</td>
+</tr>
+<tr>
+<td align="left">17</td>
+<td align="left">83.3228183</td>
+<td align="left">83.3228183</td>
+</tr>
+<tr>
+<td align="left">18</td>
+<td align="left">84.99053647</td>
+<td align="left">84.99053647</td>
+</tr>
+<tr>
+<td align="left">19</td>
+<td align="left">86.49148282</td>
+<td align="left">86.49148282</td>
+</tr>
+<tr>
+<td align="left">20</td>
+<td align="left">87.84233454</td>
+<td align="left">87.84233454</td>
+</tr>
+<tr>
+<td align="left">21</td>
+<td align="left">89.05810109</td>
+<td align="left">89.05810109</td>
+</tr>
+<tr>
+<td align="left">22</td>
+<td align="left">90.15229098</td>
+<td align="left">90.15229098</td>
+</tr>
+<tr>
+<td align="left">23</td>
+<td align="left">91.13706188</td>
+<td align="left">91.13706188</td>
+</tr>
+<tr>
+<td align="left">24</td>
+<td align="left">92.02335569</td>
+<td align="left">92.02335569</td>
+</tr>
+<tr>
+<td align="left">25</td>
+<td align="left">92.82102012</td>
+<td align="left">92.82102012</td>
+</tr>
+<tr>
+<td align="left">26</td>
+<td align="left">93.53891811</td>
+<td align="left">93.53891811</td>
+</tr>
+<tr>
+<td align="left">27</td>
+<td align="left">94.1850263</td>
+<td align="left">94.1850263</td>
+</tr>
+<tr>
+<td align="left">28</td>
+<td align="left">94.76652367</td>
+<td align="left">94.76652367</td>
+</tr>
+<tr>
+<td align="left">29</td>
+<td align="left">95.2898713</td>
+<td align="left">95.2898713</td>
+</tr>
+<tr>
+<td align="left">30</td>
+<td align="left">95.76088417</td>
+<td align="left">95.76088417</td>
+</tr>
+<tr>
+<td align="left">31</td>
+<td align="left">96.18479576</td>
+<td align="left">96.18479576</td>
+</tr>
+<tr>
+<td align="left">32</td>
+<td align="left">96.56631618</td>
+<td align="left">96.56631618</td>
+</tr>
+<tr>
+<td align="left">33</td>
+<td align="left">96.90968456</td>
+<td align="left">96.90968456</td>
+</tr>
+<tr>
+<td align="left">34</td>
+<td align="left">97.21871611</td>
+<td align="left">97.21871611</td>
+</tr>
+<tr>
+<td align="left">35</td>
+<td align="left">97.4968445</td>
+<td align="left">97.4968445</td>
+</tr>
+<tr>
+<td align="left">36</td>
+<td align="left">97.74716005</td>
+<td align="left">97.74716005</td>
+</tr>
+</tbody></table>
+</div>
+      </div>
+      <script>
+         hljs.highlightAll();
+      </script>
+      <script>
+         // 单行图片
+         document.querySelectorAll('.post-content > .content p > img:only-child').forEach((img) => {
+            // 确定确实为 only child（而不是文字夹带 img）
+            if (img.parentNode.childNodes.length > 1) return;
+            // 设置 img 及其父元素 class
+            img.parentElement.classList.add('figure');
+            img.classList.add('only-child');
+            // 添加 alt
+            const alt = document.createElement('div');
+            alt.classList.add('image-alt');
+            alt.innerText = img.getAttribute('alt');
+            img.parentElement.append(alt);
+         });
+         // 图片放大
+         document.querySelectorAll('.post-content > .content img').forEach((img) => {
+            img.addEventListener('click', () => {
+               window.open(img.getAttribute('src'));
+            })
+         });
+         // 为标题添加 id
+         document.querySelectorAll('h1, h2, h3').forEach((title) => {
+            title.id = title.innerText;
+         })
+      </script>
+   </body>
+</html>

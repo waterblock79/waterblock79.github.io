@@ -1,0 +1,271 @@
+<!DOCTYPE html>
+<html lang="zh">
+   <head>
+      <title>给你的华为设备刷入类原生&amp;ROOT - Waterblock79's website</title>
+      <meta name="viewport" content="width=device-width,initial-scale=1" />
+      <link rel="stylesheet" type="text/css" href="/assets/styles.css" />
+      <script
+         type="module"
+         src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"
+      ></script>
+      <script
+         nomodule
+         src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"
+      ></script>
+      <link
+         rel="stylesheet"
+         href="https://unpkg.com/katex@0.16.8/dist/katex.min.css"
+      />
+      <script
+         defer
+         src="https://unpkg.com/katex@0.16.8/dist/katex.min.js"
+      ></script>
+      <script
+         defer
+         src="https://unpkg.com/katex@0.16.8/dist/contrib/auto-render.min.js"
+         onload="renderMathInElement(document.body, {delimiters: [{left: '$$', right: '$$', display: true},{left: '$', right: '$'}]});"
+      ></script>
+      <!-- Google tag (gtag.js) -->
+      <script
+         async
+         src="https://www.googletagmanager.com/gtag/js?id=G-YFC9SHL1Q7"
+      ></script>
+      <script>
+         window.dataLayer = window.dataLayer || [];
+         function gtag() {
+            dataLayer.push(arguments);
+         }
+         gtag("js", new Date());
+         gtag("config", "G-YFC9SHL1Q7");
+      </script>
+      <link
+         rel="stylesheet"
+         href="//unpkg.com/@highlightjs/cdn-assets@11.7.0/styles/default.min.css"
+         id="highlightjs-css"
+      />
+      <script>
+         if (window.matchMedia("(prefers-color-scheme: dark)").matches) {
+            document.querySelector("#highlightjs-css").href =
+               "https://unpkg.com/@highlightjs/cdn-assets@11.7.0/styles/atom-one-dark.min.css";
+         }
+      </script>
+      <script src="//unpkg.com/@highlightjs/cdn-assets@11.7.0/highlight.min.js"></script>
+      <style>
+         @media screen and (max-width: 512px) {
+            body {
+               padding: 1.5em 0;
+            }
+            .post-header {
+               justify-content: center;
+            }
+            .post-header .back {
+               display: none;
+            }
+            .post-content {
+               box-shadow: none;
+               padding: 1.5em 0;
+            }
+            ul {
+               padding-inline-start: 1em;
+            }
+         }
+
+         body {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+         }
+
+         .post-content {
+            max-width: 50em;
+            width: 100%;
+         }
+
+         .post-header {
+            max-width: 56em;
+         }
+      </style>
+   </head>
+   <body>
+      <a class="post-header" href="/">
+         <div class="back">❮ 返回</div>
+         <div class="site">waterblock79 的小站</div>
+      </a>
+      <div class="card post-content">
+         <div class="title">给你的华为设备刷入类原生&amp;ROOT</div>
+         <div class="subtitle">
+            <ion-icon name="time"></ion-icon>
+            <span class="time">2021-10-23 20:20</span>
+            
+            <ion-icon name="pricetag"></ion-icon>
+             
+            <span class="tag">Android</span>
+            
+         </div>
+         <div class="content"><p><strong>这篇博客的旧版本是我刚刚开始接触刷机的时候写的，现在对刷机的认识更多了一些，所以重新写了一遍</strong>。</p>
+<h2>前提</h2>
+<ol>
+<li><strong>可以接受手机永久性损坏的风险</strong></li>
+<li>拥有一台<strong>华为/荣耀设备</strong></li>
+<li>拥有有一台 <strong>Windows、macOS 或 Linux 系统的电脑</strong></li>
+</ol>
+<h2>解锁</h2>
+<p>这一块不多解释，可以找酷安老哥有偿解锁，也可以淘宝解锁，还可以自己去试试 HCU-Client 或者 DC-Unlocker，注意防骗，货比三家。<strong>相比来说，老机型比新机型解锁更便宜</strong>，一些老机型能读出解锁码，而一些新机型不能（没有解锁码意味着如果你手误把 Bootloader 锁上了，那你还需要再花钱重新解锁），注意，如果你解锁时<strong>没有提供解锁码</strong>，那么<strong>请不要使用华为手机助手进行系统修复！</strong></p>
+<h2>备份原固件（可选）</h2>
+<p><strong>如果你只是想尝尝鲜，或者害怕类原生不好用，想换回EMUI，又或者想多尝试几个Rom，那请看这里！</strong></p>
+<ol>
+<li><p>访问 <a href="https://pro-teammt.ru/en/online-firmware-database/">Online firmware database</a> ，在标题下方的 <code>Enter model</code> 搜索框里，输入手机的型号（<strong>格式形如 MAR-AL00</strong> ，在机器背面或入网许可上有，也可以在 EMUI 的设置 - 系统 - 关于手机 - 型号里找到），并点击<code>FIND MODEL</code>搜索。</p>
+<p>找到<code>Тип</code>一栏是<code>FullOTA-MF</code>的，尽量使版本号（即文件名中的<code>xx.x.x.x</code>）和你现在使用EMUI版本靠近，点击这行的<code>filelist</code>，复制链接并下载，解压这个压缩包。</p>
+</li>
+<li><p>下载 <strong><a href="https://www.baidu.com/s?ie=UTF-8&wd=HuaweiUpdateExtractor">HuaweiUpdateExtractor</a></strong> ，解压压缩包或安装后打开<code>HuaweiUpdateExtractor.exe</code>，在<code>Settings</code>中关闭<code>Verify header checksum</code>。</p>
+</li>
+<li><p>回到<code>Extract</code>，点击<code>Update file</code>一栏中右侧的<code>[···]</code>，找到你刚才下载的压缩包里的<code>UPDATE.APP</code>，这个软件会自动解析文件，右键这下面文件中的<code>SYSTEM.img</code>，点击<code>Extract Selected</code>，选择一个你方便找到的文件夹，确定。</p>
+</li>
+<li><p>至此，备份完成，如果你觉得需要换回来 EMUI ，在 adb 命令行执行：</p>
+<pre><code>fastboot flash system &lt;你导出的SYSTEM.img路径&gt;
+</code></pre>
+<p>（可以直接将文件复制，并在命令行中粘贴来直接输入文件的路径）</p>
+<p>然后重启设备，参照<strong>挑选喜欢的 ROM 并刷机中第 5 条</strong>，对设备进行数据清除，重启，就回到 EMUI 了。</p>
+</li>
+</ol>
+<h2>挑选喜欢的ROM并刷机</h2>
+<ol>
+<li><ol>
+<li><p>前往 <a href="https://openkirin.net/download/"><em><strong>Openkirin</strong></em></a> 下载<strong>对应自己当前EMUI版本</strong>（EMUI8.0 / EMUI9.0）的包，下载。</p>
+</li>
+<li><p>你也可以在 <strong><a href="https://sourceforge.net/directory/?q=GSI"><em>SourceForge</em> 上寻找 GSI 包</a></strong>，个人推荐如下项目：</p>
+<ul>
+<li><p><a href="https://sourceforge.net/projects/andyyan-gsi/files/">andyyan-gsi</a></p>
+<p>这位做 Lineage OS 的 GSI，很稳，几乎没有 Bug，Lineage OS 是一个很原生气的类原生系统，和原生的差距不大。</p>
+</li>
+<li><p><a href="https://sourceforge.net/projects/amber-gsi/files/">amber-gsi</a></p>
+<p>很多系统的 GSI 都有，看个人喜好咯。</p>
+</li>
+</ul>
+</li>
+</ol>
+</li>
+<li><p><a href="https://www.baidu.com/s?ie=UTF-8&wd=%E5%A6%82%E4%BD%95%E5%AE%89%E8%A3%85ADB">安装ADB工具</a>并打开；或者下载<a href="https://atmb.top/">秋之盒</a>，在秋之盒中打开右下方的 <strong>ADB 命令行</strong>。</p>
+</li>
+<li><p>将手机关机，关机后<strong>连接数据线</strong>并<strong>长摁电源键与音量减</strong>，进入到 Fastboot 模式（请确保安卓小机器人下面的文字是<code>PHONE Unlocked</code>）。</p>
+</li>
+<li><p>在ADB命令行执行：</p>
+<pre><code>fastboot flash system &lt;ROM的img路径&gt;
+</code></pre>
+<p>（可以直接将文件复制，并在命令行中粘贴来直接输入文件的路径）</p>
+</li>
+<li><p>开机，当遇到这样的界面（以后统称为“解锁警告”）：</p>
+<pre><code>(!)
+
+Your device has been unlocked and can&#39;t be trusted.
+
+To learn mode,vist:
+http://zh.ui.vmall.com/emotiondownload.php?mod=restore
+
+------
+(1) Press Power key to continue.
+(2) Press Volume Up key to 3 seconds to enter erecovery to restore your device.
+(3) Your device will countinue to boot 5 seconds later if there is no operation.
+------
+</code></pre>
+<p><strong>立刻长摁音量上键直到页面改变</strong>，进入 Erecovery，点击<strong>恢复出厂设置</strong>（也有可能是 <strong>wipe data/factory reset</strong> 或者<strong>工厂级格式化</strong>）。</p>
+<p>如果恢复好了，那就先退出，看看这个页面里有没有<strong>清除缓存</strong>（或<strong>清除 Cache</strong>），如果有的话，清除一下。</p>
+</li>
+<li><p>现在，拔出你的SIM卡，关闭手机，然后再开机。</p>
+</li>
+<li><p>如果出现一个<strong>欢迎页面</strong>，<strong>那恭喜你成功的刷入了类原生 Rom</strong>！</p>
+</li>
+<li><p>如果你选择了 “gapps” 包，那你需要跳过连接 WiFi 和插入 SIM 卡的部分，直接进入系统，进入系统后再连接WiFi、插入 SIM 卡。（否则可能会卡在依赖于谷歌的服务的页面）</p>
+<p>下载翻墙工具，然后再进入<code>Android 设置向导</code>，完成设置。</p>
+</li>
+</ol>
+<h2>刷入 Magisk</h2>
+<p>当你刷入了 Magisk 后，你的设备就自动 Root 了，刷入 Magisk 后你可以安装 <strong>Ed</strong>Xposed 或者 <strong>LSP</strong>osed （推荐）框架，对系统进行一些改造。</p>
+<p><strong>使用本方法会导致原来的 Recovery 会无法使用、开机后或许会出现触摸失灵半分钟。</strong></p>
+<ul>
+<li><p><strong>修补 Boot 法</strong>（不确定可用性）</p>
+<ol>
+<li><p>进入系统中的设置 - 关于手机，连续点击 10 次<code>版本号</code>，进入开发者模式，启用<code>Android 调试</code>、将<code> Root 授权</code>设为<code>仅限于 ADB </code>。</p>
+</li>
+<li><p>手机连接电脑，进入 Adb 工具，依次输入以下指令：</p>
+<pre><code class="language-sh">adb root
+adb shell
+cd /dev/block/by-name
+cat recovery_ramdisk &gt; /data/media/0/boot.img
+exit
+adb pull /data/media/0/boot.img
+</code></pre>
+<p>这个时候你的命令行所在目录就会出现手机的<code>boot.img</code>，先自己保存好这个文件，然后将<code>boot.img</code>发送到手机里。</p>
+</li>
+<li><p>下载<code>Magisk Manager</code>（推荐在<a href="coolapk.com">酷安</a>里下载），进去挂上魔法上网工具（否则更新可能比较慢），更新 Magisk Manager 后，在<code>Magisk</code>一栏点击安装，勾选<code>安装到 Recovery</code>，选择<code>选择并修补一个文件</code>，选择你的<code>boot.img</code>，修补好了以后，在 Magisk Manager 中设置的下载路径那里找到修补好的文件。</p>
+</li>
+<li><p>重启设备到 Fastboot 模式，输入以下指令：</p>
+<pre><code>fastboot flash recovery_ramdisk &lt;boot.img的路径&gt;
+</code></pre>
+<p>（可以直接将文件复制，并在命令行中粘贴来直接输入文件的路径）</p>
+</li>
+</ol>
+</li>
+<li><p><strong>Magisk.img 法</strong></p>
+<p>你也可以使用其他开发者（<strong>酷安 @麦麦观饭</strong>）已经打包好的 Recovery，<a href="https://github.com/waterblock79/waterfall/raw/gh-pages/images/magisk.img">点此下载</a>。</p>
+<p>下载完毕后在 Fastboot 模式中执行以下命令：</p>
+<pre><code>fastboot flash recovery_ramdisk &lt;magisk.img的路径&gt;
+</code></pre>
+</li>
+</ul>
+<ol>
+<li><p><strong>拔掉数据线，长摁音量加键和电源键（进入 “Recovery” ），直到出现这样的页面，然后松手：</strong></p>
+<pre><code>(!)
+
+Your device has been unlocked and can&#39;t be trusted.
+
+To learn mode,vist:
+http://zh.ui.vmall.com/emotiondownload.php?mod=restore
+
+Your device is booting now...
+</code></pre>
+</li>
+<li><p>开机等到触摸有用了以后，进入系统，<strong>进入 Magisk Manager，如果提示需要修复运行环境就对了，点击<code>确定</code></strong>。</p>
+</li>
+<li><ul>
+<li><p>如果你使用修补 Boot 的方法，请：</p>
+<p>等待修复后自动重启，你会发现正常开机的警告不一样，现在可以直接进入系统，完成！</p>
+</li>
+<li><p>如果你使用 Recovery.img 的方法，请：</p>
+<p>按前面提到的方法进入 Recovery，完成！</p>
+</li>
+</ul>
+</li>
+</ol>
+</div>
+      </div>
+      <script>
+         hljs.highlightAll();
+      </script>
+      <script>
+         // 单行图片
+         document.querySelectorAll('.post-content > .content p > img:only-child').forEach((img) => {
+            // 确定确实为 only child（而不是文字夹带 img）
+            if (img.parentNode.childNodes.length > 1) return;
+            // 设置 img 及其父元素 class
+            img.parentElement.classList.add('figure');
+            img.classList.add('only-child');
+            // 添加 alt
+            const alt = document.createElement('div');
+            alt.classList.add('image-alt');
+            alt.innerText = img.getAttribute('alt');
+            img.parentElement.append(alt);
+         });
+         // 图片放大
+         document.querySelectorAll('.post-content > .content img').forEach((img) => {
+            img.addEventListener('click', () => {
+               window.open(img.getAttribute('src'));
+            })
+         });
+         // 为标题添加 id
+         document.querySelectorAll('h1, h2, h3').forEach((title) => {
+            title.id = title.innerText;
+         })
+      </script>
+   </body>
+</html>

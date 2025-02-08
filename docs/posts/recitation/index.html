@@ -1,0 +1,501 @@
+<html>
+   <head>
+      <title>古诗文背诵工具</title>
+      <link rel="stylesheet" href="./assets/styles.css" />
+      <meta
+         name="viewport"
+         content="width=device-width, initial-scale=1.0, user-scalable=no"
+      />
+      <link rel="icon" href="./assets/icon.jpg" />
+      <link rel="manifest" href="./assets/manifest.json" />
+      <meta name="theme-color" content="#E8E7E3" />
+      <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+      <script src="https://cdn.jsdelivr.net/npm/dayjs@1/dayjs.min.js"></script>
+      <script src="https://cdn.jsdelivr.net/npm/dayjs@1.11.11/locale/zh-cn.js"></script>
+      <script src="https://cdn.jsdelivr.net/npm/dayjs@1/plugin/relativeTime.js"></script>
+      <!-- Google tag (gtag.js) -->
+      <script
+         async
+         src="https://www.googletagmanager.com/gtag/js?id=G-YFC9SHL1Q7"
+      ></script>
+      <script>
+         window.dataLayer = window.dataLayer || [];
+         function gtag() {
+            dataLayer.push(arguments);
+         }
+         gtag("js", new Date());
+         gtag("config", "G-YFC9SHL1Q7");
+      </script>
+   </head>
+   <body>
+      <div id="app">
+         <Transition name="opacity">
+            <div class="main" v-if="page.name === 'main'">
+               <div class="title">
+                  <div>Reci<b>TaT</b>ion</div>
+                  <div class="subtitle">古诗文背诵辅助工具</div>
+               </div>
+               <input
+                  class="searching"
+                  placeholder="搜索中小学课内古诗文"
+                  @keyup.enter="searchPrediction.length && enterPoem(searchPrediction[0].id)"
+                  @input="handlePredicting"
+                  v-model="searchKeyword"
+               />
+               <div
+                  class="searchPrediction"
+                  ref="esp"
+                  :style="{ height: espsh + 'px', position: 'absolute', marginTop: '8em' }"
+               >
+                  <div
+                     class="prediction"
+                     v-for="item in searchPrediction"
+                     @click="enterPoem(item.id)"
+                  >
+                     {{ item.text }}
+                  </div>
+                  <div
+                     class="placeholder"
+                     :style="{ height: searchKeyword && !searchPrediction.length ? '1em': '0' }"
+                  >
+                     　
+                  </div>
+               </div>
+               <div class="logs" v-if="logs.length">
+                  <b>日志</b>
+                  <div v-for="item in (showAllLogs ? logs : logs.slice(0, 20))">
+                     <span>{{ item.text }}</span>
+                     <b>{{ dayjs().to(dayjs(item.time)) }}</b>
+                  </div>
+                  <b @click="showAllLogs = true"
+                     >{{ !showAllLogs && logs.length > 20 ?
+                     '......(点击以显示全部)' : ''}}</b
+                  >
+               </div>
+               <div class="banner">
+                  <b><a @click="modal.show = 'welcome'">点我显示使用提示</a></b
+                  ><br /><a @click="updateData()">点我更新诗文数据</a>
+                  |
+                  <a @click="clearDb()">点我重置本地数据</a>
+                  <br />
+                  <a href="//waterblock79.github.io/">waterblock79</a>
+                  制作，感谢 <a href="https://www.gushiwen.cn/">古诗文网</a>、<a
+                     href="https://day.js.org/zh-CN/"
+                     >Day.js</a
+                  >、<a href="https://cn.vuejs.org/">Vue.js</a>
+               </div>
+            </div>
+         </Transition>
+         <Transition>
+            <div class="poem" v-if="page.name === 'poem'">
+               <p class="title">
+                  {{ poemData?.title }}
+                  <span class="secondary" style="font-size: 0.6em">
+                     {{ poemData?.author }}
+                  </span>
+               </p>
+               <div class="content">
+                  <p
+                     v-for="(item, index) in poemData.content"
+                     @click="enterRecite(page.id, index)"
+                  >
+                     {{ item }} <br />
+                     <span
+                        class="secondary"
+                        v-if="poemData.history && poemData.history[index]"
+                        :style="{ textAlign: 'right', display: 'block' }"
+                     >
+                        上次背诵于
+                        <b
+                           >{{
+                           dayjs().to(dayjs(poemData.history[index].lastRecite))
+                           }}</b
+                        >，共背诵 <b>{{ poemData.history[index].sum }}</b> 次
+                     </span>
+                  </p>
+                  <pre class="secondary">{{ poemData?.remark }}</pre>
+               </div>
+            </div>
+         </Transition>
+         <Transition>
+            <div
+               class="reciting"
+               v-if="page.name === 'reciting'"
+               @click="
+                  (new Date().getTime() - mousedown < 500) && posNext();
+                  mousedown = -1;
+               "
+               @mousedown="mousedown = new Date().getTime()"
+               @touchstart="
+                  mousedown = new Date().getTime()
+                  mousedownInterval = setInterval(() => {
+                     if (mousedown === -1) {
+                        clearInterval(mousedownInterval);
+                        return;
+                     }
+                     hint++;
+                  }, 500)
+               "
+               @touchend="clearInterval(mousedownInterval)"
+               @contextmenu="evt => {
+                  evt.preventDefault();
+                  hint++;
+               }"
+            >
+               <div
+                  :style="{ '--height': parts.length - 1 }"
+                  class="placeholder"
+               ></div>
+               <div
+                  v-for="(item, index) in parts"
+                  :class="[position === index ? 'current' : (position < index ? 'hide' : 'pass')]"
+               >
+                  <span class="hint"
+                     >{{ index === position + 1 ? item.substring(0, hint - 1) :
+                     ''}}</span
+                  >{{ index === position + 1 ? item.substring(hint - 1) : item
+                  }}
+               </div>
+               <div
+                  :style="{ '--height': position * 2 }"
+                  class="placeholder"
+               ></div>
+            </div>
+         </Transition>
+         <Transition>
+            <div class="modal" v-if="modal.show">
+               <div class="content">
+                  <div class="title">欢迎！</div>
+                  <div>
+                     <b>ReciTaTion</b>
+                     是一个古诗文背诵辅助工具，它可以帮助你“背一句看一句”以确定自己背诵的是否正确、并在需要的时候进行提醒，就像和同学一起背诵一样。
+                  </div>
+                  <img src="./assets/whatis.svg" />
+                  <div>
+                     请搜索古诗文，并点击选择需要背诵的段落，然后开始背诵。<br />
+                     在背诵完一句时，请
+                     <b
+                        ><u>点击卡片{{ isMobile ? '' : '或按任意键' }}</u
+                        >以显示刚才背诵的一句</b
+                     >（<u>{{ isMobile ? '长按卡片' : '按“/”键或右键卡片' }}</u
+                     >以提示），然后继续背诵下一句...... 如此直至背诵完成整段。
+                  </div>
+                  <div class="operate">
+                     <img src="./assets/preview.jpg">
+                     <div class="align-center">
+                        <b>显示下一句诗文</b><br/><span v-if="!isMobile">使用 <kbd>任意</kbd> 键或</span>点击卡片<br/>
+                        <b>显示提示</b><br/><span v-if="!isMobile">使用 <kbd>/</kbd> 键或右键卡片</span><span v-if="isMobile">长按卡片</span><br/>
+                        <b>返回上一页面</b><br/>点击页面背景<span v-if="!isMobile">或使用 <kbd>Esc</kbd> 键</span><br/>
+                     </div>
+                  </div>
+               </div>
+               <div class="secondary align-center">
+                  <b>点击页面背景以返回</b>
+               </div>
+            </div>
+         </Transition>
+      </div>
+      <script>
+         window.dayjs.locale(window.dayjs_locale_zh_cn);
+         window.dayjs.extend(window.dayjs_plugin_relativeTime);
+
+         const dbName = "gushiwen";
+
+         /**
+          * @returns {Promise<IDBDatabase>}
+          */
+         const openDb = () => {
+            return new Promise((resolve, reject) => {
+               const req = indexedDB.open(dbName);
+               req.onsuccess = () => {
+                  resolve(req.result);
+               };
+               req.onupgradeneeded = () => {
+                  if (!req.result.objectStoreNames.contains("data")) {
+                     req.result.createObjectStore("data", {
+                        keyPath: "id",
+                     });
+                  }
+                  if (!req.result.objectStoreNames.contains("logs")) {
+                     req.result.createObjectStore("logs");
+                  }
+               };
+            });
+         };
+
+         const { createApp, ref, reactive, watch } = Vue;
+
+         createApp({
+            setup() {
+               // 页面
+               const page = reactive({
+                     name: "main",
+                     id: null,
+                     index: null,
+                  }),
+                  poemData = reactive({});
+               // 搜索
+               const searchKeyword = ref(""),
+                  searchPrediction = reactive([]),
+                  lastPredict = ref(0);
+               const esp = ref(null),
+                  espsh = ref(0); // element search prediction / scroll height
+               // 背诵
+               const parts = ref([]),
+                  position = ref(0),
+                  hint = ref(1),
+                  mousedown = ref(-1),
+                  mousedownInterval = ref(0);
+               // 日志
+               const logs = reactive([]),
+                  showAllLogs = ref(false);
+               // 模态框
+               const modal = reactive({
+                  show: false,
+               });
+
+               // 更新古诗文数据库
+               const updateData = (su) => {
+                  if (!su && !confirm("确定要更新数据吗？")) return;
+                  fetch("./assets/data.json")
+                     .then((res) => res.json())
+                     .then((data) => {
+                        openDb().then((db) => {
+                           const trans = db.transaction(["data"], "readwrite");
+                           trans.objectStore("data").clear();
+                           data.forEach((poem) => {
+                              trans.objectStore("data").put(poem);
+                           });
+                        });
+                     });
+                  localStorage["downloadedData"] = "true";
+               };
+               if (localStorage["downloadedData"] !== "true") {
+                  updateData(true);
+                  modal.show = "welcome";
+               }
+
+               watch(
+                  page,
+                  () => {
+                     if (page.name === "main") {
+                        openDb().then((db) => {
+                           const trans = db.transaction(["logs"]);
+                           const req = trans.objectStore("logs").getAll();
+                           req.onsuccess = () => {
+                              logs.length = 0;
+                              logs.push(...req.result);
+                              logs.reverse();
+                           };
+                        });
+                     }
+                  },
+                  { immediate: true }
+               );
+
+               const dayjs = window.dayjs;
+               const setInterval = (f, t) => window.setInterval(f, t);
+               const clearInterval = (i) => window.clearInterval(i);
+
+               const isMobile = ref(false);
+
+               // 搜索预测
+               const handlePredicting = () => {
+                  let triggered = new Date().getTime();
+                  // 截流
+                  if (triggered - lastPredict.value < 500) {
+                     setTimeout(handlePredicting, 600);
+                     return;
+                  }
+                  // 空关键词直接返回
+                  if (searchKeyword.value === "") {
+                     searchPrediction.length = 0;
+                     return;
+                  }
+                  lastPredict.value = triggered;
+                  // 执行搜索
+                  let results = [];
+                  openDb().then((db) => {
+                     const trans = db.transaction(["data"]);
+                     const req = trans.objectStore("data").openCursor();
+                     req.onsuccess = () => {
+                        const cur = req.result;
+                        if (cur) {
+                           if (
+                              cur.value.title.includes(searchKeyword.value) ||
+                              cur.value.content.find((x) =>
+                                 x.includes(searchKeyword.value)
+                              )
+                           )
+                              results.push({
+                                 text: `${cur.value.title} - ${cur.value.author}`,
+                                 id: cur.key,
+                              });
+                           cur.continue();
+                        } else {
+                           searchPrediction.length = 0;
+                           searchPrediction.push(...results);
+                        }
+                     };
+                  });
+               };
+               // 进入诗文
+               const enterPoem = (id) => {
+                  page.name = "poem";
+                  page.id = id;
+                  openDb().then((db) => {
+                     const trans = db.transaction(["data"]);
+                     const req = trans.objectStore("data").get(id);
+                     req.onsuccess = () => {
+                        poemData.history = [];
+                        for (key in req.result) {
+                           poemData[key] = req.result[key];
+                           window.location.hash = id;
+                        }
+                     };
+                  });
+               };
+
+               // 进入背诵
+               const enterRecite = (id, index) => {
+                  page.name = "reciting";
+                  page.id = id;
+                  page.index = index;
+                  hint.value = 1;
+                  // 分句
+                  parts.value = poemData.content[index]
+                     .replaceAll("\n", "")
+                     .replaceAll(/[（\(][^\)）]*[）\)]/g, "")
+                     .split(/，|：|。|“|”|‘|’|？|！|；|（|）/g)
+                     .filter((x) => x.length)
+                     .map((x) => x.trimStart().trimEnd());
+                  position.value = 0;
+               };
+               const posNext = () => {
+                  hint.value = 1;
+                  position.value++;
+                  // 完成背诵
+                  if (position.value > parts.value.length - 1) {
+                     let time = new Date().getTime();
+                     openDb().then((db) => {
+                        const trans = db.transaction(
+                           ["logs", "data"],
+                           "readwrite"
+                        );
+                        trans.objectStore("logs").put(
+                           {
+                              text: `背诵 ${poemData.title} 第 ${
+                                 page.index + 1
+                              } 段完成。`,
+                              time,
+                              id: page.id,
+                              index: page.index,
+                           },
+                           time
+                        );
+                        let poemDataReq = trans
+                           .objectStore("data")
+                           .get(page.id);
+                        poemDataReq.onsuccess = () => {
+                           let poemData = poemDataReq.result;
+                           if (!poemData.history) poemData.history = [];
+                           poemData.history[page.index] = {
+                              sum: (poemData.history[page.index]?.sum || 0) + 1,
+                              lastRecite: time,
+                           };
+                           trans.objectStore("data").put(poemData);
+                        };
+                     });
+                     enterPoem(page.id);
+                  }
+               };
+
+               // 后退
+               const back = () => {
+                  if (page.name === "reciting") {
+                     enterPoem(page.id);
+                     return;
+                  }
+                  if (page.name === "poem") {
+                     page.name = "main";
+                     window.location.hash = '';
+                     return;
+                  }
+                  if (modal.show) modal.show = false;
+               };
+
+               // 清除数据
+               const clearDb = () => {
+                  if (!confirm("确定要重置本地数据吗？")) return;
+                  openDb().then((db) => {
+                     localStorage["downloadedData"] = "";
+                     const trans = db.transaction(
+                        ["logs", "data"],
+                        "readwrite"
+                     );
+                     trans.objectStore("logs").clear();
+                     trans.objectStore("data").clear();
+                     window.location.reload();
+                  });
+               };
+
+               return {
+                  searchKeyword,
+                  handlePredicting,
+                  searchPrediction,
+                  espsh,
+                  esp,
+                  page,
+                  poemData,
+                  enterPoem,
+                  enterRecite,
+                  parts,
+                  position,
+                  posNext,
+                  dayjs,
+                  back,
+                  logs,
+                  showAllLogs,
+                  updateData,
+                  clearDb,
+                  modal,
+                  hint,
+                  mousedown,
+                  mousedownInterval,
+                  setInterval,
+                  clearInterval,
+                  isMobile,
+               };
+            },
+            mounted() {
+               let id = window.location.hash.replace('#', '');
+               if (id) this.enterPoem(id);
+               window.addEventListener('hashchange', () => {
+                  let id = window.location.hash.replace('#', '');
+                  if (id) this.enterPoem(id);
+               })
+               setInterval(() => {
+                  let height = 0;
+                  this?.esp?.childNodes?.forEach((c) => {
+                     height += c?.offsetHeight || 0;
+                  });
+                  this.espsh = height;
+               });
+               window.addEventListener("click", (evt) => {
+                  if (evt?.target?.id === "app") this.back();
+               });
+               window.addEventListener("keyup", (evt) => {
+                  if (this.page.name === "reciting") {
+                     if (evt.key === "/") this.hint++;
+                     else this.posNext();
+                  }
+                  if (evt.key === 'Escape') this.back();
+               });
+
+               this.isMobile =
+                  window.navigator.userAgent.match(/iPhone|Android/g);
+            },
+         }).mount("#app");
+      </script>
+   </body>
+</html>

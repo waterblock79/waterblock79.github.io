@@ -1,0 +1,169 @@
+<html>
+   <head>
+      <style>
+         button {
+            border: none;
+            background-color: #fff;
+            box-shadow: 0px 0px 8px rgba(0,0,0,0.2);
+            padding: 0.5em 1em;
+            font-size: 1em;
+            border-radius: 4px;
+            margin: 1em;
+            transition: box-shadow 0.1s, background 0.1s;
+         }
+
+         button:hover {
+            box-shadow: 0px 0px 10px rgba(0,0,0,0.2);
+         }
+
+         button:active {
+            background: #fafafa;
+         }
+
+         pre {
+            text-wrap: wrap;
+         }
+
+         .main {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+         }
+
+         body {
+            overflow: hidden;
+         }
+      </style>
+   </head>
+   <body>
+      <script src="https://cdn.jsdelivr.net/npm/opentype.js"></script>
+      <script src="https://cdn.jsdelivr.net/npm/jszip"></script>
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/crypto-js/4.0.0/core.min.js"></script>
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/crypto-js/3.1.9-1/md5.js"></script>
+      <div class="main">
+         <button id="upload">上传使用 Zinc Engine 的 Scratch 作品文件</button>
+         <pre id="log"></pre>
+      </div>
+      <script async>
+         let url = './unifont-15.1.05.otf';
+         let logList = [], startTime = 0;
+         const log = (message) => {
+            logList.push(`[ ${startTime && (new Date().getTime() - startTime) / 1000}s ] ${message}`);
+            document.querySelector('#log').innerHTML = logList.join('\n');
+         };
+         
+         const advance = async (file) => {
+            startTime = new Date().getTime();
+            JSZip.loadAsync(file)
+               .then(async (zip) => {
+                  const project = JSON.parse(await zip.file('project.json').async("string"));
+
+                  log(`加载作品成功。`);
+
+                  let words = new Set('ABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890abcdefghijklmnopqrstuvwxyz'.split(''));
+
+                  project.targets.forEach((target) => {
+                     Object.keys(target.blocks).forEach((blockId) => {
+                        const block = target.blocks[blockId];
+                        if (block.opcode === 'procedures_call' && block.mutation.proccode === "Engine - 设置组件属性（ID %s ）（Name %s ）（Value %s ）") {
+                           if (block.inputs["i:v!-Y^tL8fuq-?k9N]s"][1][1] === 'text') { // tagName
+                              const getWordsFromInput = (input) => {
+                                 if (input.length === 2) {
+                                    input[1][1].split('').forEach(w => words.add(w));
+                                 } else if (input.length === 3 && typeof input[1] === 'string') {
+                                    let inputsNext = target.blocks[input[1]].inputs;
+                                    Object.keys(inputsNext).forEach((inputNextId) => {
+                                       getWordsFromInput(inputsNext[inputNextId]);
+                                    })
+                                 }
+                              };
+                              getWordsFromInput(block.inputs["M6wn;4ce9HVTE+3SWdwi"]);
+                           }
+                        }
+                     })
+                  });
+                  log(`准备对 ${words.size} 个字符进行优化。`);
+                  let engine = project.targets.filter(t => t.name === '【Zinc Engine】')[0];
+                  engine.variables["m8kq,$Fn|2N}ycBGNy0V"] = ["UI 框架 - 已优化？", startTime];
+                  zip.file('db545d786cc9afedfcfa51e01464f129.svg', quarterCircle);
+                  zip.file('b3d69e8c9ec0b6938de4d45b1f47407d.svg', quarterRound);
+                  zip.file('2c51b62958a0118d6abb42dd487c8072.svg', large);
+                  engine.costumes = [
+                     {
+                        "name": "1 / 4 圆",
+                        "bitmapResolution": 1,
+                        "dataFormat": "svg",
+                        "assetId": "db545d786cc9afedfcfa51e01464f129",
+                        "md5ext": "db545d786cc9afedfcfa51e01464f129.svg",
+                        "rotationCenterX": -1.1368683772161603e-13,
+                        "rotationCenterY": 7.998166612906374
+                     },
+                     {
+                        "name": "1 / 4 弧",
+                        "bitmapResolution": 1,
+                        "dataFormat": "svg",
+                        "assetId": "b3d69e8c9ec0b6938de4d45b1f47407d",
+                        "md5ext": "b3d69e8c9ec0b6938de4d45b1f47407d.svg",
+                        "rotationCenterX": -0.08512026799357386,
+                        "rotationCenterY": 7.988518158314861
+                     },
+                     {
+                        "name": "large",
+                        "bitmapResolution": 1,
+                        "dataFormat": "svg",
+                        "assetId": "2c51b62958a0118d6abb42dd487c8072",
+                        "md5ext": "2c51b62958a0118d6abb42dd487c8072.svg",
+                        "rotationCenterX": 434.3543530180182,
+                        "rotationCenterY": 434.35436301801843
+                     },
+                  ];
+                  words.forEach(word => {
+                     let svg = `<svg xmlns="http://www.w3.org/2000/svg">${font.getPath(word, -8, 10, 30).toSVG()}<rect xmlns="http://www.w3.org/2000/svg" width="64" height="64" x="-32" y="-32" fill="rgba(0,0,0,0)"/></svg>`;
+                     let md5 = CryptoJS.MD5(svg);
+                     let custume = {
+                        "name": word,
+                        "bitmapResolution": 1,
+                        "dataFormat": "svg",
+                        "assetId": md5 + '',
+                        "md5ext": md5 + '.svg',
+                        "rotationCenterX": 0,
+                        "rotationCenterY": 0
+                     };
+                     zip.file(md5 + '.svg', svg);
+                     engine.costumes.push(custume);
+                  });
+                  zip.file('project.json', JSON.stringify(project));
+                  log(`生成字符 SVG 成功。`);
+                  log(`开始打包作品。`);
+                  zip.generateAsync({
+                     type: "blob",
+                     compression: "DEFLATE",
+                     compressionOptions: { level: 9 }
+                  }).then(function (blob) {
+                     let a = document.createElement('a');
+                     a.download = file.name.match(/[^.sb3]+/g) + ' Advanced.sb3';
+                     a.href = URL.createObjectURL(blob);
+                     a.click();
+                     log(`打包并下载 SB3 文件 ${a.download} 完成。`)
+                  });
+               })
+            log(`开始从 ${url} 获取字体...`);
+            const font = opentype.parse(await (fetch(url).then((res) => res.arrayBuffer())));
+            log(`成功从获取 ${url} 获取字体！`);
+         };
+
+         document.querySelector('#upload').addEventListener('click', () => {
+            let uploader = document.createElement('input');
+            uploader.type = 'file';
+            uploader.addEventListener('input', (e) => {
+               advance(uploader.files[0])
+            })
+            uploader.click();
+         });
+
+         const quarterCircle = `<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" version="1.1" width="7.99817" height="7.99817" viewBox="0,0,7.99817,7.99817"><g transform="translate(-240,-172.00183)"><g data-paper-data="{&quot;isPaintingLayer&quot;:true}" fill="none" fill-rule="nonzero" stroke="none" stroke-width="0.5" stroke-linecap="butt" stroke-linejoin="miter" stroke-miterlimit="10" stroke-dasharray="" stroke-dashoffset="0" style="mix-blend-mode: normal"><image x="5071.16218" y="3634.37163" transform="scale(0.04733,0.04733)" width="169" height="169" xlink:href="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAKkAAACpCAYAAABQ1R0vAAAAAXNSR0IArs4c6QAABWRJREFUeF7t3NtyGzsMRNHR/390Urk5sjzWkBySQKN3XjMXoHsVJTt1zuM4jh9H/59H/y3cQQJjCfzCNoK05W1AbkmJay4TWIn03csBfFkNF/xLIArpWQPAxeVpApmQAhekkkhfh+a0NYSc/STle60hyrOTadVP97vj5ZTdnfim9ymfpJyym5BEv6Yq0udcOWGjld18vwNSwN5EEn27G9Ln3w9HZ8/7GxNwRcrp2ggkw2Ug/d8C310ziDyZAaRfQwFrMqwgfV8IYBOABWlbCWBty2nJVSDtixWsfXlNuRqkYzGCdSy3obtAOhTbx01gvZdf090gbYrp8iKwXkY0fgFIx7N7vROo87L89CSQzg8WrJMzBenkQJ8eB9ZJ2YJ0UpBvHgPWmxmD9GaAjbcDtTGos8tAeiO8gVvBOhhalf/GaWD9kFuA2hk7J2lnYBMvB2tjmCBtDGrRZUBtCBakDSFtuASsF78e4TvpBoUNrwDqNyFxkjbo2XgJUE/CBulGgR2vAuvLP93xcd+hZ+OlQP0bNifpRnUDrwLqcRwgHZATcIs1VpAGiBt8pS1UkA6KCbrNEipIg7TdeK0dVJDe0BJ8qw1WkAZLu/l6C6ggvakkwe3loYI0gbIJI5SGCtIJQpI8oixUkCYRNmmMklBBOklHoseUgwrSRLomjlIKKkgnykj2qDJQQZpM1uRxSkAF6WQVCR8nDxWkCVUtGEkaKkgXiEj6SFmoIE0qatFYklBBukhD4sfKQQVpYk0LR5OCCtKFEpI/WgYqSJNLWjyeBFSQLlYg8Pj0UEEqoGjDiKmhgnSDAIFXgFSgJEb88z8KSfmHkzRlLWFDpYQK0jAPaV+cDipI01oJHSwVVJCGWkj7cpCmrYbBnhNIA5WTFJjvEkgBFaQgvUogHCpIryri70GKAYkEQqFykkoYSTFkGFSQpuhfZogQqCCV8ZFiUJCmqIEhrhLYDpWT9KoS/v4sga1QQQrCkQRAOpIa92xPYBtUTtLt3ZZ64RaoIC1lZvsyIN0eOS8cSWA5VE7SkVq45zWBpVBBCrgZCYB0Roo8Y3kCy6Byki7vzuYFILWpWnvRJVA5SbVRZJsepNkaYZ7TBKZD5SRF2ooEpkIF6YqKeCZIMSCRwDSonKQSfUsOCVLJ2vyGngKVk9QPzs6NQbozbd41nMBtqJykw9lzY2MCIG0MistiE7gFlZM0tjyXt4PUpWnxPYehcpKKNy80PkiFynIdFaSuzYvtPQSVj3uxlsXHBal4gS7jd0PlJHWhkWdPkObpgkneJNAFlZMUSxEJgDQidd7ZlQBIu+Li4qgEmqHycR9VEe8FKQYkEmiCykkq0WXZIUFatto6i4G0TpelN7mEysd96f4llgOpRE3eQ4LUu3+Z7d9C5eNepsfSg4K0dL01lgNpjR7Lb/EtVD7uy3cvsyBIZaryHRSkvt3LbA5Smaq8Bz2FyndSbxTZtgdptkaY50sCIAWFRAJfoPJxL9Gb1ZAgtapbc1mQavZmNTVIrerWXfYTVL6T6hZZeXKQVm63yG4gLVJk5TVAWrndIruBtEiR1df4gMoPTtWr1t0PpLrd2UwOUpuqdRcFqW53NpOD1KZq7UV/Q+UHJ+0Sq08P0uoNF9gPpAVKrL4CSKs3XGA/kBYosfoKIK3ecIH9QFqgRIcVHvwKyqFm7R1Bqt2fxfQgtahZe0mQavdnMT1ILWrWXhKk2v1ZTA9Si5q1lwSpdn8W04PUombxJfllvniBDuOD1KFl8R1BKl6gw/ggdWhZfEeQihfoMD5IHVoW3xGk4gU6jA9Sh5bFdwSpeIEO44PUoWXxHUEqXqDD+CB1aFl8x5+/BamdB7W7hwAAAABJRU5ErkJggg=="/></g></g></svg><!--rotationCenter:-0.08512026799357386:7.988518158314861-->`,
+         quarterRound = `<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" version="1.1" width="8.01827" height="8.01827" viewBox="0,0,8.01827,8.01827"><g transform="translate(-240.08512,-172.01148)"><g data-paper-data="{&quot;isPaintingLayer&quot;:true}" fill="none" fill-rule="nonzero" stroke="none" stroke-width="0.5" stroke-linecap="butt" stroke-linejoin="miter" stroke-miterlimit="10" stroke-dasharray="" stroke-dashoffset="0" style="mix-blend-mode: normal"><image x="2425.32434" y="1737.64885" transform="scale(0.09899,0.09899)" width="81" height="81" xlink:href="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAFEAAABRCAYAAACqj0o2AAAAAXNSR0IArs4c6QAABHlJREFUeF7t3d2rFVUYx/Gvd0FX3fkH1J/QhRdeiojifSKpKIoXoheFFwqaGAVamYiIXiiZmqRZYWlqYVGiJGJQ5GsQ+P6W5luZZvx0nZyz99mz1qyZveftWTeHs/fMPmc+53lmrXlmzTqjgDvAcwxvN4F9wOnEy98D37jvHyde/7dj39Z9O8ohPp/xyI8DR9y+G4HzwD+AQP92XzN+ZH03j0Uc6YgPAGeALcDvwG2H+Wd9ecJ+8yIRkz9REbkJuAWsc6D3AZ0mGtf6hZiEUkQeBH4BPgIuAVeblPKDQEyCXgY+BvYCV4CzwI26h+agEZNeAvwQ+Br4FbgOJHv92tiWiTiEdArYAXwH/Aj8UTdMIfraoKJDmDuBQw60Nr16CGIacj+ATwK73Dj0S+CB769c9vt5ETt//yJRTwCfuxRXule2FY2YPNCiQIW5G3i9qor9RCwS9BGwwY03t1cNc1CIRYDqKkgFkc+AhVWCLANx6Phj01299heuJ1dvXnorEzEPpipGPwPvugF7qZBVQIzFfOiuw3WuXFamYpUQYzGV3oeBVcCeMjCriCiHrOdLReVRYCnw1aAhq4oYE5Xqve8CrwHrBwlZdcSYqNRl4mzgg4iIjrKvA2JMVApypisCK9X72uqEmDUqBTndjSf7WsSoG2IM5KvAp+4uZF8iso6IWdNbUdhXyDojZolKQU5zqa2rnUJb3RGzQs4AVAVSVaiw1gTErJCzgM2FCQJNQcwKOd7VJguxbBJiFkjdVVwE7C9CsWmIoZC6Nv8BGGuIvQVCChiavfYG8FZeyCZGYpZx5DVgPrA1D2STEUNSW0MdVchV1P0kFrLpiCGQGnxrgtVkQ8x3flR1XDXIqHvbbYjEkGjUNr8Bi4FtWSOyLYghkKo7au7kFENMF/ANff5yaa0eO7i1KRJDolHbaJaFxo+awB/U2oYYCqnJ+nODBBtWgAg95hBIReOS0E6mjZEYgqht1riJU/d8f522IoZAKho15FGPndohtRkxBPJ918loMn7PZojpuarH7DQXUnPIe0Zj2xFDovE9Vy7TU2AjNkP0T57SoyEL0macGeLT2PJdybwNvAOo/tjVDDEMUefGOYmH5odBGuIzDl80ahaFKuBd96wNMRxRl4JvAuc689kQh4ukReNF4BXgW0NMHxf6UnolsMI9q/3/J1kkhkeittR88Hkdq7Q0ahqJr04Q+n5aNOryb4J7AtYiMUXUl9KrgeVuHYsnH2Pp3K3pQ9SNLD2hcGFoV0McOSTTILU0zRjgJ0PM10tPdMuAPXkywSIxeyRqDy3tpRv9WkHFECM7GC1DM9U9oGmIkYja7SW3Npoh5kB8GTim5brsnNhb0TfUWetuHdwxxPheWp2LppvcNsR4RKXyOC0YZ4jxiNpzNHDZEA0xtDATvZ2vc5mk8phFYr5I1B3AxYZoiNFpmmXHtJS2SAyUTEPUkoTTLJ39kmmImhHxoiHmQ9TeLxiiIfoFCtjCN1a0SAxANsQAJN8mhugTCni/83/VdO3yH9svEu5Ci3coAAAAAElFTkSuQmCC"/></g></g></svg><!--rotationCenter:-0.08512026799357386:7.988518158314861-->`,
+         large = `<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" version="1.1" width="868.70871" height="868.70871" viewBox="0,0,868.70871,868.70871"><g transform="translate(194.35435,254.35436)"><g data-paper-data="{&quot;isPaintingLayer&quot;:true}" fill="none" fill-rule="nonzero" stroke="none" stroke-width="0" stroke-linecap="butt" stroke-linejoin="miter" stroke-miterlimit="10" stroke-dasharray="" stroke-dashoffset="0" style="mix-blend-mode: normal"><path d="M-194.35435,614.35435v-868.70871h868.70871v868.70871z"/></g></g></svg>`;
+      </script>
+   </body>
+</html>

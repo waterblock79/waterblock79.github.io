@@ -1,0 +1,13 @@
+{
+   "name": "ReciTaTion",
+   "icons": [
+      {
+         "src": "icon.png",
+         "type": "image/png",
+         "sizes": "600x600"
+      }
+   ],
+   "start_url": "/posts/recitation/",
+   "display": "fullscreen",
+   "theme_color": "#E8E7E3"
+}

@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="zh">
+   <head>
+      <title>Waterblock79's website</title>
+      <meta name="viewport" content="width=device-width,initial-scale=1" />
+      <link rel="stylesheet" type="text/css" href="/assets/styles.css" />
+      <script
+         type="module"
+         src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"
+      ></script>
+      <script
+         nomodule
+         src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"
+      ></script>
+      <!-- Google tag (gtag.js) -->
+      <script
+         async
+         src="https://www.googletagmanager.com/gtag/js?id=G-YFC9SHL1Q7"
+      ></script>
+      <script>
+         window.dataLayer = window.dataLayer || [];
+         function gtag() {
+            dataLayer.push(arguments);
+         }
+         gtag("js", new Date());
+         gtag("config", "G-YFC9SHL1Q7");
+      </script>
+   </head>
+   <body>
+      <div class="card index-about" time>
+         <!-- Content -->
+         <div class="title">
+            嗨！欢迎来到 <span class="name">waterblock79</span> 的小站
+         </div>
+         <div class="about">
+            <ul>
+               <li>
+                  这是一名居住在<b>北京</b>的<b>高中生</b>，Scratcher，会一些前端开发，偶尔玩玩游戏，挺喜欢听歌的。
+               </li>
+               <li>
+                  使用并学习着：<b>HTML/CSS</b>、<b>Javascript</b> +
+                  <b>Typescript</b>、<b>Vue.js</b>、<b>Python</b>。
+               </li>
+            </ul>
+         </div>
+         <div class="contact">
+            <a
+               class="chip"
+               href="//github.com/waterblock79"
+               target="_blank"
+               tooltip="Github"
+            >
+               <ion-icon name="logo-github" class="icon"></ion-icon>
+            </a>
+            <a
+               class="chip"
+               href="mailto:waterblock79@outlook.com"
+               tooltip="电子邮件"
+            >
+               <ion-icon name="mail-open" class="icon"></ion-icon>
+            </a>
+            <a
+               class="chip"
+               href="//gitblock.cn/Users/1068072"
+               target="_blank"
+               tooltip="阿儿法营 / 稽木世界"
+            >
+               <img src="https://aerfaying.com/Content/logo.ico" class="icon" />
+            </a>
+         </div>
+      </div>
+      <div class="index-infos">
+         <div class="index-projects card">
+            <div class="title">一些项目和作品</div>
+            <div class="projects">
+               <a
+                  class="project"
+                  href="//waterblock79.github.io/posts/recitation"
+                  target="_blank"
+               >
+                  <img
+                     src="./posts/recitation/assets/icon.jpg"
+                     class="logo"
+                  ></ion-icon>
+                  <div>
+                     <div class="title">ReciTaTion</div>
+                     <div class="description">
+                        古诗文背诵辅助工具
+                     </div>
+                  </div>
+               </a>
+               <a
+                  class="project"
+                  href="//waterblock79.github.io/aerfaying-explore/"
+                  target="_blank"
+               >
+                  <ion-icon
+                     name="extension-puzzle"
+                     class="logo"
+                     style="color: #455a64"
+                  ></ion-icon>
+                  <div>
+                     <div class="title">Aerfaying Explore</div>
+                     <div class="description">
+                        一个开源脚本，为阿儿法营/稽木世界社区提供了一些优化、补丁及小功能来提升社区内的探索效率和用户体验。
+                     </div>
+                  </div>
+               </a>
+            </div>
+         </div>
+      </div>
+      <div class="index-posts card">
+         <div class="title">博客</div>
+         <div class="posts">
+            <% posts.forEach((post) => { %>
+            <a class="post" href="<%= `posts/${post.id}.html` %>">
+               <% if (post.image?.length) { %>
+               <div
+                  class="background"
+                  style="--background: url(/posts/assets/<%= post.image %>)"
+               ></div>
+               <% } %>
+               <div class="post-content">
+                  <div class="post-title"><%= post.title %></div>
+                  <div class="post-excerpt"><%= post.excerpt %></div>
+               </div>
+               <div class="post-info">
+                  <ion-icon name="time"></ion-icon>
+                  <span class="time"
+                     ><%= post.dateString
+                     %></span
+                  >
+                  <% if (post.tags?.length) { %>
+                  <ion-icon name="pricetag"></ion-icon>
+                  <% } %> <% post.tags.forEach((tag) => { %>
+                  <span class="tag"><%= tag %></span>
+                  <% }) %>
+               </div>
+            </a>
+            <% }) %>
+         </div>
+      </div>
+      <div class="index-footer">更新于 <%= updateDateString %></div>
+      <script>
+         const $ = (selector) => document.querySelectorAll(selector);
+
+         let hours = new Date().getHours() + new Date().getMinutes() / 60,
+            months = new Date().getMonth() + new Date().getDate() / 31;
+         let sunset = ((x) => 1.75 * Math.sin(0.4 * x - 1.06) + 18.1)(months),
+            sunrise = ((x) => -1.9 * Math.sin(0.4 * x - 1.07) + 6.6)(months);
+         console.log(
+            `now: ${hours} \npredicted_sunset: ${sunset} \npredicted_sunrise: ${sunrise}`
+         );
+         let time;
+         if (hours < sunrise - 0.25 || hours > sunset + 0.25) time = "night";
+         else if (hours > sunrise + 1 && hours < sunset - 1) time = "day";
+         else time = "sunrise_sunset";
+         $(".index-about")[0].setAttribute("time", time);
+      </script>
+   </body>
+</html>

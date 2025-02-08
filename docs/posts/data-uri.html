@@ -1,0 +1,278 @@
+<!DOCTYPE html>
+<html lang="zh">
+   <head>
+      <title>浏览器 Data 协议的应用 - Waterblock79's website</title>
+      <meta name="viewport" content="width=device-width,initial-scale=1" />
+      <link rel="stylesheet" type="text/css" href="/assets/styles.css" />
+      <script
+         type="module"
+         src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"
+      ></script>
+      <script
+         nomodule
+         src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"
+      ></script>
+      <link
+         rel="stylesheet"
+         href="https://unpkg.com/katex@0.16.8/dist/katex.min.css"
+      />
+      <script
+         defer
+         src="https://unpkg.com/katex@0.16.8/dist/katex.min.js"
+      ></script>
+      <script
+         defer
+         src="https://unpkg.com/katex@0.16.8/dist/contrib/auto-render.min.js"
+         onload="renderMathInElement(document.body, {delimiters: [{left: '$$', right: '$$', display: true},{left: '$', right: '$'}]});"
+      ></script>
+      <!-- Google tag (gtag.js) -->
+      <script
+         async
+         src="https://www.googletagmanager.com/gtag/js?id=G-YFC9SHL1Q7"
+      ></script>
+      <script>
+         window.dataLayer = window.dataLayer || [];
+         function gtag() {
+            dataLayer.push(arguments);
+         }
+         gtag("js", new Date());
+         gtag("config", "G-YFC9SHL1Q7");
+      </script>
+      <link
+         rel="stylesheet"
+         href="//unpkg.com/@highlightjs/cdn-assets@11.7.0/styles/default.min.css"
+         id="highlightjs-css"
+      />
+      <script>
+         if (window.matchMedia("(prefers-color-scheme: dark)").matches) {
+            document.querySelector("#highlightjs-css").href =
+               "https://unpkg.com/@highlightjs/cdn-assets@11.7.0/styles/atom-one-dark.min.css";
+         }
+      </script>
+      <script src="//unpkg.com/@highlightjs/cdn-assets@11.7.0/highlight.min.js"></script>
+      <style>
+         @media screen and (max-width: 512px) {
+            body {
+               padding: 1.5em 0;
+            }
+            .post-header {
+               justify-content: center;
+            }
+            .post-header .back {
+               display: none;
+            }
+            .post-content {
+               box-shadow: none;
+               padding: 1.5em 0;
+            }
+            ul {
+               padding-inline-start: 1em;
+            }
+         }
+
+         body {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+         }
+
+         .post-content {
+            max-width: 50em;
+            width: 100%;
+         }
+
+         .post-header {
+            max-width: 56em;
+         }
+      </style>
+   </head>
+   <body>
+      <a class="post-header" href="/">
+         <div class="back">❮ 返回</div>
+         <div class="site">waterblock79 的小站</div>
+      </a>
+      <div class="card post-content">
+         <div class="title">浏览器 Data 协议的应用</div>
+         <div class="subtitle">
+            <ion-icon name="time"></ion-icon>
+            <span class="time">2022-09-29 22:01</span>
+            
+            <ion-icon name="pricetag"></ion-icon>
+             
+            <span class="tag">前端</span>
+            
+         </div>
+         <div class="content"><p><strong>本文初稿写于 2020 年 10 月 17 日中午，但是发现写的不太好，所以在 2022 年 9 月 29 日进行了大幅度的修改，本文可能有一些用语不是很准确，但是意思应该是达到了的，仅供参考，具体请以相关文档为准。</strong></p>
+<p>在一些情况下，你可能需要引用一个外部资源，但是又难以保证这个外部资源存在哪是否哪天就会失效了；又或者你需要引入好几十个极其简单的小图标，每个小图标都使用 img 标签发送一个请求，这样会造成一定的性能浪费。对于上面这两种情况，我想 <strong>Data 协议</strong> 是一个适合的答案，在 MDN Web Docs 中，Data 协议被介绍为：</p>
+<blockquote>
+<p>Data URLs，即前缀为 data: 协议的 URL，其<strong>允许内容创建者向文档中嵌入小文件</strong>。</p>
+</blockquote>
+<p>怎么理解 Data 协议？假如现在在你的作业本上有这样的一道题目：</p>
+<blockquote>
+<p>如图所示是某一物体运动的 s-t 图像...<br> （图请见书第 10 页图 3-4）</p>
+</blockquote>
+<p>此时就需要你去翻书，看一下图是什么，这就像是一般情况下我们去请求外部资源，不过，如果我们把这个图抄在题旁边呢？这样我们既不用担心书丢了找不到图（外部资源失效），也不用再麻烦翻书了（极简单的内容也要请求一下造成性能浪费），这就像是使用 Data 协议了，方便又快捷。</p>
+<p>不过也要提到一下 Data URI 的弊处：</p>
+<ol>
+<li><p>冗长：如果在一个 Markdown 文档中使用一个 Data URI 来存储某个图片，那么就会出现一个极长的字符串，会大大影响可编辑性。</p>
+</li>
+<li><p>占用空间：使用 Data URI 存储可能会相较于直接请求外部资源占用更多的空间。</p>
+</li>
+</ol>
+<h2>怎么使用</h2>
+<p>Data URI 的格式，或者说是语法是这样的：</p>
+<pre><code>data:[资源类型];[编码,][编码方式,]内容
+</code></pre>
+<ul>
+<li><p>资源类型：</p>
+<p>列举几种常用的资源类型，比如这个文件是图片，那么就应该填写 <code>image/png</code>。</p>
+<table>
+<thead>
+<tr>
+<th>资源类型</th>
+<th>资源类型名称</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>图片(PNG)</td>
+<td><code>image/png</code></td>
+</tr>
+<tr>
+<td>图片(JPG)</td>
+<td><code>image/jpg</code></td>
+</tr>
+<tr>
+<td>动图(GIF)</td>
+<td><code>image/gif</code></td>
+</tr>
+<tr>
+<td>矢量图(SVG)</td>
+<td><code>image/svg+xml</code></td>
+</tr>
+<tr>
+<td>纯文本格式</td>
+<td><code>text/plain</code></td>
+</tr>
+<tr>
+<td>HTML 文档格式</td>
+<td><code>text/html</code></td>
+</tr>
+</tbody></table>
+</li>
+<li><p>编码方式（可选）</p>
+<p>编码方式是这样填写的：<code>charset=xxx</code></p>
+<p><code>xxx</code> 的内容是这段文本的编码格式，如 ascii、UTF-8 等。举个栗子，可以这样填写：<code>charset=UTF-8</code>。</p>
+</li>
+<li><p>编码（可选）</p>
+<p>如果是使用 Base64 编码来编码的，那此处就应为：<code>base64</code>，如果不是的话那这里就不填好了。</p>
+</li>
+<li><p>内容</p>
+<p>直接写要显示的数据即可。记得先将这段字符进行 <code>encodeURI()</code> 操作。</p>
+<p>只需要执行这段 Javascript 代码 <code>encodeURIComponent(prompt(&quot;请输入你需要转码的内容&quot;,&quot;&quot;));</code>，它的返回值就是转码后的内容。</p>
+<div id="encode" style="display: none;">
+  <h3>将文本内容进行转换为 Data URI</h3>
+  <button id="encodeURI">输入内容并获取 Data URI</button>
+  <pre id="encodeResult" class="hljs language-css">No Result</pre>
+  <script>
+    // 支持 Javascript 脚本就显示这个小工具
+    document.querySelector('#encode').style.display = 'block';
+    // 绑定点击事件
+    document.querySelector('#encodeURI').addEventListener('click', (e) => {
+      document.querySelector('#encodeResult').innerText = `data:text/html;charset=UTF-8,` + encodeURIComponent(prompt("请输入你需要转码的内容",""));
+    })
+  </script>
+  <style>
+    #encodeResult { 
+      padding: 1em;
+      overflow-x: auto;
+    }
+    #encode { margin: 1em; }
+  </style>
+</div>
+<div id="convert" style="display: none;">
+  <h3>将文件转换为 Data URI</h3>
+  <input type="file" id="convert-base64">
+  <pre id="convert-result" class="hljs language-css">No Result</pre>
+  <script>
+    document.querySelector('#convert').style.display = 'block';
+    // 绑定点击事件
+    document.querySelector('#convert-base64').addEventListener('input', (e) => {
+      let reader = new FileReader();
+      reader.readAsDataURL(document.querySelector('#convert-base64').files[0]);
+      reader.onload = () => {
+        if(reader.result.length > 1024 * 1024) {
+          alert('文件过大（文件的大小限制为 1 MB）');
+          return;
+        }
+        document.querySelector('#convert-result').innerText = reader.result;
+      };
+    })
+  </script>
+  <style>
+    #convertResult { padding: 1em; }
+    #convert { margin: 1em; }
+    #convert-result {
+      padding: 1em;
+      overflow-x: auto;
+    }
+  </style>
+</div></li>
+</ul>
+<p>举几个例子：</p>
+<ul>
+<li><p>如果你需要显示一个经过 <strong>base64</strong> 处理的<strong>图片文件</strong>，处理后的 base64 是<code>AAAAAA</code>，那么 data 的 URI 应该是：<code>data:image/png;base64,AAAAAA</code>。</p>
+</li>
+<li><p>如果你需要显示一段 <strong>HTML</strong> 代码，内容是<code>&lt;b&gt;你好&lt;/b&gt;</code>，那么 data 的 URI 应该是：<code>data:text/html;charset=UTF-8,%3Cb%3E%E4%BD%A0%E5%A5%BD%3C/b%3E</code>。</p>
+<p>（这里包含中文，如果不使用 UTF-8 则会出现乱码）</p>
+</li>
+<li><p>如果你需要显示一个 SVG 图片，内容为 <code>&lt;svg xmlns=&quot;http://www.w3.org/2000/svg&quot;&gt;&lt;/svg&gt;</code>，那么 data 的 URI 应该是：<code>data:image/svg+xml,&lt;svg xmlns=&#39;http://www.w3.org/2000/svg&#39;&gt;&lt;/svg&gt;</code>，这个时候你应该可以看到一片空白的 svg。</p>
+</li>
+</ul>
+<h2>应用</h2>
+<p>举个例子，你可以使用 Data URI 存储一些你想要嵌入在文档内的的图片，来防止外部资源丢失，尤其是在一些不能够直接将内嵌的图片等资源存储在文档里的文档类型中（如 Markdown、HTML 等）。如在 Markdown 中，可以：</p>
+<blockquote>
+<pre><code class="language-markdown">![图片](data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAICAIAAAB/FOjAAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAAJcEhZcwAAFiUAABYlAUlSJPAAAAA8SURBVChTY/z//z8DKYAJSjMwMDIyopHIDDhAaEAGeKxF0YDHYDhA0UCMf7A7CQ4wjSCgAdNtJAYrAwMA3qUPFUTBASYAAAAASUVORK5CYII=)  
+上面是一张写着 `Hi!` 的图片。
+</code></pre>
+</blockquote>
+<blockquote>
+<p><img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAICAIAAAB/FOjAAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAAJcEhZcwAAFiUAABYlAUlSJPAAAAA8SURBVChTY/z//z8DKYAJSjMwMDIyopHIDDhAaEAGeKxF0YDHYDhA0UCMf7A7CQ4wjSCgAdNtJAYrAwMA3qUPFUTBASYAAAAASUVORK5CYII=" alt="图片"><br>上面是一张写着 <code>Hi!</code> 的图片。</p>
+</blockquote>
+<p>不过，Data
+协议的链接也可能被用来于进行钓鱼诈骗，请见<a href="https://nakedsecurity.sophos.com/2012/08/31/phishing-without-a-webpage-researcher-reveals-how-a-link-itself-can-be-malicious/">《Phishing without a webpage
+– researcher reveals how a link <em>itself</em> can be
+malicious》（没有网页的网上诱骗–研究人员揭示链接自身可能是恶意的）</a>。
+（2022 年 9 月 27 日注：现在在 Chrome 浏览器 60+ 版本中已经有阻止跳转到 Data URI
+限制了，问题不大）</p>
+</div>
+      </div>
+      <script>
+         hljs.highlightAll();
+      </script>
+      <script>
+         // 单行图片
+         document.querySelectorAll('.post-content > .content p > img:only-child').forEach((img) => {
+            // 确定确实为 only child（而不是文字夹带 img）
+            if (img.parentNode.childNodes.length > 1) return;
+            // 设置 img 及其父元素 class
+            img.parentElement.classList.add('figure');
+            img.classList.add('only-child');
+            // 添加 alt
+            const alt = document.createElement('div');
+            alt.classList.add('image-alt');
+            alt.innerText = img.getAttribute('alt');
+            img.parentElement.append(alt);
+         });
+         // 图片放大
+         document.querySelectorAll('.post-content > .content img').forEach((img) => {
+            img.addEventListener('click', () => {
+               window.open(img.getAttribute('src'));
+            })
+         });
+         // 为标题添加 id
+         document.querySelectorAll('h1, h2, h3').forEach((title) => {
+            title.id = title.innerText;
+         })
+      </script>
+   </body>
+</html>
