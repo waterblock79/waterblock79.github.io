@@ -317,6 +317,10 @@ ul {
    font-family: 楷体;
 }*/
 
+.index-posts {
+   margin-bottom: 1em;
+}
+
 .index-posts > .posts {
    display: flex;
    flex-wrap: wrap;
