@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="zh">
+   <head>
+      <title>从配速法到运动的合成与分解 - Waterblock79's website</title>
+      <meta name="viewport" content="width=device-width,initial-scale=1" />
+      <link rel="stylesheet" type="text/css" href="/assets/styles.css" />
+      <link rel="icon" type="image/png" href="/assets/icon.png" />
+      <script
+         type="module"
+         src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"
+      ></script>
+      <script
+         nomodule
+         src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"
+      ></script>
+      <link
+         rel="stylesheet"
+         href="https://unpkg.com/katex@0.16.8/dist/katex.min.css"
+      />
+      <script
+         defer
+         src="https://unpkg.com/katex@0.16.8/dist/katex.min.js"
+      ></script>
+      <script
+         defer
+         src="https://unpkg.com/katex@0.16.8/dist/contrib/auto-render.min.js"
+         onload="renderMathInElement(document.body, {delimiters: [{left: '$$', right: '$$', display: true},{left: '$', right: '$'}]});"
+      ></script>
+      <!-- Google tag (gtag.js) -->
+      <script
+         async
+         src="https://www.googletagmanager.com/gtag/js?id=G-YFC9SHL1Q7"
+      ></script>
+      <script>
+         window.dataLayer = window.dataLayer || [];
+         function gtag() {
+            dataLayer.push(arguments);
+         }
+         gtag("js", new Date());
+         gtag("config", "G-YFC9SHL1Q7");
+      </script>
+      <link
+         rel="stylesheet"
+         href="//unpkg.com/@highlightjs/cdn-assets@11.7.0/styles/default.min.css"
+         id="highlightjs-css"
+      />
+      <script>
+         if (window.matchMedia("(prefers-color-scheme: dark)").matches) {
+            document.querySelector("#highlightjs-css").href =
+               "https://unpkg.com/@highlightjs/cdn-assets@11.7.0/styles/atom-one-dark.min.css";
+         }
+      </script>
+      <script src="//unpkg.com/@highlightjs/cdn-assets@11.7.0/highlight.min.js"></script>
+      <style>
+         @media screen and (max-width: 512px) {
+            body {
+               padding: 1.5em 0;
+            }
+            .post-header {
+               justify-content: center;
+            }
+            .post-header .back {
+               display: none;
+            }
+            .post-content {
+               box-shadow: none;
+               padding: 1.5em 0;
+            }
+            ul {
+               padding-inline-start: 1em;
+            }
+         }
+
+         body {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+         }
+
+         .post-content {
+            max-width: 50em;
+            width: 100%;
+         }
+
+         .post-header {
+            max-width: 56em;
+         }
+      </style>
+   </head>
+   <body>
+      <a class="post-header" href="/">
+         <div class="back">❮ 返回</div>
+         <div class="site">waterblock79 的小站</div>
+      </a>
+      <div class="card post-content">
+         <div class="title">从配速法到运动的合成与分解</div>
+         <div class="subtitle">
+            <ion-icon name="time"></ion-icon>
+            <span class="time">2025-04-20 14:08</span>
+            
+            <ion-icon name="pricetag"></ion-icon>
+             
+            <span class="tag">学习</span>
+            
+         </div>
+         <div class="content"><p><strong>一点思考，欢迎指正错误、提出建议！</strong></p>
+<p>必修二中，我们学习过 <strong>运动的合成与分解</strong> 这一课，课本指出：</p>
+<blockquote>
+<p>运动的合成与分解遵从矢量运算法则。</p>
+</blockquote>
+<p>并且我们也学习了合运动和分运动间具有 <strong>等效性</strong>（各分运动叠加的效果与合运动相同）、<strong>独立性</strong>（分运动间相互独立、互不干扰）和 <strong>等时性</strong>（合运动和分运动同时开始与结束）。</p>
+<p>在 2024 年北京市朝阳区一模第 20 题中，就出现了基于运动的合成与分解的考察（配速法）：</p>
+<blockquote>
+<p>根据牛顿力学经典理论，只要物体的初始条件和受力情况确定，就可以推知物体此后的运动情况。<br>情境 1：如图 1 所示，空间存在水平方向的匀强磁场（垂直纸面向里），磁感应强度大小为 B，在磁场中 M 点处有一质量为 m、电荷量为 +q 的带电粒子。已知重力加速度 g。<br>（1）若使带电粒子获得某一水平向右的初速度，恰好作匀速直线运动，求该速度的大小 $v_0$;<br>（2）若在 M 点静止释放该粒子，其运动将比较复杂。为了研究该粒子的运动，可以应用运动的合成与分解的方法，将它为零的初速度分解为大小相等的水平向左和水平向右的速度。求粒子运动过程中的最大速率。<br>......  </p>
+<p><img src="resolution-and-composition-of-motion/image1.png" alt="图 1"></p>
+</blockquote>
+<p>在 (1) 中，粒子受到向下的重力 $mg$ 和向上的洛伦兹力 $qv_0B$，当二者平衡时、它做匀速直线运动，有 $v_0=\frac{mg}{qB}$.</p>
+<p>(2) 中，题目提示我们 <strong>“可以应用运动的合成与分解的方法，将它为零的初速度分解为大小相等的水平向左和水平向右的速度”</strong>，并且 (1) 中也提醒我们，当速度 $v=\frac{mg}{qB}$ 时，粒子做匀速直线运动，因此我们可以：</p>
+<ol>
+<li><p>将粒子的速度分解为向左、向右的两个速度，大小均为 $\frac{mg}{qB}$.</p>
+</li>
+<li><ol>
+<li>其中 <strong>向右的速度 $\frac{mg}{qB}$</strong> 在 <strong>洛伦兹力 $qvB$</strong> 和 <strong>重力 $mg$</strong>（二力平衡）的作用下，做 <strong>匀速直线运动</strong>、速度大小为 $qvB$.（如下图右侧）</li>
+<li><strong>向左的速度 $\frac{mg}{qB}$</strong> 在 <strong>洛伦兹力 $qvB$</strong> 的作用下，做 <strong>匀速圆周运动</strong>、速度大小为 $qvB$.（如下图左侧）</li>
+</ol>
+<p><img src="resolution-and-composition-of-motion/image2.jpg" alt="分解后的两个运动"></p>
+</li>
+<li><p>当左右两个运动速度均向右时，其合成的运动速度最大，大小为 $2qvB$，即 $\frac{2mg}{qB}$.</p>
+</li>
+</ol>
+<p>但是我们发现，两个分运动都各自具有一个洛伦兹力，但是合运动却只有一个洛伦兹力，所以说在分解合运动的时候，我们是让洛伦兹力凭空增加了一个吗？<br>其实不然，我们可以理解为“在磁场中有速度就有洛伦兹力”，分运动具有速度、而且他们也有“独立性”，所以各自一定会有洛伦兹力，分运动的两个洛伦兹力之矢量和与合运动的一个洛伦兹力是相等的。<br>类似地，如果把“弹簧拉着小球做圆周运动”正交分解成了两个“弹簧拉着小球做简谐运动”的分运动，其中弹簧的弹力是“有‘位移’就有弹力”，因此两个分运动具有两个弹力。<br>但是重力是恒定的，它不因位移或者速度的改变而发生变化，所以分解时不能“一个分运动一个重力 $mg$”。</p>
+<p>在运动的分解与合成中，我们应该把握对位移 / 速度 / 加速度（力）这三个矢量的分解与合成。例如，物体合运动的位移等于各个分运动位移的矢量和。</p>
+<p>在这道题中，我们就可以借助这样的思想分析粒子的运动位移（轨迹）：</p>
+<p>（以初始位置为原点，当时间 $T$ 时）</p>
+<ol>
+<li>分运动 <strong>匀速直线运动</strong> 的位移 $\vec{x_1} = (v_0T, 0)$.</li>
+<li>分运动 <strong>匀速圆周运动</strong> 的位移 $\vec{x_2} = (-sin\omega T, cos\omega T - 1)$.</li>
+<li>合运动的位移 
+$\vec{x} = \vec{x_1} + \vec{x_2} = (v_0T-sin\omega T, cos\omega T - 1)$.</li>
+</ol>
+<p><img src="resolution-and-composition-of-motion/image3.gif" alt="位移的合成动画"></p>
+</div>
+      </div>
+      <script>
+         hljs.highlightAll();
+      </script>
+      <script>
+         // 单行图片
+         document.querySelectorAll('.post-content > .content p > img:only-child').forEach((img) => {
+            // 确定确实为 only child（而不是文字夹带 img）
+            if (img.parentNode.childNodes.length > 1) return;
+            // 设置 img 及其父元素 class
+            img.parentElement.classList.add('figure');
+            img.classList.add('only-child');
+            // 添加 alt
+            const alt = document.createElement('div');
+            alt.classList.add('image-alt');
+            alt.innerText = img.getAttribute('alt');
+            img.parentElement.append(alt);
+         });
+         // 图片放大
+         document.querySelectorAll('.post-content > .content img').forEach((img) => {
+            img.addEventListener('click', () => {
+               window.open(img.getAttribute('src'));
+            })
+         });
+         // 为标题添加 id
+         document.querySelectorAll('h1, h2, h3').forEach((title) => {
+            title.id = title.innerText;
+         })
+      </script>
+   </body>
+</html>
