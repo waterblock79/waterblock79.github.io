@@ -16,6 +16,13 @@ const texPreprocess = (text) => {
    return text.replaceAll("\\\\", "\\\\\\\\");
 };
 
+const extractMarkdown = (rf) => {
+   let matchMetadata = rf.match(/-{3,}[\s\S]+?-{3,}/g)[0];
+   let metadata = yaml.parse(matchMetadata.replace(/-{3,}/g, ""));
+   let content = rf.replace(matchMetadata, "");
+   return { metadata, content };
+}
+
 const colorText = {
    blue: (text) => `\x1B[34m${text}\x1B[0m`,
    blueBg: (text) => `\x1B[44m${text}\x1B[0m`,
@@ -61,11 +68,9 @@ fs.readdirSync("sources", {
    withFileTypes: true,
 }).map((file) => {
    let filePath = path.join(file.path, file.name).toString();
-   if (file.isFile()) {
-      let postFile = fs.readFileSync(filePath, { encoding: "utf-8" });
-      let matchMetadata = postFile.match(/-{3,}[\s\S]+?-{3,}/g)[0];
-      let postMetadata = yaml.parse(matchMetadata.replace(/-{3,}/g, ""));
-      let postContent = postFile.replace(matchMetadata, "");
+   if (file.isFile()) { 
+      let ext = extractMarkdown(fs.readFileSync(filePath, { encoding: "utf-8" }));
+      let postMetadata = ext.metadata, postContent = ext.content;
       if (postMetadata.hide == true) return;
       posts.push({
          title: postMetadata.title,

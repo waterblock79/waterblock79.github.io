@@ -216,6 +216,19 @@ ul {
    }
 }
 
+.index-message {
+   display: flex;
+   flex-direction: column;
+   justify-content: space-between;
+   max-width: 32em;
+}
+
+.index-message > .date {
+   text-align: right;
+   opacity: 0.33;
+   font-size: 0.9em;
+}
+
 .index-infos {
    margin: 1em 0;
    display: flex;
