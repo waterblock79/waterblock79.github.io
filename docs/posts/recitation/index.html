@@ -45,7 +45,7 @@
                <div
                   class="searchPrediction"
                   ref="esp"
-                  :style="{ height: espsh + 'px', position: 'absolute', marginTop: '8em' }"
+                  :style="{ height: (espsh + (searchKeyword === '' ? 0 : 1)) + 'px', position: 'absolute', marginTop: '8em' }"
                >
                   <div
                      class="prediction"
@@ -54,12 +54,12 @@
                   >
                      {{ item.text }}
                   </div>
-                  <div
-                     class="placeholder"
-                     :style="{ height: searchKeyword && !searchPrediction.length ? '1em': '0' }"
-                  >
-                     　
-                  </div>
+                  <div style="
+                     opacity: 0.35;
+                     font-size: 0.9em;
+                     text-align: center;
+                     padding: 1em 0;
+                  " v-show="searchPrediction.length === 0 && searchKeyword !== ''">空空如也</div>
                </div>
                <div class="logs" v-if="logs.length">
                   <b>日志</b>
@@ -78,11 +78,7 @@
                   |
                   <a @click="clearDb()">点我重置本地数据</a>
                   <br />
-                  <a href="//waterblock79.github.io/">waterblock79</a>
-                  制作，感谢 <a href="https://www.gushiwen.cn/">古诗文网</a>、<a
-                     href="https://day.js.org/zh-CN/"
-                     >Day.js</a
-                  >、<a href="https://cn.vuejs.org/">Vue.js</a>
+                  这是一个 <a target="_blank" href="//github.com/waterblock79/waterblock79.github.io/tree/main/sources/recitation">开源项目</a>
                </div>
             </div>
          </Transition>
