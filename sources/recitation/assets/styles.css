@@ -218,7 +218,7 @@ a {
    gap: 2em;
 }
 
-#app .modal > img {
+#app .modal>img {
    width: calc(100% - 2em);
    margin: 0 auto;
    border-radius: 8px;
@@ -319,4 +319,31 @@ kbd {
    padding: 0.25em;
    border-bottom: #aaaaaa solid 0.25em;
    border-radius: 2px;
+}
+
+.hint-btn {
+   position: absolute;
+    bottom: 1rem;
+    right: 1rem;
+    width: 4rem;
+    height: 4rem;
+    border: 1px solid rgba(0, 0, 0, 0.15);
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    user-select: none;
+    justify-content: center;
+    display: none;
+    background: hsl(48, 10%, 98%);
+    z-index: 1000;
+    transition: filter 0.1s;
+}
+
+.hint-btn:active {
+   filter: brightness(0.975);
+}
+@media screen and (max-width:768px) {
+ .hint-btn {
+   display: flex;
+ }
 }
