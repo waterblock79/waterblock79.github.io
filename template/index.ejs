@@ -28,10 +28,10 @@
          <div class="about">
             <ul>
                <li>
-                  这是一名居住在<b>北京</b>的<b>高中生</b>，Scratcher，会一些前端开发，偶尔玩玩游戏，挺喜欢听歌的。
+                  这是一名居住在 <b>北京</b> 的 <b>准大学生</b>。
                </li>
                <li>
-                  使用并学习着：<b>HTML/CSS</b>、<b>Javascript</b> +
+                  使用并学习着：<b>HTML / CSS</b>、<b>Javascript</b> +
                   <b>Typescript</b>、<b>Vue.js</b>、<b>Python</b>。
                </li>
             </ul>
@@ -72,7 +72,10 @@
             <div class="date">placeholder</div>
          </div>
          <div class="index-projects card">
-            <div class="title">近期的项目和作品</div>
+            <div class="title">
+               <span>近期的项目和作品</span>
+               <span class="btn" id="show-archived-btn">显示已归档项目</span>
+            </div>
             <div class="projects">
                <a
                   class="project"
@@ -103,7 +106,34 @@
                   <div>
                      <div class="title">Aerfaying Explore</div>
                      <div class="description">
-                        一个开源脚本，为阿儿法营/稽木世界社区提供了一些优化、补丁及小功能来提升社区内的探索效率和用户体验。
+                        一个开源脚本，为稽木世界社区提供了一些优化、补丁及小功能来提升社区内的探索效率和用户体验。
+                     </div>
+                  </div>
+               </a>
+               <a class="project archived" href="//gitblock.cn/Posts/6601/View" target="_blank">
+                  <ion-icon name="cloud" class="logo md hydrated" style="color: #455a64" role="img"></ion-icon>
+                  <div>
+                     <div class="title">FreeJSON</div>
+                     <div class="description">
+                        一个稽木世界社区内项目，实现作品内获取一言、天气、用户头像等功能
+                     </div>
+                  </div>
+               </a>
+               <a class="project archived" href="//github.com/waterblock79/waterfall" target="_blank">
+                  <ion-icon name="logo-android" class="logo md hydrated" style="color: #455a64" role="img"></ion-icon>
+                  <div>
+                     <div class="title">Waterfall</div>
+                     <div class="description">
+                        一个 Android 设备管理器
+                     </div>
+                  </div>
+               </a>
+               <a class="project archived" href="/posts/as-a-scratcher.html" target="_blank">
+                  <ion-icon name="git-commit" class="logo md hydrated" style="color: #455a64" role="img"></ion-icon>
+                  <div>
+                     <div class="title">Scratch 作品</div>
+                     <div class="description">
+                        包括 Zinc Engine、Edge 等 Scratch 作品。
                      </div>
                   </div>
                </a>
@@ -143,10 +173,19 @@
       </div>
       <div class="index-footer">更新于 <%= updateDateString %></div>
       <script>
+         /**
+          * @return {HTMLElement[]}
+         */
          const $ = (selector) => document.querySelectorAll(selector);
 
          const getPeriod=()=>{const d=new Date(),h=d.getHours()+d.getMinutes()/60,s=Math.sin((Date.now()/864e5-81)*.0172),r=6+s*1.5,t=18+s*1.5;return (h>=r-.5&&h<=r+.5||h>=t-.5&&h<=t+.5)?'sunrise_sunset':h>r&&h<t?'day':'night';} // AI 生成
          $(".index-about")[0].setAttribute("time", getPeriod());
+
+         $('#show-archived-btn')[0].addEventListener('click', () => {
+            const proj = $('.index-projects .projects')[0];
+            if (proj.classList.contains('show-archived')) proj.classList.remove('show-archived');
+            else proj.classList.add('show-archived');
+         })
       </script>
       <script
          type="module"

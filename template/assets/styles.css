@@ -282,8 +282,30 @@ ul {
    margin-bottom: 0.1em;
 }
 
+.index-projects > .title {
+   display: flex;
+   justify-content: space-between;
+}
+
+.index-projects > .title .btn {
+   font-size: 0.8em;
+   font-weight: 500;
+   opacity: 0.5;
+   user-select: none;
+   cursor: pointer;
+}
+
 .index-projects .projects .project .description {
    font-size: 0.8em;
+}
+
+.index-projects .projects .project.archived {
+   opacity: 0.5;
+   display: none;
+}
+
+.index-projects .projects.show-archived .project.archived {
+   display: flex;
 }
 
 @media screen and (max-width: 360px) {

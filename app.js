@@ -67,7 +67,7 @@ fs.mkdirSync("docs/posts");
 fs.readdirSync("sources", {
    withFileTypes: true,
 }).map((file) => {
-   let filePath = path.join(file.path, file.name).toString();
+   let filePath = path.join("sources", file.name).toString();
    if (file.isFile()) { 
       let ext = extractMarkdown(fs.readFileSync(filePath, { encoding: "utf-8" }));
       let postMetadata = ext.metadata, postContent = ext.content;
