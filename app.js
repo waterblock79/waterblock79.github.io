@@ -90,6 +90,7 @@ fs.readdirSync("sources", {
             dateString: dayjs(postMetadata.date).format("YYYY-MM-DD"),
             datetimeString: dayjs(postMetadata.date).format("YYYY-MM-DD HH:mm"),
             tags: postMetadata.tags || [],
+            description: postMetadata.excerpt,
             content: marked.parse(texPreprocess(postContent), {
                mangle: false,
                headerIds: false,
@@ -110,6 +111,9 @@ sitemap.push('');
 
 // 复制 assets
 fs.cpSync("template/assets", "docs/assets", { recursive: true });
+
+// 复制 404 页
+fs.cpSync("template/404.html", "docs/404.html");
 
 // 复制文章资源
 fs.readdirSync("sources", {

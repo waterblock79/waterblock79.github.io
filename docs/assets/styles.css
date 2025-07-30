@@ -7,6 +7,24 @@ body {
    -webkit-tap-highlight-color: rgb(0, 0, 0, 0);
 }
 
+a:not(a[class], a[id]) {
+   color: #0069c2;
+   text-decoration: none;
+}
+
+a:hover:not(a[class], a[id]) {
+   border-bottom: 1px solid #0069c280;
+}
+
+@media (prefers-color-scheme: dark) {
+   a:not(a[class], a[id]) {
+      color: #42A5F5;
+   }
+   a:hover:not(a[class], a[id]) {
+      border-bottom-color: #42A5F5bf;
+   }
+}
+
 @media (prefers-color-scheme: dark) {
    body {
       --page-background-color: #121212;
@@ -17,7 +35,6 @@ body {
    a {
       color: #eeeeff;   
    }
-
 }
 
 body {
@@ -31,10 +48,6 @@ body {
    body {
       padding: 0;
    }
-}
-
-a {
-   color: #0069c2;
 }
 
 hr {
@@ -203,6 +216,11 @@ ul {
    max-height: 1em;
 }
 
+.index-about > .contact > .chip > .chip-text {
+   font-size: 0.8em;
+   margin-left: 0.25rem;
+}
+
 .index-about[time="night"] > .contact > .chip > .icon {
    filter: brightness(150);
 }
@@ -285,6 +303,7 @@ ul {
 .index-projects > .title {
    display: flex;
    justify-content: space-between;
+   align-items: baseline;
 }
 
 .index-projects > .title .btn {
