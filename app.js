@@ -1,3 +1,4 @@
+// @ts-nocheck
 import fs from "fs";
 import path from "path";
 import yaml from "yaml";
@@ -44,7 +45,7 @@ const templates = {
    ),
 };
 
-const url = 'https://waterblock.top/';
+const url = 'https://waterblock79.github.io/';
 
 let posts = [];
 let sitemap = [];
@@ -103,9 +104,14 @@ fs.readdirSync("sources", {
 
 // 写入主页
 posts = posts.sort((a, b) => b.date.getTime() - a.date.getTime());
+const recently = fs.existsSync('./recently.md') ? (extractMarkdown(fs.readFileSync('./recently.md', 'utf-8'))) : false;
+const recentlyDisplay = !!recently && recently.metadata.display;
 fs.writeFileSync(`docs/index.html`, templates.index({
    posts,
-   updateDateString: dayjs().format("YYYY-MM-DD")
+   updateDateString: dayjs().format("YYYY-MM-DD"),
+   recentlyDisplay,
+   recently: recentlyDisplay ? marked.parse(recently.content) : '',
+   recentlyDate: recentlyDisplay ? dayjs(recently.metadata.date).format("YYYY-MM-DD") : ''
 }));
 sitemap.push('');
 

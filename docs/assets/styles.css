@@ -238,7 +238,13 @@ ul {
    display: flex;
    flex-direction: column;
    justify-content: space-between;
-   max-width: 32em;
+   max-width: 24em;
+   opacity: 0.9   ;
+   font-size: 0.9em;
+}
+
+.index-message p {
+   margin: 0;
 }
 
 .index-message > .date {
@@ -247,11 +253,18 @@ ul {
    font-size: 0.9em;
 }
 
+@media screen and (max-width: 360px) {
+   .index-message {
+      width: 100%;
+   }
+}
+
 .index-infos {
    margin: 1em 0;
    display: flex;
    flex-wrap: wrap;
    justify-content: center;
+   flex-direction: row-reverse;
    gap: 1em;
 }
 
@@ -298,6 +311,7 @@ ul {
    font-size: 1em;
    font-weight: 600;
    margin-bottom: 0.1em;
+   line-height: 1.6em;
 }
 
 .index-projects > .title {

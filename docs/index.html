@@ -32,7 +32,7 @@
                </li>
                <li>
                   使用并学习着：<b>HTML / CSS</b>、<b>Javascript</b> +
-                  <b>Typescript</b>、<b>Vue.js</b>、<b>Python</b>。
+                  <b>Typescript</b>、<b>Vue.js</b>、<b>C</b>、<b>C++</b>。
                </li>
             </ul>
          </div>
@@ -59,26 +59,38 @@
                tooltip="电子邮件"
             >
                <ion-icon name="mail-open" class="icon"></ion-icon>
-               <span class="chip-text"></span>
             </a>
             <script>
                const eA = 'd2F0ZXJibG9jazc5QG91dGxvb2suY29t';
                document.querySelector('#mail-link').href = 'mailto:' + atob(eA);
-               document.querySelector('#mail-link .chip-text').innerText = atob(eA);
             </script>
          </div>
       </div>
       <div class="index-infos">
-         <div class="index-message card" style="display: none">
-            <div>placeholder</div>
-            <div class="date">placeholder</div>
-         </div>
+         
          <div class="index-projects card">
             <div class="title">
                <span>近期的项目和作品</span>
                <span class="btn" id="show-archived-btn">显示已归档项目</span>
             </div>
             <div class="projects">
+               <a
+                  class="project"
+                  href="./posts/vscode-flavored-markdown-preview"
+                  target="_blank"
+               >
+                  <ion-icon
+                     name="logo-markdown"
+                     class="logo"
+                     style="color: #455a64"
+                  ></ion-icon>
+                  <div>
+                     <div class="title">Markdown Preview</div>
+                     <div class="description">
+                        一个简单的 VSCode 风格 Markdown 在线预览工具，或许能帮你生成一个好看的 PDF
+                     </div>
+                  </div>
+               </a>
                <a
                   class="project"
                   href="//waterblock79.github.io/posts/recitation"
@@ -425,7 +437,7 @@
             
          </div>
       </div>
-      <div class="index-footer">更新于 2025-07-30</div>
+      <div class="index-footer">更新于 2025-12-25</div>
       <script>
          /**
           * @return {HTMLElement[]}
