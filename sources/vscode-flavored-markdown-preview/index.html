@@ -23,10 +23,21 @@
          rel="stylesheet"
       />
       <script type="module">
+         /* 这个工具使用了以下库 / 资源：
+            - markdown-it
+            - vscode/markdown-it-katex
+            - katex
+            - highlight.js
+            - mermaid
+            - github-markdown-css
+            - JetBrains Mono, Noto Sans SC
+         */
          import markdownIt from "https://cdn.jsdelivr.net/npm/markdown-it@14.1.0/+esm";
          import vscodemarkdownItKatex from "https://cdn.jsdelivr.net/npm/@vscode/markdown-it-katex@1.1.2/+esm";
          import highlightjs from "https://cdn.jsdelivr.net/npm/highlight.js@11.9.0/+esm";
+         import mermaid from "https://cdn.jsdelivr.net/npm/mermaid@11.12.2/+esm";
 
+         // 创建 markdown-it 实例
          const MarkdownIt = markdownIt({
             html: true,
             highlight: function (str, lang) {
@@ -40,11 +51,18 @@
             },
          });
          MarkdownIt.use(vscodemarkdownItKatex.default);
-         const raw = document.querySelector("#raw");
-         const previewer = document.querySelector("#preview");
-         const renderRaw = () => {
-            previewer.innerHTML = MarkdownIt.render(raw.value);
+
+         // 将 textarea 中的 Raw 渲染到 Preview 区域
+         window.renderRaw = () => {
+            document.querySelector("#preview").innerHTML = MarkdownIt.render(
+               document.querySelector("#raw").value
+            );
+            mermaid.run({
+               querySelector: ".language-mermaid",
+            });
          };
+
+         // 监测 Raw 更新
          let lastEdit = 0,
             lastEditId = 0;
          document.querySelector("#raw").addEventListener("input", () => {
@@ -52,19 +70,24 @@
             lastEdit = new Date().getTime();
             setTimeout(() => {
                if (new Date().getTime() - lastEdit > 160 && lastEditId == id) {
-                  localStorage.setItem("Raw", raw.value);
-                  renderRaw();
+                  localStorage.setItem(
+                     "Raw",
+                     document.querySelector("#raw").value
+                  );
+                  window.renderRaw();
                }
             }, 200);
          });
+
+         // 初始化 Raw
          if (localStorage.getItem("Raw") == null) {
             localStorage.setItem(
                "Raw",
-               '这是一个简易的 Markdown 预览工具，其表现与 Visual Studio Code 中 Markdown 预览功能相近，您可以点击上方的“预览”、并使用打印中的“另存为 PDF”将您的 Markdown 文档保存为打印质量的 PDF 文件。  \n<small>您可以在打印的选项中勾选背景图形以获得更美观的代码高亮。</small>\n\n**文本一**\n\n常用的等价无穷小有 $sinx \\sim x$、$ln(1 + x) \\sim x$、$a^x - 1 \\sim x \\ln a$、$[(1+x)^\\alpha - 1] \\sim \\alpha x$ 等。\n\n**文本二**\n\n```c\nprintf("Hello, world!"); // 输出 Hello, world!\n```\n\n**文本三**\n\n<div align="center">\n   这是一段居中文本\n</div>'
+               '## VSCode Flavored Markdown Preview\n\n这是 **一个简易的 Markdown 预览工具**，其表现与 Visual Studio Code 中的 Markdown 预览功能相近。您可以点击上方的“Print”、并 **使用“另存为 PDF”将您的 Markdown 文档保存为高质量的 PDF 文件**。  \n\n**提示**\n\n- 您可以在 *打印选项* 中勾选 *背景图形* 以获得更美观的代码高亮。   \n- 如果您需要预览含有本地资源的 Markdown 文件，您可以：  \n   1. 将这个网页保存（Ctrl + S）到该 Markdown 文件所属的文件夹中；  \n   2. 在本地打开所保存的网页；  \n   3. 将该 Markdown 文件拖拽到本地打开的页面中。\n\n**文本一**\n\n常用的等价无穷小有 $\\sin x \\sim x$、$\\ln(1 + x) \\sim x$、$a^x - 1 \\sim x \\ln a$、$[(1+x)^\\alpha - 1] \\sim \\alpha x$ 等。\n\n**文本二**\n\n```c\nprintf("Hello, world!"); // 输出 Hello, world!\n```\n\n**文本三**\n\n<div align="center">\n   这是一段居中文本\n</div>'
             );
          }
          document.querySelector("#raw").value = localStorage.getItem("Raw");
-         renderRaw();
+         window.renderRaw();
       </script>
       <style>
          .root {
@@ -91,19 +114,21 @@
 
          .root > .title > .btn-preview {
             border: none;
-            background: #607d8b;
-            color: #fff;
-            box-shadow: 0 3px 4px rgba(0, 0, 0, 0.2);
+            background: #eceff1;
+            border: 1px solid #b0bec5;
+            color: #37474f;
+            box-shadow: 0 2px 6px rgba(0, 0, 0, 0.16);
             font-size: 0.96em;
             padding: 0.25em 1em;
             border-radius: 4px;
             cursor: pointer;
+            font-family: "JetBrains Mono", "Noto Sans SC", monospace;
             transition: 0.24s background, 0.24s box-shadow;
          }
 
          .root > .title > .btn-preview:active {
-            background: #5a7987;
-            box-shadow: 0 1px 4px rgba(0, 0, 0, 0.2);
+            background: #e9ecf1;
+            box-shadow: 0 1px 4px rgba(0, 0, 0, 0.16);
          }
 
          .root > .main {
@@ -149,12 +174,44 @@
             text-wrap: auto !important;
          }
 
+         .markdown-body pre:has(.language-mermaid) {
+            background: none;
+         }
+
          body > div#preview.fullscreen {
-            z-index: 100000;
+            z-index: 1000;
             background: #fff;
             margin: 1.6rem;
             position: relative;
             border: none;
+         }
+
+         .print-tip {
+            position: fixed;
+            right: 2em;
+            bottom: 2em;
+            background: #eceff1;
+            border: 1px solid #b0bec5;
+            color: #37474f;
+            padding: 0.5em 1em;
+            font-size: 0.92em;
+            border-radius: 6px;
+            box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+            font-weight: 600;
+            user-select: none;
+            cursor: pointer;
+            transition: 0.16s opacity;
+         }
+
+         .print-tip:hover {
+            opacity: 0;
+            cursor: default;
+         }
+
+         .hidden { display: none; }
+
+         @media print {
+            .print-tip { display: none; }
          }
       </style>
    </head>
@@ -162,8 +219,9 @@
       <div class="root">
          <div class="title">
             <div class="name">VSCode Flavored Markdown Preview</div>
-            <button class="btn-preview">预览</button>
+            <button class="btn-preview">Print</button>
             <script>
+               // 全屏 Preview
                document
                   .querySelector(".btn-preview")
                   .addEventListener("click", () => {
@@ -171,7 +229,9 @@
                      const origin = document.querySelector("#preview");
                      origin.classList.add("fullscreen");
                      document.body.append(origin);
-                     document.querySelector(".root").remove();
+                     document.querySelector(".root").classList.add("hidden");
+                     document.querySelector(".print-tip").classList.remove("hidden");
+                     window.print();
                   });
             </script>
          </div>
@@ -180,5 +240,27 @@
             <div id="preview" class="markdown-body"></div>
          </div>
       </div>
+      <div class="print-tip hidden">使用打印网页中的“另存为 PDF”来导出 PDF</div>
+      <script>
+         // 监听 File drag and drop
+         // https://developer.mozilla.org/zh-CN/docs/Web/API/HTML_Drag_and_Drop_API/File_drag_and_drop
+
+         document.body.addEventListener("dragover", (evt) => {
+            evt.preventDefault();
+         });
+
+         document.body.addEventListener("drop", async (evt) => {
+            evt.preventDefault();
+
+            for (let i = 0; i < evt.dataTransfer.items.length; i++) {
+               if (evt.dataTransfer.items[i].kind == "file") {
+                  document.querySelector("#raw").value =
+                     await evt.dataTransfer.items[i].getAsFile().text();
+                  renderRaw();
+                  break;
+               }
+            }
+         });
+      </script>
    </body>
 </html>
