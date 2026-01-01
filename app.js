@@ -4,25 +4,32 @@ import path from "path";
 import yaml from "yaml";
 import ejs from "ejs";
 import dayjs from "dayjs";
-import { marked } from "marked";
+import markdownItKatex from "@vscode/markdown-it-katex";
+import markdownItFootnote from "markdown-it-footnote";
+import markdownIt from "markdown-it";
+import hljs from "highlight.js";
 
-const texPreprocess = (text) => {
-   /*
-   let matches = text.match(/\${2}.+\${2}/g);
-   matches && matches.map((match) => {
-      // 修复双反斜杠 \\ 换行会被转义掉的问题
-      text = text.replace(match, match.replaceAll('\\\\', '\\\\\\\\'));
-   });
-   */
-   return text.replaceAll("\\\\", "\\\\\\\\");
-};
+const MarkdownIt = markdownIt({
+   html: true,
+   highlight: function (str, lang) {
+      if (lang && hljs.getLanguage(lang)) {
+         try {
+            return hljs.highlight(str, { language: lang }).value;
+         } catch (err) {}
+      }
+      return "";
+   },
+});
+
+MarkdownIt.use(markdownItKatex.default);
+MarkdownIt.use(markdownItFootnote);
 
 const extractMarkdown = (rf) => {
    let matchMetadata = rf.match(/-{3,}[\s\S]+?-{3,}/g)[0];
    let metadata = yaml.parse(matchMetadata.replace(/-{3,}/g, ""));
    let content = rf.replace(matchMetadata, "");
    return { metadata, content };
-}
+};
 
 const colorText = {
    blue: (text) => `\x1B[34m${text}\x1B[0m`,
@@ -45,10 +52,17 @@ const templates = {
    ),
 };
 
-const url = 'https://waterblock79.github.io/';
+const url = "https://waterblock79.github.io/";
 
 let posts = [];
 let sitemap = [];
+
+if (fs.existsSync("sitemap.txt")) {
+   sitemap = fs
+      .readFileSync("sitemap.txt", { encoding: "utf-8" })
+      .split("\n")
+      .filter((str) => !!str);
+}
 
 try {
    fs.rmSync("docs", { recursive: true, force: true });
@@ -69,9 +83,12 @@ fs.readdirSync("sources", {
    withFileTypes: true,
 }).map((file) => {
    let filePath = path.join("sources", file.name).toString();
-   if (file.isFile()) { 
-      let ext = extractMarkdown(fs.readFileSync(filePath, { encoding: "utf-8" }));
-      let postMetadata = ext.metadata, postContent = ext.content;
+   if (file.isFile()) {
+      let ext = extractMarkdown(
+         fs.readFileSync(filePath, { encoding: "utf-8" })
+      );
+      let postMetadata = ext.metadata,
+         postContent = ext.content;
       if (postMetadata.hide == true) return;
       posts.push({
          title: postMetadata.title,
@@ -92,10 +109,7 @@ fs.readdirSync("sources", {
             datetimeString: dayjs(postMetadata.date).format("YYYY-MM-DD HH:mm"),
             tags: postMetadata.tags || [],
             description: postMetadata.excerpt,
-            content: marked.parse(texPreprocess(postContent), {
-               mangle: false,
-               headerIds: false,
-            })
+            content: MarkdownIt.render(postContent),
          })
       );
       sitemap.push(`posts/${postMetadata.id}.html`);
@@ -104,16 +118,23 @@ fs.readdirSync("sources", {
 
 // 写入主页
 posts = posts.sort((a, b) => b.date.getTime() - a.date.getTime());
-const recently = fs.existsSync('./recently.md') ? (extractMarkdown(fs.readFileSync('./recently.md', 'utf-8'))) : false;
+const recently = fs.existsSync("./recently.md")
+   ? extractMarkdown(fs.readFileSync("./recently.md", "utf-8"))
+   : false;
 const recentlyDisplay = !!recently && recently.metadata.display;
-fs.writeFileSync(`docs/index.html`, templates.index({
-   posts,
-   updateDateString: dayjs().format("YYYY-MM-DD"),
-   recentlyDisplay,
-   recently: recentlyDisplay ? marked.parse(recently.content) : '',
-   recentlyDate: recentlyDisplay ? dayjs(recently.metadata.date).format("YYYY-MM-DD") : ''
-}));
-sitemap.push('');
+fs.writeFileSync(
+   `docs/index.html`,
+   templates.index({
+      posts,
+      updateDateString: dayjs().format("YYYY-MM-DD"),
+      recentlyDisplay,
+      recently: recentlyDisplay ? MarkdownIt.render(recently.content) : "",
+      recentlyDate: recentlyDisplay
+         ? dayjs(recently.metadata.date).format("YYYY-MM-DD")
+         : "",
+   })
+);
+sitemap.push("");
 
 // 复制 assets
 fs.cpSync("template/assets", "docs/assets", { recursive: true });
@@ -126,12 +147,14 @@ fs.readdirSync("sources", {
    withFileTypes: true,
 }).map((item) => {
    if (item.isDirectory()) {
-      fs.cpSync(`sources/${item.name}`, `docs/posts/${item.name}`, { recursive: true });
+      fs.cpSync(`sources/${item.name}`, `docs/posts/${item.name}`, {
+         recursive: true,
+      });
    }
-})
+});
 
 // 复制 CNAME
 fs.cpSync("template/CNAME", "docs/CNAME");
 
 // 写入 Sitemap
-fs.writeFileSync(`docs/sitemap.txt`, sitemap.map(x => url + x).join('\n'));
+fs.writeFileSync(`docs/sitemap.txt`, sitemap.map((x) => url + x).join("\n"));

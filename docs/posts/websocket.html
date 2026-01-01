@@ -6,28 +6,25 @@
       <link rel="stylesheet" type="text/css" href="/assets/styles.css" />
       <link rel="icon" type="image/png" href="/assets/icon.png" />
       <meta name="description" content="介绍了 Websocket 的原理、用法，并提供了一个聊天室的例子。" />
+      
       <script
          type="module"
-         src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"
+         src="https://cdn.jsdelivr.net/npm/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"
       ></script>
       <script
          nomodule
-         src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"
+         src="https://cdn.jsdelivr.net/npm/ionicons@7.1.0/dist/ionicons/ionicons.js"
       ></script>
+
       <link
          rel="stylesheet"
-         href="https://unpkg.com/katex@0.16.8/dist/katex.min.css"
+         href="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/katex.min.css"
       />
       <script
          defer
-         src="https://unpkg.com/katex@0.16.8/dist/katex.min.js"
+         src="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/katex.min.js"
       ></script>
-      <script
-         defer
-         src="https://unpkg.com/katex@0.16.8/dist/contrib/auto-render.min.js"
-         onload="renderMathInElement(document.body, {delimiters: [{left: '$$', right: '$$', display: true},{left: '$', right: '$'}]});"
-      ></script>
-      <!-- Google tag (gtag.js) -->
+
       <script
          async
          src="https://www.googletagmanager.com/gtag/js?id=G-YFC9SHL1Q7"
@@ -40,18 +37,25 @@
          gtag("js", new Date());
          gtag("config", "G-YFC9SHL1Q7");
       </script>
+
       <link
          rel="stylesheet"
-         href="//unpkg.com/@highlightjs/cdn-assets@11.7.0/styles/default.min.css"
+         href="https://cdn.jsdelivr.net/npm/github-markdown-css@4.0.0/github-markdown.min.css"
+      />
+      <link
+         rel="stylesheet"
+         href="https://cdn.jsdelivr.net/npm/highlight.js@11.11.1/styles/github.min.css"
          id="highlightjs-css"
       />
+      <script src="https://cdn.jsdelivr.net/npm/highlight.js@11.11.1/lib/highlight.min.js"></script>
+
       <script>
          if (window.matchMedia("(prefers-color-scheme: dark)").matches) {
             document.querySelector("#highlightjs-css").href =
-               "https://unpkg.com/@highlightjs/cdn-assets@11.7.0/styles/atom-one-dark.min.css";
+               "https://cdn.jsdelivr.net/npm/highlight.js@11.11.1/styles/atom-one-dark.min.css";
          }
       </script>
-      <script src="//unpkg.com/@highlightjs/cdn-assets@11.7.0/highlight.min.js"></script>
+
       <style>
          @media screen and (max-width: 512px) {
             body {
@@ -87,6 +91,13 @@
             max-width: 56em;
          }
       </style>
+      
+      <script type="module">
+         import mermaid from "https://cdn.jsdelivr.net/npm/mermaid@11.4.1/dist/mermaid.esm.min.mjs";
+         mermaid.run({
+            querySelector: ".language-mermaid",
+         });
+      </script>
    </head>
    <body>
       <a class="post-header" href="/">
@@ -96,11 +107,9 @@
       <div class="card post-content">
          <div class="title">HTML5 WebSocket的原理及聊天室应用</div>
          <div class="subtitle">
-            <ion-icon name="time"></ion-icon>
-            <span class="time">2020-10-28 19:04</span>
-             
+            2020-10-28 19:04
          </div>
-         <div class="content"><h2>基本原理</h2>
+         <div class="content markdown-body"><h2>基本原理</h2>
 <p>WebSocket 是 HTML5 开始提供的一种在单个 TCP 连接上进行全双工通讯的协议（这段是我从 Runoob 上摘的）。它的使用比较简单，在客户端只需要<code>new WebSocket(url)</code>对象，即可使用。</p>
 <p>这么说可能有些抽象，简单来说，就是通过一次 HTTP 握手，就可以在服务端和客户端之间建立一个通道，进行实时的信息传输，无需轮询。</p>
 <pre><code>          [ HTTP ]
@@ -142,160 +151,160 @@
 <h2>例子</h2>
 <p>首先先设计一下实现方式，我的设想是这样的：客户端发送消息，就告诉服务器这段消息的内容、时间和发送者，服务器收到后向所有人广播这条消息，这样所有人就得到了这位发送的消息。</p>
 <p>首先写一个服务端的程序，这里使用<code>nodejs</code>的<code>nodejs-websocket</code>库，先写出引入依赖和创建服务器对象。</p>
-<pre><code class="language-javascript">var ws = require(&quot;nodejs-websocket&quot;)           //添加Nodejs-WebSocket依赖
-var port = 8001
-var server=ws.createServer(function(conn){     //创建一个WebSocket服务器！
-}).listen(port)                                //设置服务器开启的端口
+<pre><code class="language-javascript"><span class="hljs-keyword">var</span> ws = <span class="hljs-built_in">require</span>(<span class="hljs-string">&quot;nodejs-websocket&quot;</span>)           <span class="hljs-comment">//添加Nodejs-WebSocket依赖</span>
+<span class="hljs-keyword">var</span> port = <span class="hljs-number">8001</span>
+<span class="hljs-keyword">var</span> server=ws.<span class="hljs-title function_">createServer</span>(<span class="hljs-keyword">function</span>(<span class="hljs-params">conn</span>){     <span class="hljs-comment">//创建一个WebSocket服务器！</span>
+}).<span class="hljs-title function_">listen</span>(port)                                <span class="hljs-comment">//设置服务器开启的端口</span>
 </code></pre>
 <p>然后根据刚才的设计，应该在收到消息发送者的内容的时候，把这个消息广播给所有人，那么应该在收到消息后直接再广播出去，使用了<code>conn.sendText()</code>函数，然后通过服务器<code>server</code>对象的<code>connections</code>属性，给每个连接者都发送刚才发送者发送的消息：</p>
-<pre><code class="language-javascript">var ws = require(&quot;nodejs-websocket&quot;)           //添加Nodejs-WebSocket依赖
-var port = 8001
-var server=ws.createServer(function(conn){     //创建一个WebSocket服务器！
-    conn.on(&quot;text&quot;, function (str) {                //监听收到消息事件（名为&quot;text&quot;）
-      server.connections.forEach(function (conn) {    //给每个连接的人都执行这个操作
-        conn.sendText(str)                              //给这个人发送刚才的消息     
+<pre><code class="language-javascript"><span class="hljs-keyword">var</span> ws = <span class="hljs-built_in">require</span>(<span class="hljs-string">&quot;nodejs-websocket&quot;</span>)           <span class="hljs-comment">//添加Nodejs-WebSocket依赖</span>
+<span class="hljs-keyword">var</span> port = <span class="hljs-number">8001</span>
+<span class="hljs-keyword">var</span> server=ws.<span class="hljs-title function_">createServer</span>(<span class="hljs-keyword">function</span>(<span class="hljs-params">conn</span>){     <span class="hljs-comment">//创建一个WebSocket服务器！</span>
+    conn.<span class="hljs-title function_">on</span>(<span class="hljs-string">&quot;text&quot;</span>, <span class="hljs-keyword">function</span> (<span class="hljs-params">str</span>) {                <span class="hljs-comment">//监听收到消息事件（名为&quot;text&quot;）</span>
+      server.<span class="hljs-property">connections</span>.<span class="hljs-title function_">forEach</span>(<span class="hljs-keyword">function</span> (<span class="hljs-params">conn</span>) {    <span class="hljs-comment">//给每个连接的人都执行这个操作</span>
+        conn.<span class="hljs-title function_">sendText</span>(str)                              <span class="hljs-comment">//给这个人发送刚才的消息     </span>
       })
-      console.log(&quot;收到消息：&quot;,str)                  //控制台输出刚刚消息的内容
+      <span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(<span class="hljs-string">&quot;收到消息：&quot;</span>,str)                  <span class="hljs-comment">//控制台输出刚刚消息的内容</span>
     })
-}).listen(port)                                //设置服务器开启的端口
+}).<span class="hljs-title function_">listen</span>(port)                                <span class="hljs-comment">//设置服务器开启的端口</span>
 </code></pre>
 <p>最后添加一个输出服务器开设的ip及端口的功能，最终代码如下：</p>
-<pre><code class="language-javascript">var ws = require(&quot;nodejs-websocket&quot;)           //添加Nodejs-WebSocket依赖
-var port = 8001
-console.log(&quot;你的服务器的地址是：ws://&quot;+getIP()+&quot;:&quot;+port+&quot;，快让你的朋友们进入聊天室吧&quot;)
-var server=ws.createServer(function(conn){     //创建一个WebSocket服务器！
-    conn.on(&quot;text&quot;, function (str) {                //监听收到消息事件（名为&quot;text&quot;）
-      server.connections.forEach(function (conn) {    //给每个连接的人都执行这个操作
-        conn.sendText(str)                              //给这个人发送刚才的消息     
+<pre><code class="language-javascript"><span class="hljs-keyword">var</span> ws = <span class="hljs-built_in">require</span>(<span class="hljs-string">&quot;nodejs-websocket&quot;</span>)           <span class="hljs-comment">//添加Nodejs-WebSocket依赖</span>
+<span class="hljs-keyword">var</span> port = <span class="hljs-number">8001</span>
+<span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(<span class="hljs-string">&quot;你的服务器的地址是：ws://&quot;</span>+<span class="hljs-title function_">getIP</span>()+<span class="hljs-string">&quot;:&quot;</span>+port+<span class="hljs-string">&quot;，快让你的朋友们进入聊天室吧&quot;</span>)
+<span class="hljs-keyword">var</span> server=ws.<span class="hljs-title function_">createServer</span>(<span class="hljs-keyword">function</span>(<span class="hljs-params">conn</span>){     <span class="hljs-comment">//创建一个WebSocket服务器！</span>
+    conn.<span class="hljs-title function_">on</span>(<span class="hljs-string">&quot;text&quot;</span>, <span class="hljs-keyword">function</span> (<span class="hljs-params">str</span>) {                <span class="hljs-comment">//监听收到消息事件（名为&quot;text&quot;）</span>
+      server.<span class="hljs-property">connections</span>.<span class="hljs-title function_">forEach</span>(<span class="hljs-keyword">function</span> (<span class="hljs-params">conn</span>) {    <span class="hljs-comment">//给每个连接的人都执行这个操作</span>
+        conn.<span class="hljs-title function_">sendText</span>(str)                              <span class="hljs-comment">//给这个人发送刚才的消息     </span>
       })
-      console.log(&quot;收到消息：&quot;,str)                  //控制台输出刚刚消息的内容
+      <span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(<span class="hljs-string">&quot;收到消息：&quot;</span>,str)                  <span class="hljs-comment">//控制台输出刚刚消息的内容</span>
     })
-}).listen(port)                                //设置服务器开启的端口
+}).<span class="hljs-title function_">listen</span>(port)                                <span class="hljs-comment">//设置服务器开启的端口</span>
 
-//以下代码为获取电脑内网IP
-function getIP(){
-  var os=require(&quot;os&quot;)                              //引入OS依赖
-  return os.networkInterfaces()[&#39;WLAN&#39;][1].address  //返回Network信息中的内网IP
+<span class="hljs-comment">//以下代码为获取电脑内网IP</span>
+<span class="hljs-keyword">function</span> <span class="hljs-title function_">getIP</span>(<span class="hljs-params"></span>){
+  <span class="hljs-keyword">var</span> os=<span class="hljs-built_in">require</span>(<span class="hljs-string">&quot;os&quot;</span>)                              <span class="hljs-comment">//引入OS依赖</span>
+  <span class="hljs-keyword">return</span> os.<span class="hljs-title function_">networkInterfaces</span>()[<span class="hljs-string">&#x27;WLAN&#x27;</span>][<span class="hljs-number">1</span>].<span class="hljs-property">address</span>  <span class="hljs-comment">//返回Network信息中的内网IP</span>
 }
 </code></pre>
 <p>现在这样一个简易的服务器部分就完成了，服务端代码请见本章节最下方。</p>
 <p>然后进行一个客户端前端页面的编写：</p>
-<pre><code class="language-html">&lt;div id=&quot;Output&quot; style=&quot;width:100%;height:50%;border:2px solid black;border-radius:4px;margin-top:10px;&quot;&gt;&lt;/div&gt;
-&lt;div style=&quot;margin-top:10px;&quot;&gt;
-    &lt;input type=&quot;text&quot; id=&quot;Input&quot; style=&quot;position:absolute;width:90%;height:20%;&quot;&gt;
-    &lt;button style=&quot;position:absolute;right:5px;width:10%;height:20%;&quot;onclick=&quot;sendmessage()&quot;&gt;发送&lt;/button&gt;
-&lt;/div&gt;
-&lt;div style=&quot;position:absolute;bottom:10px;&quot;&gt;
-    &lt;b&gt;连接到聊天室&lt;/b&gt;&lt;br/&gt;
-    聊天室地址 &lt;input type=&quot;text&quot; id=&quot;ServerLink&quot;/&gt;
-    聊天室昵称 &lt;input type=&quot;text&quot; id=&quot;MyName&quot;/&gt;
-    &lt;button onclick=&quot;connect()&quot;&gt;连接&lt;/button&gt;
-&lt;/div&gt;
+<pre><code class="language-html"><span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">id</span>=<span class="hljs-string">&quot;Output&quot;</span> <span class="hljs-attr">style</span>=<span class="hljs-string">&quot;width:100%;height:50%;border:2px solid black;border-radius:4px;margin-top:10px;&quot;</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span>
+<span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">style</span>=<span class="hljs-string">&quot;margin-top:10px;&quot;</span>&gt;</span>
+	<span class="hljs-tag">&lt;<span class="hljs-name">input</span> <span class="hljs-attr">type</span>=<span class="hljs-string">&quot;text&quot;</span> <span class="hljs-attr">id</span>=<span class="hljs-string">&quot;Input&quot;</span> <span class="hljs-attr">style</span>=<span class="hljs-string">&quot;position:absolute;width:90%;height:20%;&quot;</span>&gt;</span>
+	<span class="hljs-tag">&lt;<span class="hljs-name">button</span> <span class="hljs-attr">style</span>=<span class="hljs-string">&quot;position:absolute;right:5px;width:10%;height:20%;&quot;</span><span class="hljs-attr">onclick</span>=<span class="hljs-string">&quot;sendmessage()&quot;</span>&gt;</span>发送<span class="hljs-tag">&lt;/<span class="hljs-name">button</span>&gt;</span>
+<span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span>
+<span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">style</span>=<span class="hljs-string">&quot;position:absolute;bottom:10px;&quot;</span>&gt;</span>
+	<span class="hljs-tag">&lt;<span class="hljs-name">b</span>&gt;</span>连接到聊天室<span class="hljs-tag">&lt;/<span class="hljs-name">b</span>&gt;</span><span class="hljs-tag">&lt;<span class="hljs-name">br</span>/&gt;</span>
+	聊天室地址 <span class="hljs-tag">&lt;<span class="hljs-name">input</span> <span class="hljs-attr">type</span>=<span class="hljs-string">&quot;text&quot;</span> <span class="hljs-attr">id</span>=<span class="hljs-string">&quot;ServerLink&quot;</span>/&gt;</span>
+	聊天室昵称 <span class="hljs-tag">&lt;<span class="hljs-name">input</span> <span class="hljs-attr">type</span>=<span class="hljs-string">&quot;text&quot;</span> <span class="hljs-attr">id</span>=<span class="hljs-string">&quot;MyName&quot;</span>/&gt;</span>
+	<span class="hljs-tag">&lt;<span class="hljs-name">button</span> <span class="hljs-attr">onclick</span>=<span class="hljs-string">&quot;connect()&quot;</span>&gt;</span>连接<span class="hljs-tag">&lt;/<span class="hljs-name">button</span>&gt;</span>
+<span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span>
 </code></pre>
 <p>然后进行客户端的接收、发送消息核心制作：</p>
-<pre><code class="language-javascript">var Socket;
-function connect(){
-    var serverlink=document.getElementById(&quot;ServerLink&quot;).value;
-    var myname=document.getElementById(&quot;MyName&quot;).value;
-    var output=document.getElementById(&quot;Output&quot;);
-    Socket = new WebSocket(serverlink);
-    Socket.onopen = function()
+<pre><code class="language-javascript"><span class="hljs-keyword">var</span> <span class="hljs-title class_">Socket</span>;
+<span class="hljs-keyword">function</span> <span class="hljs-title function_">connect</span>(<span class="hljs-params"></span>){
+    <span class="hljs-keyword">var</span> serverlink=<span class="hljs-variable language_">document</span>.<span class="hljs-title function_">getElementById</span>(<span class="hljs-string">&quot;ServerLink&quot;</span>).<span class="hljs-property">value</span>;
+    <span class="hljs-keyword">var</span> myname=<span class="hljs-variable language_">document</span>.<span class="hljs-title function_">getElementById</span>(<span class="hljs-string">&quot;MyName&quot;</span>).<span class="hljs-property">value</span>;
+    <span class="hljs-keyword">var</span> output=<span class="hljs-variable language_">document</span>.<span class="hljs-title function_">getElementById</span>(<span class="hljs-string">&quot;Output&quot;</span>);
+    <span class="hljs-title class_">Socket</span> = <span class="hljs-keyword">new</span> <span class="hljs-title class_">WebSocket</span>(serverlink);
+    <span class="hljs-title class_">Socket</span>.<span class="hljs-property">onopen</span> = <span class="hljs-keyword">function</span>(<span class="hljs-params"></span>)
     {
-        output.innerHTML+=&quot;&lt;b style=&#39;color:green&#39;&gt;成功连接到服务器！&lt;/b&gt;&quot;;
+    	output.<span class="hljs-property">innerHTML</span>+=<span class="hljs-string">&quot;&lt;b style=&#x27;color:green&#x27;&gt;成功连接到服务器！&lt;/b&gt;&quot;</span>;
     };
-    Socket.onmessage = function (evt) 
+    <span class="hljs-title class_">Socket</span>.<span class="hljs-property">onmessage</span> = <span class="hljs-keyword">function</span> (<span class="hljs-params">evt</span>) 
     { 
-        console.log(evt);
-        var data=JSON.parse(evt.data);
-        output.innerHTML+=&quot;&lt;b&gt;&quot;+data.name+&quot;&lt;/b&gt; &gt;&gt; &lt;b&gt;&quot;+data.message+&quot;&lt;/b&gt;&lt;br/&gt;&quot;;
+        <span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(evt);
+        <span class="hljs-keyword">var</span> data=<span class="hljs-title class_">JSON</span>.<span class="hljs-title function_">parse</span>(evt.<span class="hljs-property">data</span>);
+        output.<span class="hljs-property">innerHTML</span>+=<span class="hljs-string">&quot;&lt;b&gt;&quot;</span>+data.<span class="hljs-property">name</span>+<span class="hljs-string">&quot;&lt;/b&gt; &gt;&gt; &lt;b&gt;&quot;</span>+data.<span class="hljs-property">message</span>+<span class="hljs-string">&quot;&lt;/b&gt;&lt;br/&gt;&quot;</span>;
     };
 }
-function sendmessage(){
-    var input=document.getElementById(&quot;Input&quot;).value;
-    var myname=document.getElementById(&quot;MyName&quot;).value;
-    var date=new Date();
-    var data={};
-    data.time=date.getHours()+&quot;:&quot;+date.getMinutes();
-    data.name=myname;
-    data.message=input;
-    Socket.send(JSON.stringify(data));
-    return;
+<span class="hljs-keyword">function</span> <span class="hljs-title function_">sendmessage</span>(<span class="hljs-params"></span>){
+    <span class="hljs-keyword">var</span> input=<span class="hljs-variable language_">document</span>.<span class="hljs-title function_">getElementById</span>(<span class="hljs-string">&quot;Input&quot;</span>).<span class="hljs-property">value</span>;
+    <span class="hljs-keyword">var</span> myname=<span class="hljs-variable language_">document</span>.<span class="hljs-title function_">getElementById</span>(<span class="hljs-string">&quot;MyName&quot;</span>).<span class="hljs-property">value</span>;
+    <span class="hljs-keyword">var</span> date=<span class="hljs-keyword">new</span> <span class="hljs-title class_">Date</span>();
+    <span class="hljs-keyword">var</span> data={};
+    data.<span class="hljs-property">time</span>=date.<span class="hljs-title function_">getHours</span>()+<span class="hljs-string">&quot;:&quot;</span>+date.<span class="hljs-title function_">getMinutes</span>();
+    data.<span class="hljs-property">name</span>=myname;
+    data.<span class="hljs-property">message</span>=input;
+    <span class="hljs-title class_">Socket</span>.<span class="hljs-title function_">send</span>(<span class="hljs-title class_">JSON</span>.<span class="hljs-title function_">stringify</span>(data));
+    <span class="hljs-keyword">return</span>;
 }
-window.onbeforeunload = function(evt) {
-Socket.close();
-}//关闭窗口前先关闭连接，否则服务器会报错
+<span class="hljs-variable language_">window</span>.<span class="hljs-property">onbeforeunload</span> = <span class="hljs-keyword">function</span>(<span class="hljs-params">evt</span>) {
+<span class="hljs-title class_">Socket</span>.<span class="hljs-title function_">close</span>();
+}<span class="hljs-comment">//关闭窗口前先关闭连接，否则服务器会报错</span>
 </code></pre>
 <p>最后可以试试效果，比较神奇的，使用了大概70行左右就完成了一个完备的聊天室。</p>
 <h2>实例代码</h2>
 <h3>./index.html（客户端）</h3>
-<pre><code class="language-html">&lt;html&gt;
-    &lt;head&gt;
-    &lt;/head&gt;
-    &lt;body&gt;
-        &lt;div id=&quot;Output&quot; style=&quot;width:100%;height:50%;border:2px solid black;border-radius:4px;margin-top:10px;&quot;&gt;&lt;/div&gt;
-        &lt;div style=&quot;margin-top:10px;&quot;&gt;
-            &lt;input type=&quot;text&quot; id=&quot;Input&quot; style=&quot;position:absolute;width:90%;height:20%;&quot;&gt;
-            &lt;button style=&quot;position:absolute;right:5px;width:10%;height:20%;&quot;onclick=&quot;sendmessage()&quot;&gt;发送&lt;/button&gt;
-        &lt;/div&gt;
-        &lt;div style=&quot;position:absolute;bottom:10px;&quot;&gt;
-            &lt;b&gt;连接到聊天室&lt;/b&gt;&lt;br/&gt;
-            聊天室地址 &lt;input type=&quot;text&quot; id=&quot;ServerLink&quot;/&gt;
-            聊天室昵称 &lt;input type=&quot;text&quot; id=&quot;MyName&quot;/&gt;
-            &lt;button onclick=&quot;connect()&quot;&gt;连接&lt;/button&gt;
-        &lt;/div&gt;
-        &lt;script&gt;
-            var Socket;
-            function connect(){
-                var serverlink=document.getElementById(&quot;ServerLink&quot;).value;
-                var myname=document.getElementById(&quot;MyName&quot;).value;
-                var output=document.getElementById(&quot;Output&quot;);
-                Socket = new WebSocket(serverlink);
-                Socket.onopen = function()
+<pre><code class="language-html"><span class="hljs-tag">&lt;<span class="hljs-name">html</span>&gt;</span>
+    <span class="hljs-tag">&lt;<span class="hljs-name">head</span>&gt;</span>
+    <span class="hljs-tag">&lt;/<span class="hljs-name">head</span>&gt;</span>
+    <span class="hljs-tag">&lt;<span class="hljs-name">body</span>&gt;</span>
+        <span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">id</span>=<span class="hljs-string">&quot;Output&quot;</span> <span class="hljs-attr">style</span>=<span class="hljs-string">&quot;width:100%;height:50%;border:2px solid black;border-radius:4px;margin-top:10px;&quot;</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span>
+        <span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">style</span>=<span class="hljs-string">&quot;margin-top:10px;&quot;</span>&gt;</span>
+            <span class="hljs-tag">&lt;<span class="hljs-name">input</span> <span class="hljs-attr">type</span>=<span class="hljs-string">&quot;text&quot;</span> <span class="hljs-attr">id</span>=<span class="hljs-string">&quot;Input&quot;</span> <span class="hljs-attr">style</span>=<span class="hljs-string">&quot;position:absolute;width:90%;height:20%;&quot;</span>&gt;</span>
+            <span class="hljs-tag">&lt;<span class="hljs-name">button</span> <span class="hljs-attr">style</span>=<span class="hljs-string">&quot;position:absolute;right:5px;width:10%;height:20%;&quot;</span><span class="hljs-attr">onclick</span>=<span class="hljs-string">&quot;sendmessage()&quot;</span>&gt;</span>发送<span class="hljs-tag">&lt;/<span class="hljs-name">button</span>&gt;</span>
+        <span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span>
+        <span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">style</span>=<span class="hljs-string">&quot;position:absolute;bottom:10px;&quot;</span>&gt;</span>
+            <span class="hljs-tag">&lt;<span class="hljs-name">b</span>&gt;</span>连接到聊天室<span class="hljs-tag">&lt;/<span class="hljs-name">b</span>&gt;</span><span class="hljs-tag">&lt;<span class="hljs-name">br</span>/&gt;</span>
+            聊天室地址 <span class="hljs-tag">&lt;<span class="hljs-name">input</span> <span class="hljs-attr">type</span>=<span class="hljs-string">&quot;text&quot;</span> <span class="hljs-attr">id</span>=<span class="hljs-string">&quot;ServerLink&quot;</span>/&gt;</span>
+            聊天室昵称 <span class="hljs-tag">&lt;<span class="hljs-name">input</span> <span class="hljs-attr">type</span>=<span class="hljs-string">&quot;text&quot;</span> <span class="hljs-attr">id</span>=<span class="hljs-string">&quot;MyName&quot;</span>/&gt;</span>
+            <span class="hljs-tag">&lt;<span class="hljs-name">button</span> <span class="hljs-attr">onclick</span>=<span class="hljs-string">&quot;connect()&quot;</span>&gt;</span>连接<span class="hljs-tag">&lt;/<span class="hljs-name">button</span>&gt;</span>
+        <span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span>
+        <span class="hljs-tag">&lt;<span class="hljs-name">script</span>&gt;</span><span class="language-javascript">
+            <span class="hljs-keyword">var</span> <span class="hljs-title class_">Socket</span>;
+            <span class="hljs-keyword">function</span> <span class="hljs-title function_">connect</span>(<span class="hljs-params"></span>){
+                <span class="hljs-keyword">var</span> serverlink=<span class="hljs-variable language_">document</span>.<span class="hljs-title function_">getElementById</span>(<span class="hljs-string">&quot;ServerLink&quot;</span>).<span class="hljs-property">value</span>;
+                <span class="hljs-keyword">var</span> myname=<span class="hljs-variable language_">document</span>.<span class="hljs-title function_">getElementById</span>(<span class="hljs-string">&quot;MyName&quot;</span>).<span class="hljs-property">value</span>;
+                <span class="hljs-keyword">var</span> output=<span class="hljs-variable language_">document</span>.<span class="hljs-title function_">getElementById</span>(<span class="hljs-string">&quot;Output&quot;</span>);
+                <span class="hljs-title class_">Socket</span> = <span class="hljs-keyword">new</span> <span class="hljs-title class_">WebSocket</span>(serverlink);
+                <span class="hljs-title class_">Socket</span>.<span class="hljs-property">onopen</span> = <span class="hljs-keyword">function</span>(<span class="hljs-params"></span>)
                 {
-                    output.innerHTML+=&quot;&lt;b style=&#39;color:green&#39;&gt;成功连接到服务器！&lt;/b&gt;&lt;br/&gt;&quot;;
+                    output.<span class="hljs-property">innerHTML</span>+=<span class="hljs-string">&quot;&lt;b style=&#x27;color:green&#x27;&gt;成功连接到服务器！&lt;/b&gt;&lt;br/&gt;&quot;</span>;
                 };
-                Socket.onmessage = function (evt) 
+                <span class="hljs-title class_">Socket</span>.<span class="hljs-property">onmessage</span> = <span class="hljs-keyword">function</span> (<span class="hljs-params">evt</span>) 
                 { 
-                    console.log(evt);
-                    var data=JSON.parse(evt.data);
-                    output.innerHTML+=&quot;&lt;b&gt;&quot;+data.name+&quot;&lt;/b&gt; &gt;&gt; &lt;b&gt;&quot;+data.message+&quot;&lt;/b&gt;&lt;br/&gt;&quot;;
+                    <span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(evt);
+                    <span class="hljs-keyword">var</span> data=<span class="hljs-title class_">JSON</span>.<span class="hljs-title function_">parse</span>(evt.<span class="hljs-property">data</span>);
+                    output.<span class="hljs-property">innerHTML</span>+=<span class="hljs-string">&quot;&lt;b&gt;&quot;</span>+data.<span class="hljs-property">name</span>+<span class="hljs-string">&quot;&lt;/b&gt; &gt;&gt; &lt;b&gt;&quot;</span>+data.<span class="hljs-property">message</span>+<span class="hljs-string">&quot;&lt;/b&gt;&lt;br/&gt;&quot;</span>;
                 };
             }
-            function sendmessage(){
-                var input=document.getElementById(&quot;Input&quot;).value;
-                var myname=document.getElementById(&quot;MyName&quot;).value;
-                var date=new Date();
-                var data={};
-                data.time=date.getHours()+&quot;:&quot;+date.getMinutes();
-                data.name=myname;
-                data.message=input;
-                Socket.send(JSON.stringify(data));
-                return;
+            <span class="hljs-keyword">function</span> <span class="hljs-title function_">sendmessage</span>(<span class="hljs-params"></span>){
+                <span class="hljs-keyword">var</span> input=<span class="hljs-variable language_">document</span>.<span class="hljs-title function_">getElementById</span>(<span class="hljs-string">&quot;Input&quot;</span>).<span class="hljs-property">value</span>;
+                <span class="hljs-keyword">var</span> myname=<span class="hljs-variable language_">document</span>.<span class="hljs-title function_">getElementById</span>(<span class="hljs-string">&quot;MyName&quot;</span>).<span class="hljs-property">value</span>;
+                <span class="hljs-keyword">var</span> date=<span class="hljs-keyword">new</span> <span class="hljs-title class_">Date</span>();
+                <span class="hljs-keyword">var</span> data={};
+                data.<span class="hljs-property">time</span>=date.<span class="hljs-title function_">getHours</span>()+<span class="hljs-string">&quot;:&quot;</span>+date.<span class="hljs-title function_">getMinutes</span>();
+                data.<span class="hljs-property">name</span>=myname;
+                data.<span class="hljs-property">message</span>=input;
+                <span class="hljs-title class_">Socket</span>.<span class="hljs-title function_">send</span>(<span class="hljs-title class_">JSON</span>.<span class="hljs-title function_">stringify</span>(data));
+                <span class="hljs-keyword">return</span>;
             }
-            window.onbeforeunload = function(evt) {
-                Socket.close();
-            }//关闭窗口前先关闭连接，否则服务器会炸
-        &lt;/script&gt;
-    &lt;/body&gt;
-&lt;/html&gt;
+            <span class="hljs-variable language_">window</span>.<span class="hljs-property">onbeforeunload</span> = <span class="hljs-keyword">function</span>(<span class="hljs-params">evt</span>) {
+    		    <span class="hljs-title class_">Socket</span>.<span class="hljs-title function_">close</span>();
+            }<span class="hljs-comment">//关闭窗口前先关闭连接，否则服务器会炸</span>
+        </span><span class="hljs-tag">&lt;/<span class="hljs-name">script</span>&gt;</span>
+    <span class="hljs-tag">&lt;/<span class="hljs-name">body</span>&gt;</span>
+<span class="hljs-tag">&lt;/<span class="hljs-name">html</span>&gt;</span>
 </code></pre>
 <h3>./WS.js（服务端）</h3>
-<pre><code class="language-javascript">var ws = require(&quot;nodejs-websocket&quot;)           //添加Nodejs-WebSocket依赖
-var port = 8001
-console.log(&quot;你的服务器的地址是：ws://&quot;+getIP()+&quot;:&quot;+port+&quot;，快让你的朋友们进入聊天室吧&quot;)
-var server=ws.createServer(function(conn){     //创建一个WebSocket服务器！
-    conn.on(&quot;text&quot;, function (str) {                //监听收到消息事件（名为&quot;text&quot;）
-      server.connections.forEach(function (conn) {    //给每个连接的人都执行这个操作（server对象的connections进行foreach操作）
-        conn.sendText(str)                              //给这个人发送刚才的消息     
+<pre><code class="language-javascript"><span class="hljs-keyword">var</span> ws = <span class="hljs-built_in">require</span>(<span class="hljs-string">&quot;nodejs-websocket&quot;</span>)           <span class="hljs-comment">//添加Nodejs-WebSocket依赖</span>
+<span class="hljs-keyword">var</span> port = <span class="hljs-number">8001</span>
+<span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(<span class="hljs-string">&quot;你的服务器的地址是：ws://&quot;</span>+<span class="hljs-title function_">getIP</span>()+<span class="hljs-string">&quot;:&quot;</span>+port+<span class="hljs-string">&quot;，快让你的朋友们进入聊天室吧&quot;</span>)
+<span class="hljs-keyword">var</span> server=ws.<span class="hljs-title function_">createServer</span>(<span class="hljs-keyword">function</span>(<span class="hljs-params">conn</span>){     <span class="hljs-comment">//创建一个WebSocket服务器！</span>
+    conn.<span class="hljs-title function_">on</span>(<span class="hljs-string">&quot;text&quot;</span>, <span class="hljs-keyword">function</span> (<span class="hljs-params">str</span>) {                <span class="hljs-comment">//监听收到消息事件（名为&quot;text&quot;）</span>
+      server.<span class="hljs-property">connections</span>.<span class="hljs-title function_">forEach</span>(<span class="hljs-keyword">function</span> (<span class="hljs-params">conn</span>) {    <span class="hljs-comment">//给每个连接的人都执行这个操作（server对象的connections进行foreach操作）</span>
+        conn.<span class="hljs-title function_">sendText</span>(str)                              <span class="hljs-comment">//给这个人发送刚才的消息     </span>
       })
-      console.log(&quot;收到消息：&quot;,str)                  //控制台输出刚刚消息的内容
+      <span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(<span class="hljs-string">&quot;收到消息：&quot;</span>,str)                  <span class="hljs-comment">//控制台输出刚刚消息的内容</span>
     })
-}).listen(port)                                //设置服务器开启的端口
+}).<span class="hljs-title function_">listen</span>(port)                                <span class="hljs-comment">//设置服务器开启的端口</span>
 
-//以下代码为获取电脑内网IP
-function getIP(){
-  var os=require(&quot;os&quot;)                              //引入OS依赖
-  return os.networkInterfaces()[&#39;WLAN&#39;][1].address  //返回Network信息中的内网IP
+<span class="hljs-comment">//以下代码为获取电脑内网IP</span>
+<span class="hljs-keyword">function</span> <span class="hljs-title function_">getIP</span>(<span class="hljs-params"></span>){
+  <span class="hljs-keyword">var</span> os=<span class="hljs-built_in">require</span>(<span class="hljs-string">&quot;os&quot;</span>)                              <span class="hljs-comment">//引入OS依赖</span>
+  <span class="hljs-keyword">return</span> os.<span class="hljs-title function_">networkInterfaces</span>()[<span class="hljs-string">&#x27;WLAN&#x27;</span>][<span class="hljs-number">1</span>].<span class="hljs-property">address</span>  <span class="hljs-comment">//返回Network信息中的内网IP</span>
 }
 </code></pre>
 <p><img src="data:image/png;base64,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" alt=""></p>
@@ -306,20 +315,17 @@ function getIP(){
          hljs.highlightAll();
       </script>
       <script>
-         // 单行图片
+         // 单行图片处理
          document.querySelectorAll('.post-content > .content p > img:only-child').forEach((img) => {
-            // 确定确实为 only child（而不是文字夹带 img）
             if (img.parentNode.childNodes.length > 1) return;
-            // 设置 img 及其父元素 class
             img.parentElement.classList.add('figure');
             img.classList.add('only-child');
-            // 添加 alt
             const alt = document.createElement('div');
             alt.classList.add('image-alt');
             alt.innerText = img.getAttribute('alt');
             img.parentElement.append(alt);
          });
-         // 图片放大
+         // 图片点击放大
          document.querySelectorAll('.post-content > .content img').forEach((img) => {
             img.addEventListener('click', () => {
                window.open(img.getAttribute('src'));

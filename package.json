@@ -8,13 +8,18 @@
   "license": "MIT",
   "type": "module",
   "scripts": {
-    "generate": "node app.js"
+    "generate": "node app.js",
+    "preview": "node app.js && http-server ./docs"
   },
   "dependencies": {
+    "@vscode/markdown-it-katex": "^1.1.2",
     "dayjs": "^1.11.13",
     "ejs": "^3.1.9",
+    "highlight.js": "^11.11.1",
+    "http-server": "^14.1.1",
     "katex": "^0.16.8",
-    "marked": "^6.0.0",
+    "markdown-it": "^14.1.0",
+    "markdown-it-footnote": "^4.0.0",
     "yaml": "^2.3.1"
   }
 }

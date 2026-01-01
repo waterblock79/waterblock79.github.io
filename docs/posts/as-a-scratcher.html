@@ -6,28 +6,25 @@
       <link rel="stylesheet" type="text/css" href="/assets/styles.css" />
       <link rel="icon" type="image/png" href="/assets/icon.png" />
       <meta name="description" content="此情可待成追忆，只是当时已惘然" />
+      
       <script
          type="module"
-         src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"
+         src="https://cdn.jsdelivr.net/npm/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"
       ></script>
       <script
          nomodule
-         src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"
+         src="https://cdn.jsdelivr.net/npm/ionicons@7.1.0/dist/ionicons/ionicons.js"
       ></script>
+
       <link
          rel="stylesheet"
-         href="https://unpkg.com/katex@0.16.8/dist/katex.min.css"
+         href="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/katex.min.css"
       />
       <script
          defer
-         src="https://unpkg.com/katex@0.16.8/dist/katex.min.js"
+         src="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/katex.min.js"
       ></script>
-      <script
-         defer
-         src="https://unpkg.com/katex@0.16.8/dist/contrib/auto-render.min.js"
-         onload="renderMathInElement(document.body, {delimiters: [{left: '$$', right: '$$', display: true},{left: '$', right: '$'}]});"
-      ></script>
-      <!-- Google tag (gtag.js) -->
+
       <script
          async
          src="https://www.googletagmanager.com/gtag/js?id=G-YFC9SHL1Q7"
@@ -40,18 +37,25 @@
          gtag("js", new Date());
          gtag("config", "G-YFC9SHL1Q7");
       </script>
+
       <link
          rel="stylesheet"
-         href="//unpkg.com/@highlightjs/cdn-assets@11.7.0/styles/default.min.css"
+         href="https://cdn.jsdelivr.net/npm/github-markdown-css@4.0.0/github-markdown.min.css"
+      />
+      <link
+         rel="stylesheet"
+         href="https://cdn.jsdelivr.net/npm/highlight.js@11.11.1/styles/github.min.css"
          id="highlightjs-css"
       />
+      <script src="https://cdn.jsdelivr.net/npm/highlight.js@11.11.1/lib/highlight.min.js"></script>
+
       <script>
          if (window.matchMedia("(prefers-color-scheme: dark)").matches) {
             document.querySelector("#highlightjs-css").href =
-               "https://unpkg.com/@highlightjs/cdn-assets@11.7.0/styles/atom-one-dark.min.css";
+               "https://cdn.jsdelivr.net/npm/highlight.js@11.11.1/styles/atom-one-dark.min.css";
          }
       </script>
-      <script src="//unpkg.com/@highlightjs/cdn-assets@11.7.0/highlight.min.js"></script>
+
       <style>
          @media screen and (max-width: 512px) {
             body {
@@ -87,6 +91,13 @@
             max-width: 56em;
          }
       </style>
+      
+      <script type="module">
+         import mermaid from "https://cdn.jsdelivr.net/npm/mermaid@11.4.1/dist/mermaid.esm.min.mjs";
+         mermaid.run({
+            querySelector: ".language-mermaid",
+         });
+      </script>
    </head>
    <body>
       <a class="post-header" href="/">
@@ -96,34 +107,47 @@
       <div class="card post-content">
          <div class="title">回顾作为 Scratcher 的 8 年</div>
          <div class="subtitle">
-            <ion-icon name="time"></ion-icon>
-            <span class="time">2025-07-30 18:37</span>
-            
-            <ion-icon name="pricetag"></ion-icon>
-             
-            <span class="tag">Scratch</span>
-            
+            2025-07-30 18:37
          </div>
-         <div class="content"><p>大概是在 2017 年，我第一次接触 Scratch，Scratch 为我打开了互联网与计算机世界的大门。<br>最开始的时候我在贴吧 Scratch 吧活跃，2020 年后开始在 A 营活跃，在学习中做作品、写文章，有幸结识了许多优秀、友善的 Scratcher，也很幸运能参与 Scratch 吧与 A 营的管理工作，在这里我由衷地致以圈内 Scratcher 们祝福与感谢，祝愿 Scratch 圈能成为一个更好的地方。</p>
+         <div class="content markdown-body"><p>大概是在 2017 年，我第一次接触 Scratch，Scratch 为我打开了互联网与计算机世界的大门。<br>
+最开始的时候我在贴吧 Scratch 吧活跃，2020 年后开始在 A 营活跃，在学习中做作品、写文章，有幸结识了许多优秀、友善的 Scratcher，也很幸运能参与 Scratch 吧与 A 营的管理工作，在这里我由衷地致以圈内 Scratcher 们祝福与感谢，祝愿 Scratch 圈能成为一个更好的地方。</p>
 <p>日后可能也很难有时间和精力做 Scratch 作品了，以这篇博客做一个纪念和归档。</p>
 <ul>
-<li><p><a href="https://turbowarp.org/editor?project_url=waterblock79.github.io/posts/zinc-engine/Zinc+Engine.sb3"><strong>Zinc Engine</strong></a>（2024 年 2 月）<br> 一个在 Scratch 中渲染用户界面的工具，可以仅使用代码块就快速构建出灵活的界面。查看 <a href="/posts/zinc-engine-guide">介绍</a>。</p>
+<li>
+<p><a href="https://turbowarp.org/editor?project_url=waterblock79.github.io/posts/zinc-engine/Zinc+Engine.sb3"><strong>Zinc Engine</strong></a>（2024 年 2 月）<br>
+一个在 Scratch 中渲染用户界面的工具，可以仅使用代码块就快速构建出灵活的界面。查看 <a href="/posts/zinc-engine-guide">介绍</a>。</p>
 </li>
-<li><p><a href="https://turbowarp.org/editor?project_url=waterblock79.github.io/posts/as-a-scratcher/cn-covid-19-data.sb3"><strong>中国 COVID-19 疫情数据可视化</strong></a>（2022 年 12 月）<br> 也发布在 <a href="https://gitblock.cn/Projects/1153171">A 营</a>、<a href="https://codingclip.com/project/1319">别针社区</a>。</p>
+<li>
+<p><a href="https://turbowarp.org/editor?project_url=waterblock79.github.io/posts/as-a-scratcher/cn-covid-19-data.sb3"><strong>中国 COVID-19 疫情数据可视化</strong></a>（2022 年 12 月）<br>
+也发布在 <a href="https://gitblock.cn/Projects/1153171">A 营</a>、<a href="https://codingclip.com/project/1319">别针社区</a>。</p>
 </li>
-<li><p><a href="https://turbowarp.org/editor?project_url=waterblock79.github.io/posts/as-a-scratcher/edge.sb3"><strong>Edge</strong></a>（2022 年 2 月）<br> 一个开放世界生存题材游戏，已弃坑。也在 <a href="https://gitblock.cn/Projects/900999">A 营</a> 发布，是更早的版本。</p>
+<li>
+<p><a href="https://turbowarp.org/editor?project_url=waterblock79.github.io/posts/as-a-scratcher/edge.sb3"><strong>Edge</strong></a>（2022 年 2 月）<br>
+一个开放世界生存题材游戏，已弃坑。也在 <a href="https://gitblock.cn/Projects/900999">A 营</a> 发布，是更早的版本。</p>
 </li>
-<li><p><strong>猫基百科</strong>（2021 年 5 月）<br> 发布在 <a href="https://gitblock.cn/Projects/815003">A 营</a>，一个百科全书社区作品。也可以 <a href="as-a-scratcher/wikiscratch.sb3">下载作品</a>、<a href="as-a-scratcher/wikiscratch.png">查看截图</a> 或 <a href="https://paste.ubuntu.com/p/bJB4DQkfMG/">下载百科数据</a>。 </p>
+<li>
+<p><strong>猫基百科</strong>（2021 年 5 月）<br>
+发布在 <a href="https://gitblock.cn/Projects/815003">A 营</a>，一个百科全书社区作品。也可以 <a href="as-a-scratcher/wikiscratch.sb3">下载作品</a>、<a href="as-a-scratcher/wikiscratch.png">查看截图</a> 或 <a href="https://paste.ubuntu.com/p/bJB4DQkfMG/">下载百科数据</a>。</p>
 </li>
-<li><p><a href="https://turbowarp.org/editor?project_url=waterblock79.github.io/posts/as-a-scratcher/android-gsi.sb3"><strong>Android 刷机教程 - GSI 通刷</strong></a>（2021 年 2 月）<br> 一个关于如何为 Android 设备 GSI 刷机的动画作品。也发布在 <a href="https://gitblock.cn/Projects/778797">A 营</a>。</p>
+<li>
+<p><a href="https://turbowarp.org/editor?project_url=waterblock79.github.io/posts/as-a-scratcher/android-gsi.sb3"><strong>Android 刷机教程 - GSI 通刷</strong></a>（2021 年 2 月）<br>
+一个关于如何为 Android 设备 GSI 刷机的动画作品。也发布在 <a href="https://gitblock.cn/Projects/778797">A 营</a>。</p>
 </li>
-<li><p><strong>比特币挖矿模拟器-ACC</strong>（2020 年 5 月）<br> 发布在 <a href="https://gitblock.cn/Projects/449422">A 营</a>，一个模拟虚拟货币挖矿的作品。也可以 <a href="as-a-scratcher/mining-simulator.png">查看截图</a>。</p>
+<li>
+<p><strong>比特币挖矿模拟器-ACC</strong>（2020 年 5 月）<br>
+发布在 <a href="https://gitblock.cn/Projects/449422">A 营</a>，一个模拟虚拟货币挖矿的作品。也可以 <a href="as-a-scratcher/mining-simulator.png">查看截图</a>。</p>
 </li>
-<li><p><a href="https://turbowarp.org/editor?project_url=waterblock79.github.io/posts/as-a-scratcher/fanqie-doit.sb3"><strong>番茄 DoIt</strong></a>（2020 年 3 月）<br> 一个番茄钟作品。也发布在 <a href="https://gitblock.cn/Projects/400440">A 营</a>、<a href="https://scratch.mit.edu/projects/384858247/">官网</a>。</p>
+<li>
+<p><a href="https://turbowarp.org/editor?project_url=waterblock79.github.io/posts/as-a-scratcher/fanqie-doit.sb3"><strong>番茄 DoIt</strong></a>（2020 年 3 月）<br>
+一个番茄钟作品。也发布在 <a href="https://gitblock.cn/Projects/400440">A 营</a>、<a href="https://scratch.mit.edu/projects/384858247/">官网</a>。</p>
 </li>
-<li><p><a href="https://turbowarp.org/editor?project_url=waterblock79.github.io/posts/as-a-scratcher/dino-jump.sb3"><strong>Dino Jump</strong></a>（2019 年）<br> 一个仿 Chrome Dino 的小游戏。也发布在 <a href="https://gitblock.cn/Projects/456308">A 营</a>、<a href="https://scratch.mit.edu/projects/304690248/">官网</a>。</p>
+<li>
+<p><a href="https://turbowarp.org/editor?project_url=waterblock79.github.io/posts/as-a-scratcher/dino-jump.sb3"><strong>Dino Jump</strong></a>（2019 年）<br>
+一个仿 Chrome Dino 的小游戏。也发布在 <a href="https://gitblock.cn/Projects/456308">A 营</a>、<a href="https://scratch.mit.edu/projects/304690248/">官网</a>。</p>
 </li>
-<li><p><strong>Water OS</strong>（2019 年）<br> 发布在 <a href="https://tieba.baidu.com/p/6230024201">Scratch 吧</a>，一个伪系统作品，基于 ClipCC。</p>
+<li>
+<p><strong>Water OS</strong>（2019 年）<br>
+发布在 <a href="https://tieba.baidu.com/p/6230024201">Scratch 吧</a>，一个伪系统作品，基于 ClipCC。</p>
 </li>
 </ul>
 </div>
@@ -132,20 +156,17 @@
          hljs.highlightAll();
       </script>
       <script>
-         // 单行图片
+         // 单行图片处理
          document.querySelectorAll('.post-content > .content p > img:only-child').forEach((img) => {
-            // 确定确实为 only child（而不是文字夹带 img）
             if (img.parentNode.childNodes.length > 1) return;
-            // 设置 img 及其父元素 class
             img.parentElement.classList.add('figure');
             img.classList.add('only-child');
-            // 添加 alt
             const alt = document.createElement('div');
             alt.classList.add('image-alt');
             alt.innerText = img.getAttribute('alt');
             img.parentElement.append(alt);
          });
-         // 图片放大
+         // 图片点击放大
          document.querySelectorAll('.post-content > .content img').forEach((img) => {
             img.addEventListener('click', () => {
                window.open(img.getAttribute('src'));

@@ -6,28 +6,25 @@
       <link rel="stylesheet" type="text/css" href="/assets/styles.css" />
       <link rel="icon" type="image/png" href="/assets/icon.png" />
       <meta name="description" content="<%= description %>" />
+      
       <script
          type="module"
-         src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"
+         src="https://cdn.jsdelivr.net/npm/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"
       ></script>
       <script
          nomodule
-         src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"
+         src="https://cdn.jsdelivr.net/npm/ionicons@7.1.0/dist/ionicons/ionicons.js"
       ></script>
+
       <link
          rel="stylesheet"
-         href="https://unpkg.com/katex@0.16.8/dist/katex.min.css"
+         href="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/katex.min.css"
       />
       <script
          defer
-         src="https://unpkg.com/katex@0.16.8/dist/katex.min.js"
+         src="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/katex.min.js"
       ></script>
-      <script
-         defer
-         src="https://unpkg.com/katex@0.16.8/dist/contrib/auto-render.min.js"
-         onload="renderMathInElement(document.body, {delimiters: [{left: '$$', right: '$$', display: true},{left: '$', right: '$'}]});"
-      ></script>
-      <!-- Google tag (gtag.js) -->
+
       <script
          async
          src="https://www.googletagmanager.com/gtag/js?id=G-YFC9SHL1Q7"
@@ -40,18 +37,25 @@
          gtag("js", new Date());
          gtag("config", "G-YFC9SHL1Q7");
       </script>
+
       <link
          rel="stylesheet"
-         href="//unpkg.com/@highlightjs/cdn-assets@11.7.0/styles/default.min.css"
+         href="https://cdn.jsdelivr.net/npm/github-markdown-css@4.0.0/github-markdown.min.css"
+      />
+      <link
+         rel="stylesheet"
+         href="https://cdn.jsdelivr.net/npm/highlight.js@11.11.1/styles/github.min.css"
          id="highlightjs-css"
       />
+      <script src="https://cdn.jsdelivr.net/npm/highlight.js@11.11.1/lib/highlight.min.js"></script>
+
       <script>
          if (window.matchMedia("(prefers-color-scheme: dark)").matches) {
             document.querySelector("#highlightjs-css").href =
-               "https://unpkg.com/@highlightjs/cdn-assets@11.7.0/styles/atom-one-dark.min.css";
+               "https://cdn.jsdelivr.net/npm/highlight.js@11.11.1/styles/atom-one-dark.min.css";
          }
       </script>
-      <script src="//unpkg.com/@highlightjs/cdn-assets@11.7.0/highlight.min.js"></script>
+
       <style>
          @media screen and (max-width: 512px) {
             body {
@@ -87,6 +91,13 @@
             max-width: 56em;
          }
       </style>
+      
+      <script type="module">
+         import mermaid from "https://cdn.jsdelivr.net/npm/mermaid@11.4.1/dist/mermaid.esm.min.mjs";
+         mermaid.run({
+            querySelector: ".language-mermaid",
+         });
+      </script>
    </head>
    <body>
       <a class="post-header" href="/">
@@ -96,34 +107,25 @@
       <div class="card post-content">
          <div class="title"><%= title %></div>
          <div class="subtitle">
-            <ion-icon name="time"></ion-icon>
-            <span class="time"><%= datetimeString %></span>
-            <% if (tags?.length > 0) { %>
-            <ion-icon name="pricetag"></ion-icon>
-            <% } %> <% tags.forEach((tag) => { %>
-            <span class="tag"><%= tag %></span>
-            <% }) %>
+            <%= datetimeString %>
          </div>
-         <div class="content"><%- content %></div>
+         <div class="content markdown-body"><%- content %></div>
       </div>
       <script>
          hljs.highlightAll();
       </script>
       <script>
-         // 单行图片
+         // 单行图片处理
          document.querySelectorAll('.post-content > .content p > img:only-child').forEach((img) => {
-            // 确定确实为 only child（而不是文字夹带 img）
             if (img.parentNode.childNodes.length > 1) return;
-            // 设置 img 及其父元素 class
             img.parentElement.classList.add('figure');
             img.classList.add('only-child');
-            // 添加 alt
             const alt = document.createElement('div');
             alt.classList.add('image-alt');
             alt.innerText = img.getAttribute('alt');
             img.parentElement.append(alt);
          });
-         // 图片放大
+         // 图片点击放大
          document.querySelectorAll('.post-content > .content img').forEach((img) => {
             img.addEventListener('click', () => {
                window.open(img.getAttribute('src'));

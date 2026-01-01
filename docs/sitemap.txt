@@ -1,4 +1,7 @@
+https://waterblock79.github.io/posts/recitation
+https://waterblock79.github.io/posts/vscode-flavored-markdown-preview
 https://waterblock79.github.io/posts/aerfaying-history.html
+https://waterblock79.github.io/posts/future-login.html
 https://waterblock79.github.io/posts/data-uri.html
 https://waterblock79.github.io/posts/build-hexo.html
 https://waterblock79.github.io/posts/websocket.html
@@ -9,7 +12,6 @@ https://waterblock79.github.io/posts/resolution-and-composition-of-motion.html
 https://waterblock79.github.io/posts/senior-middle-school-information-technology-book-one.html
 https://waterblock79.github.io/posts/as-a-scratcher.html
 https://waterblock79.github.io/posts/scratch-layer.html
-https://waterblock79.github.io/posts/anti-addiction.html
 https://waterblock79.github.io/posts/huawei-flash-and-root.html
 https://waterblock79.github.io/posts/new-year-game-clip.html
 https://waterblock79.github.io/posts/senior-middle-school-physics-kinematics-basic.html

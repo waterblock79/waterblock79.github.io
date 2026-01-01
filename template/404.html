@@ -6,9 +6,10 @@
    <meta name="viewport" content="width=device-width,initial-scale=1" />
    <link rel="stylesheet" type="text/css" href="/assets/styles.css" />
    <link rel="icon" type="image/png" href="/assets/icon.png" />
-   <script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
-   <script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>
-   <!-- Google tag (gtag.js) -->
+   
+   <script type="module" src="https://cdn.jsdelivr.net/npm/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
+   <script nomodule src="https://cdn.jsdelivr.net/npm/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>
+   
    <script async src="https://www.googletagmanager.com/gtag/js?id=G-YFC9SHL1Q7"></script>
    <script>
       window.dataLayer = window.dataLayer || [];
@@ -32,6 +33,7 @@
          flex-direction: column;
          align-items: center;
          cursor: pointer;
+         position: relative;
       }
 
       .main .title {
@@ -49,8 +51,12 @@
 
 <body>
    <div class="card main" id="back">
+      <picture style="user-select: none; -webkit-user-drag: none;">
+         <source srcset="https://fonts.gstatic.com/s/e/notoemoji/latest/1f416/512.webp" type="image/webp">
+         <img src="https://fonts.gstatic.com/s/e/notoemoji/latest/1f416/512.gif" width="72" height="72">
+      </picture>
       <div class="title">
-         404 Not Found
+         找不到页面
       </div>
       <a href="/">返回主页</a>
    </div>

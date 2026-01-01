@@ -6,28 +6,25 @@
       <link rel="stylesheet" type="text/css" href="/assets/styles.css" />
       <link rel="icon" type="image/png" href="/assets/icon.png" />
       <meta name="description" content="使用 Hexo 搭建你自己的博客。" />
+      
       <script
          type="module"
-         src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"
+         src="https://cdn.jsdelivr.net/npm/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"
       ></script>
       <script
          nomodule
-         src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"
+         src="https://cdn.jsdelivr.net/npm/ionicons@7.1.0/dist/ionicons/ionicons.js"
       ></script>
+
       <link
          rel="stylesheet"
-         href="https://unpkg.com/katex@0.16.8/dist/katex.min.css"
+         href="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/katex.min.css"
       />
       <script
          defer
-         src="https://unpkg.com/katex@0.16.8/dist/katex.min.js"
+         src="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/katex.min.js"
       ></script>
-      <script
-         defer
-         src="https://unpkg.com/katex@0.16.8/dist/contrib/auto-render.min.js"
-         onload="renderMathInElement(document.body, {delimiters: [{left: '$$', right: '$$', display: true},{left: '$', right: '$'}]});"
-      ></script>
-      <!-- Google tag (gtag.js) -->
+
       <script
          async
          src="https://www.googletagmanager.com/gtag/js?id=G-YFC9SHL1Q7"
@@ -40,18 +37,25 @@
          gtag("js", new Date());
          gtag("config", "G-YFC9SHL1Q7");
       </script>
+
       <link
          rel="stylesheet"
-         href="//unpkg.com/@highlightjs/cdn-assets@11.7.0/styles/default.min.css"
+         href="https://cdn.jsdelivr.net/npm/github-markdown-css@4.0.0/github-markdown.min.css"
+      />
+      <link
+         rel="stylesheet"
+         href="https://cdn.jsdelivr.net/npm/highlight.js@11.11.1/styles/github.min.css"
          id="highlightjs-css"
       />
+      <script src="https://cdn.jsdelivr.net/npm/highlight.js@11.11.1/lib/highlight.min.js"></script>
+
       <script>
          if (window.matchMedia("(prefers-color-scheme: dark)").matches) {
             document.querySelector("#highlightjs-css").href =
-               "https://unpkg.com/@highlightjs/cdn-assets@11.7.0/styles/atom-one-dark.min.css";
+               "https://cdn.jsdelivr.net/npm/highlight.js@11.11.1/styles/atom-one-dark.min.css";
          }
       </script>
-      <script src="//unpkg.com/@highlightjs/cdn-assets@11.7.0/highlight.min.js"></script>
+
       <style>
          @media screen and (max-width: 512px) {
             body {
@@ -87,6 +91,13 @@
             max-width: 56em;
          }
       </style>
+      
+      <script type="module">
+         import mermaid from "https://cdn.jsdelivr.net/npm/mermaid@11.4.1/dist/mermaid.esm.min.mjs";
+         mermaid.run({
+            querySelector: ".language-mermaid",
+         });
+      </script>
    </head>
    <body>
       <a class="post-header" href="/">
@@ -96,32 +107,30 @@
       <div class="card post-content">
          <div class="title">花10分钟，搭建你自己的博客</div>
          <div class="subtitle">
-            <ion-icon name="time"></ion-icon>
-            <span class="time">2020-07-13 13:53</span>
-            
-            <ion-icon name="pricetag"></ion-icon>
-             
-            <span class="tag">好东西</span>
-            
+            2020-07-13 13:53
          </div>
-         <div class="content"><h3>环境配置</h3>
+         <div class="content markdown-body"><h3>环境配置</h3>
 <p>在搭建Hexo之前，你需要确保有：</p>
 <ul>
-<li><p>Node.js</p>
+<li>
+<p>Node.js</p>
 <p>在 <a href="https://nodejs.org/zh-cn/download/">Node.js Download</a> 下载适合你电脑系统的Node.js版本。Windows系统直接选择<strong>Windows安装包（.msi）</strong> 的 <strong>x64</strong>（如果你的电脑是64位系统的话）。</p>
 <p>然后打开安装的文件，一路摁<strong>Next</strong>（在第二个需要打勾同意用户协议）等待安装完成。</p>
 </li>
-<li><p>Git</p>
+<li>
+<p>Git</p>
 <p>前往<a href="https://git-scm.com/downloads">Git Download</a>下载Git，然后安装。Windows系统直接在<a href="https://git-scm.com/download/win">这里</a>安装。</p>
 </li>
 </ul>
 <h3>安装Hexo</h3>
 <ol>
-<li><p>hexo的安装非常简单，首先在Powershell执行：</p>
+<li>
+<p>hexo的安装非常简单，首先在Powershell执行：</p>
 <pre><code>npm install -g hexo
 </code></pre>
 </li>
-<li><p>接下来找一个你喜欢的文件夹（必须是空的），进到文件夹中，摁住 <code>Shift</code> 然后右键空白区域，选择 <code>在此处打开Powershell窗口</code> ，执行：</p>
+<li>
+<p>接下来找一个你喜欢的文件夹（必须是空的），进到文件夹中，摁住 <code>Shift</code> 然后右键空白区域，选择 <code>在此处打开Powershell窗口</code> ，执行：</p>
 <pre><code>hexo init
 </code></pre>
 <p>如果你遇到了这样的报错：</p>
@@ -134,7 +143,8 @@
 </ol>
 <h3>创建仓库</h3>
 <ul>
-<li><p>你需要一个仓库来存储博客网页，那就开始创建一个Github仓库吧~</p>
+<li>
+<p>你需要一个仓库来存储博客网页，那就开始创建一个Github仓库吧~</p>
 <p><strong>如果你没有Github账号，到这里去<a href="https://github.com/join">注册</a>一个</strong></p>
 <p>如果你注册完了或者登录好了，那么可以<a href="https://github.com/new">创建新仓库</a>了：</p>
 <p>把 <code>RepoSitory Name</code> 设为 <code>【你的用户名】.github.io</code> ，比如我叫<em>waterblock79</em>，那仓库名就应该是 <code>waterblock79.github.io</code>。</p>
@@ -144,7 +154,8 @@
 </ul>
 <h3>配置Hexo</h3>
 <ol>
-<li><p>现在在Powershell中执行：（别忘了替换引号里的内容~）</p>
+<li>
+<p>现在在Powershell中执行：（别忘了替换引号里的内容~）</p>
 <pre><code>git config --global user.name &quot;你的Github用户名&quot;
 git config --global user.email &quot;你注册Github使用的邮件地址&quot;
 </code></pre>
@@ -153,7 +164,8 @@ git config --global user.email &quot;你注册Github使用的邮件地址&quot;
 git config --global user.email &quot;waterblock79@outlook.com&quot;
 </code></pre>
 </li>
-<li><p>然后回到你刚刚的文件夹，打开文件夹中的 <em>_config.yml</em> ，找到最下面的 <em># Deployment</em>，把内容改成：</p>
+<li>
+<p>然后回到你刚刚的文件夹，打开文件夹中的 <em>_config.yml</em> ，找到最下面的 <em># Deployment</em>，把内容改成：</p>
 <pre><code># Deployment
 ## Docs: https://hexo.io/docs/deployment.html
 deploy:
@@ -175,10 +187,12 @@ deploy:
 <p><strong>（下面的命令需要在Hexo文件夹中执行）</strong></p>
 <p><strong>（摁住 <code>Shift</code> 然后右键空白区域，选择 <code>在此处打开Powershell窗口</code>）</strong></p>
 <ol>
-<li><p>执行 <code>hexo new 【文章名】</code> 来新建文章，</p>
+<li>
+<p>执行 <code>hexo new 【文章名】</code> 来新建文章，</p>
 <p>在你的博客文件夹的 <code>/source/_posts</code> 中编辑这篇文章，可以使用如 VSCode 等支持 Markdown 的编辑器来编辑文章。</p>
 </li>
-<li><p>要上传文章？依次执行这三个命令即可</p>
+<li>
+<p>要上传文章？依次执行这三个命令即可</p>
 <pre><code>hexo clean
 hexo generate
 hexo deploy
@@ -194,20 +208,17 @@ hexo deploy
          hljs.highlightAll();
       </script>
       <script>
-         // 单行图片
+         // 单行图片处理
          document.querySelectorAll('.post-content > .content p > img:only-child').forEach((img) => {
-            // 确定确实为 only child（而不是文字夹带 img）
             if (img.parentNode.childNodes.length > 1) return;
-            // 设置 img 及其父元素 class
             img.parentElement.classList.add('figure');
             img.classList.add('only-child');
-            // 添加 alt
             const alt = document.createElement('div');
             alt.classList.add('image-alt');
             alt.innerText = img.getAttribute('alt');
             img.parentElement.append(alt);
          });
-         // 图片放大
+         // 图片点击放大
          document.querySelectorAll('.post-content > .content img').forEach((img) => {
             img.addEventListener('click', () => {
                window.open(img.getAttribute('src'));

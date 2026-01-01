@@ -6,28 +6,25 @@
       <link rel="stylesheet" type="text/css" href="/assets/styles.css" />
       <link rel="icon" type="image/png" href="/assets/icon.png" />
       <meta name="description" content="简单解析 Scratch 图层机制，并在列表来更加清晰的管理角色间的图层关系！" />
+      
       <script
          type="module"
-         src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"
+         src="https://cdn.jsdelivr.net/npm/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"
       ></script>
       <script
          nomodule
-         src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"
+         src="https://cdn.jsdelivr.net/npm/ionicons@7.1.0/dist/ionicons/ionicons.js"
       ></script>
+
       <link
          rel="stylesheet"
-         href="https://unpkg.com/katex@0.16.8/dist/katex.min.css"
+         href="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/katex.min.css"
       />
       <script
          defer
-         src="https://unpkg.com/katex@0.16.8/dist/katex.min.js"
+         src="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/katex.min.js"
       ></script>
-      <script
-         defer
-         src="https://unpkg.com/katex@0.16.8/dist/contrib/auto-render.min.js"
-         onload="renderMathInElement(document.body, {delimiters: [{left: '$$', right: '$$', display: true},{left: '$', right: '$'}]});"
-      ></script>
-      <!-- Google tag (gtag.js) -->
+
       <script
          async
          src="https://www.googletagmanager.com/gtag/js?id=G-YFC9SHL1Q7"
@@ -40,18 +37,25 @@
          gtag("js", new Date());
          gtag("config", "G-YFC9SHL1Q7");
       </script>
+
       <link
          rel="stylesheet"
-         href="//unpkg.com/@highlightjs/cdn-assets@11.7.0/styles/default.min.css"
+         href="https://cdn.jsdelivr.net/npm/github-markdown-css@4.0.0/github-markdown.min.css"
+      />
+      <link
+         rel="stylesheet"
+         href="https://cdn.jsdelivr.net/npm/highlight.js@11.11.1/styles/github.min.css"
          id="highlightjs-css"
       />
+      <script src="https://cdn.jsdelivr.net/npm/highlight.js@11.11.1/lib/highlight.min.js"></script>
+
       <script>
          if (window.matchMedia("(prefers-color-scheme: dark)").matches) {
             document.querySelector("#highlightjs-css").href =
-               "https://unpkg.com/@highlightjs/cdn-assets@11.7.0/styles/atom-one-dark.min.css";
+               "https://cdn.jsdelivr.net/npm/highlight.js@11.11.1/styles/atom-one-dark.min.css";
          }
       </script>
-      <script src="//unpkg.com/@highlightjs/cdn-assets@11.7.0/highlight.min.js"></script>
+
       <style>
          @media screen and (max-width: 512px) {
             body {
@@ -87,6 +91,13 @@
             max-width: 56em;
          }
       </style>
+      
+      <script type="module">
+         import mermaid from "https://cdn.jsdelivr.net/npm/mermaid@11.4.1/dist/mermaid.esm.min.mjs";
+         mermaid.run({
+            querySelector: ".language-mermaid",
+         });
+      </script>
    </head>
    <body>
       <a class="post-header" href="/">
@@ -96,15 +107,9 @@
       <div class="card post-content">
          <div class="title">在 Scratch 中使用列表管理图层</div>
          <div class="subtitle">
-            <ion-icon name="time"></ion-icon>
-            <span class="time">2022-10-01 20:22</span>
-            
-            <ion-icon name="pricetag"></ion-icon>
-             
-            <span class="tag">Scratch</span>
-            
+            2022-10-01 20:22
          </div>
-         <div class="content"><p><strong>仅供参考，如有错误，欢迎指正！</strong></p>
+         <div class="content markdown-body"><p><strong>仅供参考，如有错误，欢迎指正！</strong></p>
 <h2>开始的开始</h2>
 <p>在 Scratch 中，角色及克隆体的图层决定了它们之间先后顺序（层次关系）。在原生 Scratch 中，我们可以使用以下两个模块（四种操作）来调整图层：</p>
 <p><img src="scratch-layer/sclayer-blocks.png" alt=""></p>
@@ -135,9 +140,11 @@
 <h3>创建一个自定义模块，用于操作图层列表</h3>
 <p><img src="scratch-layer/sclayer-02-set.png" alt=""></p>
 <ul>
-<li>自定义模块有三个参数：<ol>
+<li>自定义模块有三个参数：
+<ol>
 <li>操作对象：需要进行操作的对象的名称。</li>
-<li>操作类型：代表这个操作的类型，有 4 种类型：<ol>
+<li>操作类型：代表这个操作的类型，有 4 种类型：
+<ol>
 <li><code>TOP</code>：移到最顶端</li>
 <li><code>BOTTOM</code>：移到最底端</li>
 <li><code>UPPER</code>：移到对象 [param] 的上面</li>
@@ -168,27 +175,24 @@
 <li>角色 C 的 n 个克隆体：C1、C2、......、Cn</li>
 </ul>
 <p>按照图层从低到高的顺序依次排列为：A、A1、A2、...、An、B、C、C1、C2、......、Cn，现在我们希望 A2 能够移动到 B 的上方、C 的下方，（这里不能使用传统的管理办法了，因为我们不知道 C、A2 这两者上方和下方都有多少个角色、克隆体，无法直接通过“上/下移”模块移动到指定图层）用列表管理图层的办法当然可以，但是如果现在我只有这一个切换图层的需求呢？好像犯不上费这么大劲再接入列表管理图层。这时候就可以采用通过广播获取图层顺序的方法了。</p>
-<p>先发布一个广播，让每个角色都能获取到自己的图层（参考上面在图层性质中提到的“<strong>图层越高的角色，越先接收到广播</strong>”），当所有角色、克隆体都接收完广播后，C 将自己的图层高度放在公用变量中，A2 收到 C 的图层高度、还知道自己的图层高度，那么就可以直接通过“上移  $h_{A2}-h_{C}$ 层”来移到“B 的上方、C 的下方”了。（用 $h_{X}$ 表示 X 的图层高度）</p>
+<p>先发布一个广播，让每个角色都能获取到自己的图层（参考上面在图层性质中提到的“<strong>图层越高的角色，越先接收到广播</strong>”），当所有角色、克隆体都接收完广播后，C 将自己的图层高度放在公用变量中，A2 收到 C 的图层高度、还知道自己的图层高度，那么就可以直接通过“上移  <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msub><mi>h</mi><mrow><mi>A</mi><mn>2</mn></mrow></msub><mo>−</mo><msub><mi>h</mi><mi>C</mi></msub></mrow><annotation encoding="application/x-tex">h_{A2}-h_{C}</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.8444em;vertical-align:-0.15em;"></span><span class="mord"><span class="mord mathnormal">h</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.3283em;"><span style="top:-2.55em;margin-left:0em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mathnormal mtight">A</span><span class="mord mtight">2</span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span><span class="mspace" style="margin-right:0.2222em;"></span><span class="mbin">−</span><span class="mspace" style="margin-right:0.2222em;"></span></span><span class="base"><span class="strut" style="height:0.8444em;vertical-align:-0.15em;"></span><span class="mord"><span class="mord mathnormal">h</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.3283em;"><span style="top:-2.55em;margin-left:0em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mathnormal mtight" style="margin-right:0.07153em;">C</span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span></span></span></span> 层”来移到“B 的上方、C 的下方”了。（用 <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msub><mi>h</mi><mi>X</mi></msub></mrow><annotation encoding="application/x-tex">h_{X}</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.8444em;vertical-align:-0.15em;"></span><span class="mord"><span class="mord mathnormal">h</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.3283em;"><span style="top:-2.55em;margin-left:0em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mathnormal mtight" style="margin-right:0.07847em;">X</span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span></span></span></span> 表示 X 的图层高度）</p>
 </div>
       </div>
       <script>
          hljs.highlightAll();
       </script>
       <script>
-         // 单行图片
+         // 单行图片处理
          document.querySelectorAll('.post-content > .content p > img:only-child').forEach((img) => {
-            // 确定确实为 only child（而不是文字夹带 img）
             if (img.parentNode.childNodes.length > 1) return;
-            // 设置 img 及其父元素 class
             img.parentElement.classList.add('figure');
             img.classList.add('only-child');
-            // 添加 alt
             const alt = document.createElement('div');
             alt.classList.add('image-alt');
             alt.innerText = img.getAttribute('alt');
             img.parentElement.append(alt);
          });
-         // 图片放大
+         // 图片点击放大
          document.querySelectorAll('.post-content > .content img').forEach((img) => {
             img.addEventListener('click', () => {
                window.open(img.getAttribute('src'));

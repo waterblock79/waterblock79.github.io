@@ -1,0 +1,340 @@
+<!DOCTYPE html>
+<html lang="zh">
+   <head>
+      <title>2FA、无密码和账户登录的未来 - Waterblock79's website</title>
+      <meta name="viewport" content="width=device-width,initial-scale=1" />
+      <link rel="stylesheet" type="text/css" href="/assets/styles.css" />
+      <link rel="icon" type="image/png" href="/assets/icon.png" />
+      <meta name="description" content="浅谈互联网身份验证技术的发展。" />
+      
+      <script
+         type="module"
+         src="https://cdn.jsdelivr.net/npm/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"
+      ></script>
+      <script
+         nomodule
+         src="https://cdn.jsdelivr.net/npm/ionicons@7.1.0/dist/ionicons/ionicons.js"
+      ></script>
+
+      <link
+         rel="stylesheet"
+         href="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/katex.min.css"
+      />
+      <script
+         defer
+         src="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/katex.min.js"
+      ></script>
+
+      <script
+         async
+         src="https://www.googletagmanager.com/gtag/js?id=G-YFC9SHL1Q7"
+      ></script>
+      <script>
+         window.dataLayer = window.dataLayer || [];
+         function gtag() {
+            dataLayer.push(arguments);
+         }
+         gtag("js", new Date());
+         gtag("config", "G-YFC9SHL1Q7");
+      </script>
+
+      <link
+         rel="stylesheet"
+         href="https://cdn.jsdelivr.net/npm/github-markdown-css@4.0.0/github-markdown.min.css"
+      />
+      <link
+         rel="stylesheet"
+         href="https://cdn.jsdelivr.net/npm/highlight.js@11.11.1/styles/github.min.css"
+         id="highlightjs-css"
+      />
+      <script src="https://cdn.jsdelivr.net/npm/highlight.js@11.11.1/lib/highlight.min.js"></script>
+
+      <script>
+         if (window.matchMedia("(prefers-color-scheme: dark)").matches) {
+            document.querySelector("#highlightjs-css").href =
+               "https://cdn.jsdelivr.net/npm/highlight.js@11.11.1/styles/atom-one-dark.min.css";
+         }
+      </script>
+
+      <style>
+         @media screen and (max-width: 512px) {
+            body {
+               padding: 1.5em 0;
+            }
+            .post-header {
+               justify-content: center;
+            }
+            .post-header .back {
+               display: none;
+            }
+            .post-content {
+               box-shadow: none;
+               padding: 1.5em 0;
+            }
+            ul {
+               padding-inline-start: 1em;
+            }
+         }
+
+         body {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+         }
+
+         .post-content {
+            max-width: 50em;
+            width: 100%;
+         }
+
+         .post-header {
+            max-width: 56em;
+         }
+      </style>
+      
+      <script type="module">
+         import mermaid from "https://cdn.jsdelivr.net/npm/mermaid@11.4.1/dist/mermaid.esm.min.mjs";
+         mermaid.run({
+            querySelector: ".language-mermaid",
+         });
+      </script>
+   </head>
+   <body>
+      <a class="post-header" href="/">
+         <div class="back">❮ 返回</div>
+         <div class="site">waterblock79 的小站</div>
+      </a>
+      <div class="card post-content">
+         <div class="title">2FA、无密码和账户登录的未来</div>
+         <div class="subtitle">
+            2026-01-01 15:33
+         </div>
+         <div class="content markdown-body"><h2>从 SFA 到 2FA</h2>
+<p>输入用户名、密码，然后点击“登录”。<br>
+<strong>密码</strong> 无疑是最常用的账号登录方式，符合直觉、也并不繁琐，基于密码的 <strong>SFA</strong><sup class="footnote-ref"><a href="#fn1" id="fnref1">[1]</a></sup>、即 <strong>单因素验证</strong> 是许多网站使用的主要登录方式。<br>
+但弱口令、密码泄露等问题正使得纯密码的身份验证变得越来越不可信。<br>
+一些密码管理器程序通过 <strong>生成密码</strong> 的功能帮助用户在不同网站使用不同的、安全性高的密码，在一定程度上降低了撞库和暴力破解的风险。例如 Chrome 就提供了生成高安全系数密码的功能。</p>
+<p><img src="./future-login/chrome-password-generate.png" alt="Chrome 生成密码"></p>
+<p>即便如此，单因素验证也并非账号登录的最优解。在此之上，为了更安全地验证“你是你”，<strong>2FA</strong><sup class="footnote-ref"><a href="#fn2" id="fnref2">[2]</a></sup>、即 <strong>双因素验证</strong> 应运而生。在密码的基础上，从登录 QQ 和微信时的短信验证码、到 Steam 令牌都属于 2FA。<br>
+2FA 通过两个验证因素来验证用户的身份，这些因素包括：知识（密码、验证问题）、拥有（物理密钥、OTP）、固有（生物特征）、地点（物理位置）等<sup class="footnote-ref"><a href="#fn3" id="fnref3">[3]</a></sup>。2FA 能降低密码泄露、弱密码等情况下账户被盗的风险。</p>
+<h2>OTP<sup class="footnote-ref"><a href="#fn4" id="fnref4">[4]</a></sup></h2>
+<p>上面提到的短信验证码和 Steam 令牌都属于 <strong>OTP</strong>、即 <strong>一次性密码</strong>，是 2FA 中的一种因素，通过一个具有时效性的密码来验证用户身份，这是一种被广泛使用的验证方式，银行 U 盾（硬件令牌）生成的验证码也属于 OTP。</p>
+<p><strong>短信、邮箱等验证码验证</strong> 非常常用，但也存在着费用高昂、被滥用等问题。国内一些平台采用了“无感知校验”的“号码认证服务”（PNVS），实现了无验证码的手机验证。</p>
+<p><strong>基于 HMAC 的一次性密码算法</strong>（<strong>HOTP</strong><sup class="footnote-ref"><a href="#fn5" id="fnref5">[5]</a></sup>） / <strong>基于时间的一次性密码算法</strong>（<strong>TOTP</strong><sup class="footnote-ref"><a href="#fn6" id="fnref6">[6]</a></sup>）是另外一种常用的 OTP 类型，用户需要提交客户端显示的验证代码来证明自己的身份，Steam 令牌就采用了类似的算法<sup class="footnote-ref"><a href="#fn7" id="fnref7">[7]</a></sup>。<br>
+这里介绍一种 Github 等平台使用的开源 TOTP 方法：</p>
+<ol start="0">
+<li>
+<p>用户需要使用 <a href="https://support.google.com/accounts/answer/1066447?hl=zh-Hans">Google 身份验证器</a> 或 <a href="https://www.microsoft.com/zh-CN/security/mobile-authenticator-app">Microsoft Authenticator</a> 等应用来获取 TOTP 验证码。在注册时，平台会向用户提供一个二维码（或链接），用户需要在验证器应用中扫描这个二维码来添加 TOTP；在登录时，用户需要在网站中输入验证其中显示的动态密码以验证身份。</p>
+</li>
+<li>
+<p>在 <strong>HOTP</strong> 验证中，服务端和客户端都拥有同一个不变的 Secret，以及一个变化的、双方约定好计算方法的 C 值（验证次数）。<br>
+验证时，双方分别通过 HMAC 算法，传入 Secret 与 C 值，生成哈希值 HS；<br>
+然后，对计算出的哈希值 HS 进行截取、处理，最终得到 6 位的 OTP；<br>
+最后，由用户向服务端提供其生成的 OTP，服务端校验用户提供的 OTP 是否与服务端生成的 OTP 一致。</p>
+</li>
+<li>
+<p><strong>TOTP</strong> 基于 HOTP，在 TOTP 中，变化的 C 值是由当前时间计算得到的。这是 <a href="./future-login/totp.html">一种 HOTP / TOTP 算法的 JavaScript 实现</a> 可供体验：</p>
+<pre><code class="language-javascript"><span class="hljs-comment">/**
+ * 解码 Base 32 Secret
+ * <span class="hljs-doctag">@param</span> {<span class="hljs-type">string</span>} b32 Base 32 编码的 Secret
+ * <span class="hljs-doctag">@return</span> {<span class="hljs-type">Uint8Array</span>} 解码与转换后的 Secret
+ */</span>
+<span class="hljs-keyword">const</span> <span class="hljs-title function_">b32KeyDecode</span> = (<span class="hljs-params">b32</span>) =&gt; {
+    <span class="hljs-comment">// 将 Base 32 编码转换为二进制 String</span>
+    <span class="hljs-comment">// 参考：Base64, Base32 和 Base16，用通俗的语言深入到内部 - JMRVix的文章 - 知乎</span>
+    <span class="hljs-comment">// https://zhuanlan.zhihu.com/p/51316306</span>
+    <span class="hljs-keyword">let</span> bin = <span class="hljs-string">&#x27;&#x27;</span>;
+    b32 = b32.<span class="hljs-title function_">replaceAll</span>(<span class="hljs-string">&#x27;=&#x27;</span>, <span class="hljs-string">&#x27;&#x27;</span>).<span class="hljs-title function_">toUpperCase</span>();
+    b32.<span class="hljs-title function_">split</span>(<span class="hljs-string">&#x27;&#x27;</span>).<span class="hljs-title function_">forEach</span>(<span class="hljs-function"><span class="hljs-params">c</span> =&gt;</span> {
+        bin += <span class="hljs-string">&#x27;ABCDEFGHIJKLMNOPQRSTUVWXYZ234567&#x27;</span>.<span class="hljs-title function_">indexOf</span>(c).<span class="hljs-title function_">toString</span>(<span class="hljs-number">2</span>).<span class="hljs-title function_">padStart</span>(<span class="hljs-number">5</span>, <span class="hljs-string">&#x27;0&#x27;</span>);
+    });
+    <span class="hljs-comment">// 将二进制 String 转换为 Uint8Array</span>
+    <span class="hljs-keyword">let</span> view = <span class="hljs-keyword">new</span> <span class="hljs-title class_">Uint8Array</span>(<span class="hljs-title class_">Math</span>.<span class="hljs-title function_">max</span>(<span class="hljs-number">1</span>, bin.<span class="hljs-property">length</span> / <span class="hljs-number">8</span>));
+    <span class="hljs-keyword">for</span> (<span class="hljs-keyword">let</span> i = <span class="hljs-number">0</span>; i &lt; bin.<span class="hljs-property">length</span>; i += <span class="hljs-number">8</span>) {
+        view[i / <span class="hljs-number">8</span>] = <span class="hljs-built_in">parseInt</span>(bin.<span class="hljs-title function_">slice</span>(i, i + <span class="hljs-number">8</span>), <span class="hljs-number">2</span>);
+    }
+    <span class="hljs-keyword">return</span> view;
+};
+
+<span class="hljs-comment">/**
+ * HOTP 实现
+ * 参考：RFC 4226 - HOTP: An HMAC-Based One-Time Password Algorithm
+ * https://datatracker.ietf.org/doc/html/rfc4226
+ * <span class="hljs-doctag">@param</span> {<span class="hljs-type">string</span>} k Base 32 编码的 Secret
+ * <span class="hljs-doctag">@param</span> {<span class="hljs-type">number</span>} c 计数器
+ * <span class="hljs-doctag">@return</span> {<span class="hljs-type">string</span>} 6 位 OTP
+ */</span>
+<span class="hljs-keyword">const</span> <span class="hljs-title function_">hotp</span> = (<span class="hljs-params">k, c</span>) =&gt; {
+    <span class="hljs-keyword">return</span> <span class="hljs-keyword">new</span> <span class="hljs-title class_">Promise</span>(<span class="hljs-title function_">async</span> (resolve, reject) =&gt; {
+        <span class="hljs-comment">// I. 以 HMAC SHA-1 算法生成 HS</span>
+        <span class="hljs-comment">// a. 从 Secret 生成 Key</span>
+        <span class="hljs-keyword">const</span> key = <span class="hljs-keyword">await</span> crypto.<span class="hljs-property">subtle</span>.<span class="hljs-title function_">importKey</span>(<span class="hljs-string">&quot;raw&quot;</span>, <span class="hljs-title function_">b32KeyDecode</span>(k), { <span class="hljs-attr">name</span>: <span class="hljs-string">&quot;HMAC&quot;</span>, <span class="hljs-attr">hash</span>: <span class="hljs-string">&quot;SHA-1&quot;</span> }, <span class="hljs-literal">false</span>, [<span class="hljs-string">&quot;sign&quot;</span>]);
+        <span class="hljs-comment">// b. 从 Counter 生成 Data</span>
+        <span class="hljs-keyword">const</span> data = <span class="hljs-keyword">new</span> <span class="hljs-title class_">DataView</span>(<span class="hljs-keyword">new</span> <span class="hljs-title class_">ArrayBuffer</span>(<span class="hljs-number">8</span>));
+        data.<span class="hljs-title function_">setUint32</span>(<span class="hljs-number">4</span>, c);
+        <span class="hljs-comment">// c. HMAC-SHA-1(Key, Data)，并将 Uint8Array 类型的结果存入 HS</span>
+        <span class="hljs-keyword">const</span> sign = <span class="hljs-keyword">await</span> crypto.<span class="hljs-property">subtle</span>.<span class="hljs-title function_">sign</span>(<span class="hljs-string">&quot;HMAC&quot;</span>, key, data);
+        <span class="hljs-keyword">const</span> <span class="hljs-variable constant_">HS</span> = <span class="hljs-keyword">new</span> <span class="hljs-title class_">DataView</span>(sign);
+        <span class="hljs-comment">// II. 截留生成的 HS</span>
+        <span class="hljs-comment">// a. 获取 Offset 值</span>
+        <span class="hljs-keyword">const</span> offset = <span class="hljs-variable constant_">HS</span>.<span class="hljs-title function_">getInt8</span>(<span class="hljs-number">19</span>) &amp; <span class="hljs-number">15</span>;
+        <span class="hljs-comment">// b. 获取从第 Offset 位起的 32 位 unsigned int（4 字节），按标准取后 31 位，并 mod 6 得到 6 位 OTP</span>
+        <span class="hljs-keyword">const</span> otp = (<span class="hljs-variable constant_">HS</span>.<span class="hljs-title function_">getUint32</span>(offset) &amp; <span class="hljs-number">0x7fffffff</span>) % <span class="hljs-title class_">Math</span>.<span class="hljs-title function_">pow</span>(<span class="hljs-number">10</span>, <span class="hljs-number">6</span>);
+        <span class="hljs-comment">// c. 转 string、补 0 并返回</span>
+        <span class="hljs-title function_">resolve</span>(otp.<span class="hljs-title function_">toString</span>().<span class="hljs-title function_">padStart</span>(<span class="hljs-number">6</span>, <span class="hljs-string">&#x27;0&#x27;</span>));
+        <span class="hljs-comment">// console.log(b32KeyDecode(k), key, data, sign, HS, offset, otp);</span>
+    });
+}
+
+<span class="hljs-comment">/**
+ * TOTP 实现
+ * 参考：RFC 6238 - TOTP: Time-Based One-Time Password Algorithm
+ * https://datatracker.ietf.org/doc/html/rfc6238
+ * <span class="hljs-doctag">@param</span> {<span class="hljs-type">string</span>} k Base 32 编码的 Secret
+ * <span class="hljs-doctag">@param</span> {<span class="hljs-type">number</span>} t UNIX 时间戳
+ * <span class="hljs-doctag">@return</span> {<span class="hljs-type">string</span>} 6 位 OTP
+ */</span>
+<span class="hljs-keyword">const</span> <span class="hljs-title function_">totp</span> = (<span class="hljs-params">k, t</span>) =&gt; {
+    <span class="hljs-keyword">const</span> t0 = <span class="hljs-number">0</span>, p = <span class="hljs-number">30</span>;
+    <span class="hljs-keyword">return</span> <span class="hljs-title function_">hotp</span>(k, <span class="hljs-title class_">Math</span>.<span class="hljs-title function_">floor</span>((t - t0) / p));
+}
+</code></pre>
+<p>解释如下<sup class="footnote-ref"><a href="#fn8" id="fnref8">[8]</a></sup><sup class="footnote-ref"><a href="#fn9" id="fnref9">[9]</a></sup>：</p>
+<ol>
+<li>
+<p>默认 TOTP 参数：</p>
+<ol>
+<li><code>the time step in seconds</code> 时间步长 X = 30</li>
+<li><code>the Unix time to start counting time steps</code> 起始 UNIX 时间 T0 = 0</li>
+<li><code>number of digits</code> 验证码位数 Dight = 6</li>
+</ol>
+</li>
+<li>
+<p>计算 C 值，若当前 UNIX 时间戳为 T，则 C 值为 <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mfrac><mrow><mi>T</mi><mo>−</mo><mi>T</mi><mn>0</mn></mrow><mi>X</mi></mfrac></mrow><annotation encoding="application/x-tex">\frac{T - T0}{X}</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1.2173em;vertical-align:-0.345em;"></span><span class="mord"><span class="mopen nulldelimiter"></span><span class="mfrac"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.8723em;"><span style="top:-2.655em;"><span class="pstrut" style="height:3em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mathnormal mtight" style="margin-right:0.07847em;">X</span></span></span></span><span style="top:-3.23em;"><span class="pstrut" style="height:3em;"></span><span class="frac-line" style="border-bottom-width:0.04em;"></span></span><span style="top:-3.394em;"><span class="pstrut" style="height:3em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mathnormal mtight" style="margin-right:0.13889em;">T</span><span class="mbin mtight">−</span><span class="mord mathnormal mtight" style="margin-right:0.13889em;">T</span><span class="mord mtight">0</span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.345em;"><span></span></span></span></span></span><span class="mclose nulldelimiter"></span></span></span></span></span> 的向下取整。</p>
+</li>
+<li>
+<p>一般地，Secret 由 Base32 编码，以 Base32 解码 Secret、得到密钥 K。</p>
+</li>
+<li>
+<p>执行 HMAC SHA-1 算法，得到 20 字节的 HS = HMAC-SHA-1(K,C).</p>
+</li>
+<li>
+<p>进行截取，下面是一个生成的 HS 示例（摘自 RFC 4226）。</p>
+<pre><code>-------------------------------------------------------------
+| Byte Number                                               |
+-------------------------------------------------------------
+|00|01|02|03|04|05|06|07|08|09|10|11|12|13|14|15|16|17|18|19|
+-------------------------------------------------------------
+| Byte Value                                                |
+-------------------------------------------------------------
+|1f|86|98|69|0e|02|ca|16|61|85|50|ef|7f|19|da|8e|94|5b|55|5a|
+-------------------------------***********----------------++|
+</code></pre>
+<ol>
+<li>取第 20 字节的低 4 位（即上例的 <code>a</code>，十进制为 10）作为偏移量 Offset（<span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mn>0</mn><mo>≤</mo><mi>O</mi><mi>f</mi><mi>f</mi><mi>s</mi><mi>e</mi><mi>t</mi><mo>≤</mo><mn>15</mn></mrow><annotation encoding="application/x-tex">0\leq Offset\leq 15</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.7804em;vertical-align:-0.136em;"></span><span class="mord">0</span><span class="mspace" style="margin-right:0.2778em;"></span><span class="mrel">≤</span><span class="mspace" style="margin-right:0.2778em;"></span></span><span class="base"><span class="strut" style="height:0.8889em;vertical-align:-0.1944em;"></span><span class="mord mathnormal" style="margin-right:0.02778em;">O</span><span class="mord mathnormal" style="margin-right:0.10764em;">ff</span><span class="mord mathnormal">se</span><span class="mord mathnormal">t</span><span class="mspace" style="margin-right:0.2778em;"></span><span class="mrel">≤</span><span class="mspace" style="margin-right:0.2778em;"></span></span><span class="base"><span class="strut" style="height:0.6444em;"></span><span class="mord">15</span></span></span></span>）。</li>
+<li>截取第 Offset 字节起 4 个字节（即上例中第 10 到 13 字节，<code>50 ef 7f 19</code>），取其后 31 位<sup class="footnote-ref"><a href="#fn10" id="fnref10">[10]</a></sup>返回 D。</li>
+</ol>
+</li>
+<li>
+<p>对 D 取模 <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msup><mn>10</mn><mrow><mi>D</mi><mi>i</mi><mi>g</mi><mi>i</mi><mi>t</mi></mrow></msup></mrow><annotation encoding="application/x-tex">10^{Digit}</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.8413em;"></span><span class="mord">1</span><span class="mord"><span class="mord">0</span><span class="msupsub"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:0.8413em;"><span style="top:-3.063em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mathnormal mtight" style="margin-right:0.02778em;">D</span><span class="mord mathnormal mtight">i</span><span class="mord mathnormal mtight" style="margin-right:0.03588em;">g</span><span class="mord mathnormal mtight">i</span><span class="mord mathnormal mtight">t</span></span></span></span></span></span></span></span></span></span></span></span>（，转换为 String，补 0），得到 6 位 OTP。</p>
+</li>
+</ol>
+<p>为了降低客户端 - 服务端时间差带来的影响（抑或 HOTP 中客户端的“验证次数”意外增加）、并避免暴力破解，在生产环境验证中，还存在：</p>
+<ol>
+<li><code>throttling parameter</code> 限制参数 T：服务端会在用户验证失败 T 次后拒绝用户的连接。</li>
+<li><code>resynchronization parameter</code> s：服务端会尝试 s 范围内的 C 值。</li>
+</ol>
+</li>
+</ol>
+<p>以 HOTP / TOTP 作为 2FA 相比短信、邮箱验证码验证可能更具优势，例如能避免手机短信被恶意软件获取导致账号被盗、避免账号和手机号绑定、减少更换手机号时带来的麻烦，以及成本较低等。</p>
+<h2>Passkey</h2>
+<p>近年来，Google、微软等公司都在推动“无密码登录”<sup class="footnote-ref"><a href="#fn11" id="fnref11">[11]</a></sup><sup class="footnote-ref"><a href="#fn12" id="fnref12">[12]</a></sup>，被称为 <strong>通行密钥</strong>，即 <strong>Passkey</strong>。通行密钥的核心是非对称加密算法，其中私钥始终储存在用户端；在登陆时，服务端向客户端发起 Challenge（质询 / 挑战），客户端使用私钥对请求进行签名并返回以证明身份<sup class="footnote-ref"><a href="#fn13" id="fnref13">[13]</a></sup>。</p>
+<pre><code class="language-mermaid">---
+title: 通行密钥验证
+config:
+  theme: 'neutral'
+---
+sequenceDiagram
+    participant A as 验证器（客户端）
+    participant B as 浏览器（客户端）
+    participant S as 服务端
+    B-&gt;&gt;S: 请求验证
+    S-&gt;&gt;B: 发起包含随机信息的 Challenge
+    B-&gt;&gt;A: 调用验证器
+    A-&gt;&gt;A: 寻找匹配的凭证&lt;br /&gt;并提示用户同意验证
+    A-&gt;&gt;A: 使用本地私钥对 Challenge 签名
+    A-&gt;&gt;B: 返回签名
+    B-&gt;&gt;S: 向服务器发送响应
+    S-&gt;&gt;S: 使用公钥验证签名
+    S-&gt;&gt;B: 登录成功
+</code></pre>
+<p>使用通行密钥的用户只需要在登陆时通过指纹或 PIN 等方式验证自己的身份，加快了登录的流程、降低了密码或生物信息泄露的风险。同时，用户也可以选择使用密码管理器跨设备同步自己的通行密钥。通行密钥正在成为一些平台中与密码并行的另外一种登录方案。</p>
+<p><img src="./future-login/passkey.png" alt="Passkey"></p>
+<p>通行密钥执行 FIDO2 标准。FIDO2 标准由 FIDO 联盟推出，“FIDO2 使用户能够利用普通设备在移动和桌面环境中轻松验证在线服务”<sup class="footnote-ref"><a href="#fn14" id="fnref14">[14]</a></sup>。</p>
+<p>各个平台都在陆续支持通行密钥，例如 <a href="https://developer.mozilla.org/zh-CN/docs/Web/API/Web_Authentication_API">Web Authentication API</a>、<a href="https://developers.google.com/identity/android-credential-manager?hl=zh-cn">Android Credential Manager API</a>、<a href="https://developer.apple.com/documentation/authenticationservices/supporting-passkeys">Supporting passkeys (Apple)</a>。<br>
+这是 <a href="https://try-webauthn.appspot.com/">一个 Google 提供的 WebAuthn 演示</a> 可供体验，对于详细的 WebAuthn（通行密钥实现）流程，可以参考 <a href="https://developer.mozilla.org/zh-CN/docs/Web/API/Web_Authentication_API#%E6%B3%A8%E5%86%8C">Web Authentication API #注册</a>。</p>
+<h2>展望</h2>
+<p>从最初以密码验证的 SFA、到不断发展的 2FA，再到今天逐渐推广的通行密钥，<strong>基于知识的身份验证</strong> 正在转向 <strong>基于占有的身份验证</strong><sup class="footnote-ref"><a href="#fn14" id="fnref14:1">[14:1]</a></sup>，使得账户登录愈加安全、快速。<br>
+尽管如此，钓鱼、凭据泄露等因素仍使盗号问题挥之不去，通行密钥在国内尚未成为主流，云服务间的隔阂增加了设备间同步通行密钥的成本，“无密码未来”仍需行业进一步达成共识、协同推进。</p>
+<hr class="footnotes-sep">
+<section class="footnotes">
+<ol class="footnotes-list">
+<li id="fn1" class="footnote-item"><p>Single-factor authentication <a href="#fnref1" class="footnote-backref">↩︎</a></p>
+</li>
+<li id="fn2" class="footnote-item"><p>Two-factor authentication，属于 Multi-factor authentication、即多因素验证的一种。 <a href="#fnref2" class="footnote-backref">↩︎</a></p>
+</li>
+<li id="fn3" class="footnote-item"><p><a href="https://en.wikipedia.org/wiki/Multi-factor_authentication#Authentication_factors">Multi-factor authentication</a> - Wikipedia <a href="#fnref3" class="footnote-backref">↩︎</a></p>
+</li>
+<li id="fn4" class="footnote-item"><p>One-time password <a href="#fnref4" class="footnote-backref">↩︎</a></p>
+</li>
+<li id="fn5" class="footnote-item"><p>HMAC-based one-time password <a href="#fnref5" class="footnote-backref">↩︎</a></p>
+</li>
+<li id="fn6" class="footnote-item"><p>Time-based one-Time password <a href="#fnref6" class="footnote-backref">↩︎</a></p>
+</li>
+<li id="fn7" class="footnote-item"><p><a href="https://zhuanlan.zhihu.com/p/554017567">Steam令牌算法分析 - 紫金校尉的文章 - 知乎</a> <a href="#fnref7" class="footnote-backref">↩︎</a></p>
+</li>
+<li id="fn8" class="footnote-item"><p><a href="https://datatracker.ietf.org/doc/html/rfc4226">RFC 4226 - HOTP: An HMAC-Based One-Time Password Algorithm</a> <a href="#fnref8" class="footnote-backref">↩︎</a></p>
+</li>
+<li id="fn9" class="footnote-item"><p><a href="https://datatracker.ietf.org/doc/html/rfc6238">RFC 6238 - TOTP: Time-Based One-Time Password Algorithm</a> <a href="#fnref9" class="footnote-backref">↩︎</a></p>
+</li>
+<li id="fn10" class="footnote-item"><p>“掩去最高位的原因是为了避免在取模运算中关于有符号和无符号的混淆。不同者处理的方式不同，掩去符号位能避免歧义。”（译自 RFC 4226） <a href="#fnref10" class="footnote-backref">↩︎</a></p>
+</li>
+<li id="fn11" class="footnote-item"><p><a href="https://www.zaobao.com.sg/lifestyle/gadget/story20220605-1279750">微软、谷歌、苹果大力推动 无密码登录时代明年可待 - 联合早报</a> <a href="#fnref11" class="footnote-backref">↩︎</a></p>
+</li>
+<li id="fn12" class="footnote-item"><p>Chrome、Safari、Edge、Firefox 等主流浏览器在 2018 年前后开始支持 Web Authentication API。 <a href="#fnref12" class="footnote-backref">↩︎</a></p>
+</li>
+<li id="fn13" class="footnote-item"><p><a href="https://www.microsoft.com/en-us/security/business/security-101/what-is-fido2">What is FIDO2?</a> - Microsoft <a href="#fnref13" class="footnote-backref">↩︎</a></p>
+</li>
+<li id="fn14" class="footnote-item"><p><a href="https://fidoalliance.org/fido2/?lang=zh-hans">FIDO 身份验证</a> - FIDO Alliance <a href="#fnref14" class="footnote-backref">↩︎</a> <a href="#fnref14:1" class="footnote-backref">↩︎</a></p>
+</li>
+</ol>
+</section>
+</div>
+      </div>
+      <script>
+         hljs.highlightAll();
+      </script>
+      <script>
+         // 单行图片处理
+         document.querySelectorAll('.post-content > .content p > img:only-child').forEach((img) => {
+            if (img.parentNode.childNodes.length > 1) return;
+            img.parentElement.classList.add('figure');
+            img.classList.add('only-child');
+            const alt = document.createElement('div');
+            alt.classList.add('image-alt');
+            alt.innerText = img.getAttribute('alt');
+            img.parentElement.append(alt);
+         });
+         // 图片点击放大
+         document.querySelectorAll('.post-content > .content img').forEach((img) => {
+            img.addEventListener('click', () => {
+               window.open(img.getAttribute('src'));
+            })
+         });
+         // 为标题添加 id
+         document.querySelectorAll('h1, h2, h3').forEach((title) => {
+            title.id = title.innerText;
+         })
+      </script>
+   </body>
+</html>

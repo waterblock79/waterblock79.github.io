@@ -1,0 +1,222 @@
+<html>
+
+<head>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcode/1.5.1/qrcode.js" referrerpolicy="no-referrer"></script>
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <style>
+        .main {
+            position: absolute;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+        }
+
+        .card {
+            border: #E0E0E0 1px solid;
+            border-radius: 8px;
+            overflow: hidden;
+            margin: 0.5em;
+        }
+
+        .totp {
+            display: flex;
+            flex-direction: row;
+            justify-content: center;
+            min-height: 10em;
+            max-height: 75%;
+            width: 20em;
+        }
+
+        .tips {
+            padding: 1em 1em;
+            font-size: 0.75em;
+            color: rgba(0, 0, 0, 0.4);
+            text-align: center;
+        }
+
+        #time {
+            font-weight: 600;
+        }
+
+        .totp>.server,
+        .totp>.client {
+            width: 50%;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .totp::after {
+            content: '';
+            position: absolute;
+            height: 4px;
+            border-radius: 2em;
+            width: 20em;
+            background: #3949AB;
+            display: block;
+            transform: scaleX(var(--progress));
+            transition: transform 0.2s;
+        }
+
+        #secret, #edit {
+            max-width: 5rem;
+            font-size: 0.75em;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            text-decoration: none;
+            color: #3949AB;
+        }
+
+        #edit {
+            color: rgba(0, 0, 0, 0.4);
+            user-select: none;
+            cursor: pointer;
+        }
+
+        #qr {
+            user-select: none;
+            width: 5em;
+        }
+
+        #code {
+            color: #3949AB;
+            letter-spacing: 0.25rem;
+            font-weight: 600;
+            font-size: 1.1em;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="main">
+        <div class="totp card">
+            <div class="server">
+                <img src="" id="qr" />
+                <a id="secret"></a>
+                <span id="edit">修改</span>
+            </div>
+            <div class="client">
+                <div id="code"></div>
+            </div>
+        </div>
+        <div class="tips card">
+            这是一个 TOTP 的 <b>演示用例</b>，您可以使用 <b>Authenticator</b> 等应用添加此 TOTP
+        </div>
+    </div>
+    <script>
+        let secret = '';
+        for (let i = 0; i < 16; i++) {
+            secret += 'ABCDEFGHIJKLMNOPQRSTUVWXYZ234567'[Math.floor(Math.random() * 32)];
+        }
+
+        // 传输 OTP 的 Secret 时，Secret 使用 Base 32 编码（例如 otpauth 链接中）
+        /**
+         * 解码 Base 32 Secret
+         * @param {string} b32 Base 32 编码的 Secret
+         * @return {Uint8Array} 解码与转换后的 Secret
+         */
+        const b32KeyDecode = (b32) => {
+            // 将 Base 32 编码转换为二进制 String
+            // 参考：Base64, Base32 和 Base16，用通俗的语言深入到内部 - JMRVix的文章 - 知乎
+            // https://zhuanlan.zhihu.com/p/51316306
+            let bin = '';
+            b32 = b32.replaceAll('=', '').toUpperCase();
+            b32.split('').forEach(c => {
+                bin += 'ABCDEFGHIJKLMNOPQRSTUVWXYZ234567'.indexOf(c).toString(2).padStart(5, '0');
+            });
+            // 将二进制 String 转换为 Uint8Array
+            let view = new Uint8Array(Math.max(1, bin.length / 8));
+            for (let i = 0; i < bin.length; i += 8) {
+                view[i / 8] = parseInt(bin.slice(i, i + 8), 2);
+            }
+            return view;
+        };
+
+        /**
+         * HOTP 实现
+         * 参考：RFC 4226 - HOTP: An HMAC-Based One-Time Password Algorithm
+         * https://datatracker.ietf.org/doc/html/rfc4226
+         * @param {string} k Base 32 编码的 Secret
+         * @param {number} c 计数器
+         * @return {string} 6 位 OTP
+         */
+        const hotp = (k, c) => {
+            return new Promise(async (resolve, reject) => {
+                // I. 以 HMAC SHA-1 算法生成 HS
+                // a. 从 Secret 生成 Key
+                const key = await crypto.subtle.importKey("raw", b32KeyDecode(k), { name: "HMAC", hash: "SHA-1" }, false, ["sign"]);
+                // b. 从 Counter 生成 Data
+                const data = new DataView(new ArrayBuffer(8));
+                data.setUint32(4, c);
+                // c. HMAC-SHA-1(Key, Data)，并将 Uint8Array 类型的结果存入 HS
+                const sign = await crypto.subtle.sign("HMAC", key, data);
+                const HS = new DataView(sign);
+                // II. 截留生成的 HS
+                // a. 获取 Offset 值
+                const offset = HS.getInt8(19) & 15;
+                // b. 获取从第 Offset 位起的 32 位 unsigned int（4 字节），按标准取后 31 位，并 mod 6 得到 6 位 OTP
+                const otp = (HS.getUint32(offset) & 0x7fffffff) % Math.pow(10, 6);
+                // c. 转 string、补 0 并返回
+                resolve(otp.toString().padStart(6, '0'));
+                // console.log(b32KeyDecode(k), key, data, sign, HS, offset, otp);
+            });
+        }
+        /**
+         * TOTP 实现
+         * 参考：RFC 6238 - TOTP: Time-Based One-Time Password Algorithm
+         * https://datatracker.ietf.org/doc/html/rfc6238
+         * @param {string} k Base 32 编码的 Secret
+         * @param {number} t UNIX 时间戳
+         * @return {string} 6 位 OTP
+         */
+        const totp = (k, t) => {
+            const t0 = 0, p = 30;
+            return hotp(k, Math.floor((t - t0) / p));
+        }
+
+        const init = () => {
+            QRCode.toDataURL(`otpauth://totp/TOTP Demo?secret=${secret}`, (cb, url) => {
+                document.querySelector('#qr').src = url;
+            });
+            document.querySelector('#secret').href = `otpauth://totp/Demo?secret=${secret}`;
+            
+            document.querySelector('#secret').innerText = secret;
+        };
+
+        let lastUpdate = 0;
+        setInterval(() => {
+            document.querySelector('.totp').style.setProperty('--progress', `${100 - Math.floor(new Date().getTime() / 1000) % 30 / 30 * 100}%`);
+            let current = Math.floor(new Date().getTime() / 1000 / 30);
+            if (current > lastUpdate) {
+                totp(secret, new Date().getTime() / 1000)
+                    .then((code) => {
+                        document.querySelector('#code').innerText = code;
+                    });
+                lastUpdate = current;
+            }
+        });
+
+        init();
+
+        document.querySelector('#edit').addEventListener('click', () => {
+            const newSecret = prompt('输入新的 Secret');
+            if (newSecret) {
+                if (newSecret.match(/[^AaBbCcDdEeFfGgHhIiJjKkLlMmNnOoPpQqRrSsTtUuVvWwXxYyZz234567=]/g)) {
+                    alert('不是一个正确的 Base 32 编码的 Secret')
+                } else {
+                    secret = newSecret;
+                    init();
+                    lastUpdate = 0;
+                }
+            }
+        })
+    </script>
+</body>
+
+</html>

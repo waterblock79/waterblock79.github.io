@@ -6,28 +6,25 @@
       <link rel="stylesheet" type="text/css" href="/assets/styles.css" />
       <link rel="icon" type="image/png" href="/assets/icon.png" />
       <meta name="description" content="Zinc Engine - Scratch 原生的 UI 渲染引擎" />
+      
       <script
          type="module"
-         src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"
+         src="https://cdn.jsdelivr.net/npm/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"
       ></script>
       <script
          nomodule
-         src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"
+         src="https://cdn.jsdelivr.net/npm/ionicons@7.1.0/dist/ionicons/ionicons.js"
       ></script>
+
       <link
          rel="stylesheet"
-         href="https://unpkg.com/katex@0.16.8/dist/katex.min.css"
+         href="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/katex.min.css"
       />
       <script
          defer
-         src="https://unpkg.com/katex@0.16.8/dist/katex.min.js"
+         src="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/katex.min.js"
       ></script>
-      <script
-         defer
-         src="https://unpkg.com/katex@0.16.8/dist/contrib/auto-render.min.js"
-         onload="renderMathInElement(document.body, {delimiters: [{left: '$$', right: '$$', display: true},{left: '$', right: '$'}]});"
-      ></script>
-      <!-- Google tag (gtag.js) -->
+
       <script
          async
          src="https://www.googletagmanager.com/gtag/js?id=G-YFC9SHL1Q7"
@@ -40,18 +37,25 @@
          gtag("js", new Date());
          gtag("config", "G-YFC9SHL1Q7");
       </script>
+
       <link
          rel="stylesheet"
-         href="//unpkg.com/@highlightjs/cdn-assets@11.7.0/styles/default.min.css"
+         href="https://cdn.jsdelivr.net/npm/github-markdown-css@4.0.0/github-markdown.min.css"
+      />
+      <link
+         rel="stylesheet"
+         href="https://cdn.jsdelivr.net/npm/highlight.js@11.11.1/styles/github.min.css"
          id="highlightjs-css"
       />
+      <script src="https://cdn.jsdelivr.net/npm/highlight.js@11.11.1/lib/highlight.min.js"></script>
+
       <script>
          if (window.matchMedia("(prefers-color-scheme: dark)").matches) {
             document.querySelector("#highlightjs-css").href =
-               "https://unpkg.com/@highlightjs/cdn-assets@11.7.0/styles/atom-one-dark.min.css";
+               "https://cdn.jsdelivr.net/npm/highlight.js@11.11.1/styles/atom-one-dark.min.css";
          }
       </script>
-      <script src="//unpkg.com/@highlightjs/cdn-assets@11.7.0/highlight.min.js"></script>
+
       <style>
          @media screen and (max-width: 512px) {
             body {
@@ -87,6 +91,13 @@
             max-width: 56em;
          }
       </style>
+      
+      <script type="module">
+         import mermaid from "https://cdn.jsdelivr.net/npm/mermaid@11.4.1/dist/mermaid.esm.min.mjs";
+         mermaid.run({
+            querySelector: ".language-mermaid",
+         });
+      </script>
    </head>
    <body>
       <a class="post-header" href="/">
@@ -96,32 +107,23 @@
       <div class="card post-content">
          <div class="title">Zinc Engine 指南</div>
          <div class="subtitle">
-            <ion-icon name="time"></ion-icon>
-            <span class="time">2024-02-17 11:41</span>
-            
-            <ion-icon name="pricetag"></ion-icon>
-             
-            <span class="tag">Scratch</span>
-            
+            2024-02-17 11:41
          </div>
-         <div class="content"><p>Zinc Engine 是一个在 Scratch 中渲染用户界面的工具，通过 Zinc Engine 可以仅使用代码块就快速构建出灵活的界面。</p>
+         <div class="content markdown-body"><p>Zinc Engine 是一个在 Scratch 中渲染用户界面的工具，通过 Zinc Engine 可以仅使用代码块就快速构建出灵活的界面。</p>
 <p><img src="./zinc-engine/zinc-engine-block.png" alt="使用工具包中提供的代码块构建界面"></p>
 <p>这是一个实验性项目，仍需进一步改进以提升性能。</p>
 <h2>预览</h2>
 <div style="display: flex; justify-content: center; padding: 2em;">
    <iframe src="./zinc-engine/packaged.html" style="width: 75%; min-width: 480px; aspect-ratio: 4 / 3; border: #757575 1.5px solid;"></iframe>
 </div>
-
 <div 
    style="display: flex; justify-content: center"
 >
    <a href="./zinc-engine/Zinc%20Engine.sb3" style="font-size: 1.5em; font-weight: 600">下载引擎本体及工具包</a>
 </div>
-
 <h2>优化</h2>
 <p>通过将作品中需要打印的文字存储为为矢量造型、在需要打印时直接图章的方式可以一定程度上地提升 Zinc Engine 的性能。通过下方的工具即可一键对使用 Zinc Engine 的作品进行优化 ↓</p>
 <iframe src="./zinc-engine/advance.html" style="height: 12em; width: 100%; border: none;"></iframe>
-
 <p>感谢：<a href="https://unifoundry.com/unifont/index.html">Unifont</a>、<a href="https://github.com/opentypejs/opentype.js">opentype.js</a>、<a href="https://github.com/Stuk/jszip">jszip</a>、<a href="https://www.npmjs.com/package/crypto-js">crypto-js</a>。</p>
 <h2>使用指南</h2>
 <h3>入门</h3>
@@ -141,38 +143,59 @@
 <p>这是一个 <strong>Hello World</strong> 页面：</p>
 <p><img src="zinc-engine/hello-world.png" alt="Hello, world!"></p>
 <p>（左侧的积木先是清空了组件列表，然后创建了 ID 为 <code>title1</code> 的文本组件 <code>Text</code>，创建完成后将这个组件的 <code>text</code> 属性值设为了 <code>Hello, world!</code>，最后加入到了 ID 为空的根组件中）</p>
-<p>搭建完成后，请运行左侧的积木并点击绿旗，即可看到渲染出来的页面。 </p>
-<p>Tips: </p>
+<p>搭建完成后，请运行左侧的积木并点击绿旗，即可看到渲染出来的页面。</p>
+<p>Tips:</p>
 <ul>
-<li><strong>当程序正常运行时，使用自定义模块更改组件将会自动重新渲染页面，除此之外，还可以通过广播 [ Zinc Engine - 渲染 ] 来手动渲染页面</strong>。<br>（若将 Zinc Engine 渲染的页面作为您作品的一部分、并不需要一直展示 Zinc Engine 渲染的页面，就可以关闭自动渲染、然后在需要展示页面时通过广播来渲染页面）  </li>
-<li><strong>设置组件属性前必须先创建组件。<br> 将组件 A 加入到组件 B 时，组件 B 必须存在且已经被加入到了页面中。</strong><br> （创建组件 → 设置属性 → 加入到页面）</li>
+<li><strong>当程序正常运行时，使用自定义模块更改组件将会自动重新渲染页面，除此之外，还可以通过广播 [ Zinc Engine - 渲染 ] 来手动渲染页面</strong>。<br>
+（若将 Zinc Engine 渲染的页面作为您作品的一部分、并不需要一直展示 Zinc Engine 渲染的页面，就可以关闭自动渲染、然后在需要展示页面时通过广播来渲染页面）</li>
+<li><strong>设置组件属性前必须先创建组件。<br>
+将组件 A 加入到组件 B 时，组件 B 必须存在且已经被加入到了页面中。</strong><br>
+（创建组件 → 设置属性 → 加入到页面）</li>
 </ul>
 <h3>组件</h3>
 <ul>
-<li><p><strong>文本组件 Text</strong></p>
-<p> 这个组件类似 HTML 中的 span，用于展示文字。</p>
-<p> 该组件有几个特色属性：</p>
+<li>
+<p><strong>文本组件 Text</strong></p>
+<p>这个组件类似 HTML 中的 span，用于展示文字。</p>
+<p>该组件有几个特色属性：</p>
 <ul>
-<li><strong>文本内容 <code>text</code></strong>：<br> <em>一个字符串，该文本组件所显示的文本内容</em>，支持转义、换行符（<code>\n</code>）。例如 <code>秦时明月汉时关\n万里长征人未还</code>。</li>
-<li><strong>文本大小 <code>fontSize</code></strong>：<br> <em>一个数字，默认为 <code>16</code>，为每个文字的宽高</em>。</li>
-<li><strong>行高度 <code>lineHeight</code></strong>：<br> <em>一个数字，即每行文字占用的高度</em>。</li>
-<li><strong>字重 <code>fontWeight</code></strong>：<br> <em>一个数字，默认为 <code>1</code>，为文字的粗细</em>。</li>
+<li><strong>文本内容 <code>text</code></strong>：<br>
+<em>一个字符串，该文本组件所显示的文本内容</em>，支持转义、换行符（<code>\n</code>）。例如 <code>秦时明月汉时关\n万里长征人未还</code>。</li>
+<li><strong>文本大小 <code>fontSize</code></strong>：<br>
+<em>一个数字，默认为 <code>16</code>，为每个文字的宽高</em>。</li>
+<li><strong>行高度 <code>lineHeight</code></strong>：<br>
+<em>一个数字，即每行文字占用的高度</em>。</li>
+<li><strong>字重 <code>fontWeight</code></strong>：<br>
+<em>一个数字，默认为 <code>1</code>，为文字的粗细</em>。</li>
 </ul>
-<p> <img src="./zinc-engine/text.png" alt="Text 示例"></p>
+<p><img src="./zinc-engine/text.png" alt="Text 示例"></p>
 </li>
-<li><p><strong>盒子组件 Box</strong></p>
-<p> 这个组件类似 HTML 中的 div，像是盒子一样、可以嵌套其他的组件。  </p>
-<p> 该组件拥有两个特色属性：</p>
+<li>
+<p><strong>盒子组件 Box</strong></p>
+<p>这个组件类似 HTML 中的 div，像是盒子一样、可以嵌套其他的组件。</p>
+<p>该组件拥有两个特色属性：</p>
 <ul>
-<li><p><strong>排列方向 <code>direction</code></strong>：<br> <em><code>x</code> 或 <code>y</code></em>。<br> 默认为 <code>y</code>，Box 中的组件将按顺序从上到下排列，例如下图中最外层的 Box <code>box1</code>。<br> 当值为 <code>x</code> 时，Box 中的组件会从左到右排列，例如下图中包裹着 Button 组建的 Box <code>box2</code>。</p>
+<li>
+<p><strong>排列方向 <code>direction</code></strong>：<br>
+<em><code>x</code> 或 <code>y</code></em>。<br>
+默认为 <code>y</code>，Box 中的组件将按顺序从上到下排列，例如下图中最外层的 Box <code>box1</code>。<br>
+当值为 <code>x</code> 时，Box 中的组件会从左到右排列，例如下图中包裹着 Button 组建的 Box <code>box2</code>。</p>
 </li>
-<li><p><strong>允许换行 <code>wrap</code></strong>：<br> <em><code>false</code> 或 <code>true</code></em>。<br> 默认为 <code>false</code>、此时无论 Box 内的内容有多长都不会换行；当值为 <code>true</code> 时，如果 Box 中的内容大于所设定的 <code>width</code> 或 <code>height</code> 时，便会自动换行。</p>
+<li>
+<p><strong>允许换行 <code>wrap</code></strong>：<br>
+<em><code>false</code> 或 <code>true</code></em>。<br>
+默认为 <code>false</code>、此时无论 Box 内的内容有多长都不会换行；当值为 <code>true</code> 时，如果 Box 中的内容大于所设定的 <code>width</code> 或 <code>height</code> 时，便会自动换行。</p>
 </li>
-<li><p><strong>溢出行为 <code>overflow</code></strong>：<br> <em><code>auto</code>、<code>visible</code> 或 <code>hidden</code></em>。<br> 默认是 <code>auto</code>，当组件内内容溢出规定的长 / 宽时会截断内容，并启用滚动以便查看全部内容。<br> 当值为 <code>hidden</code> 时，组件内内容若溢出便会被截断，但不会启用滚动。<br> 当值为 <code>visible</code> 时，组件内内容即使溢出也不会被截断。</p>
+<li>
+<p><strong>溢出行为 <code>overflow</code></strong>：<br>
+<em><code>auto</code>、<code>visible</code> 或 <code>hidden</code></em>。<br>
+默认是 <code>auto</code>，当组件内内容溢出规定的长 / 宽时会截断内容，并启用滚动以便查看全部内容。<br>
+当值为 <code>hidden</code> 时，组件内内容若溢出便会被截断，但不会启用滚动。<br>
+当值为 <code>visible</code> 时，组件内内容即使溢出也不会被截断。</p>
 </li>
 </ul>
-<p> <img src="./zinc-engine/box.png" alt="Box 示例"></p>
-<p> 上图中展示的界面结构是这样的：</p>
+<p><img src="./zinc-engine/box.png" alt="Box 示例"></p>
+<p>上图中展示的界面结构是这样的：</p>
 <pre><code>Box 组件 : ( ID = &quot;box1&quot;, boxShadow = &quot;0 -2 10 0.15 0&quot;, margin = &quot;8&quot;, align = &quot;center&quot;, borderRadius = &quot;4&quot; )
    |
    |_ Text 组件 : ( ..... )
@@ -185,60 +208,75 @@
       |_ Button 组件 : ( ...... )
 </code></pre>
 <ul>
-<li>Box 组件 <code>box2</code>（包裹着按钮的）的属性 <code>direction</code> 为 <code>x</code>，因此它内部的组件是从左到右排列的；而未设定属性 <code>direction</code> 的 Box 组件 <code>box1</code>（最外层的）内部则是默认从上到下排列的。  </li>
+<li>Box 组件 <code>box2</code>（包裹着按钮的）的属性 <code>direction</code> 为 <code>x</code>，因此它内部的组件是从左到右排列的；而未设定属性 <code>direction</code> 的 Box 组件 <code>box1</code>（最外层的）内部则是默认从上到下排列的。</li>
 <li><code>box2</code> 拥有属性 <code>wrap</code> 为 <code>true</code>、且正确的设定了宽度 <code>width</code> 为 <code>320</code>，那么在它排列内部的组件时，一旦宽度到达了 320、便会自动换行。</li>
 </ul>
 </li>
-<li><p><strong>按钮组件 Button</strong></p>
-<p> 一个拥有预置样式的按钮组件。</p>
+<li>
+<p><strong>按钮组件 Button</strong></p>
+<p>一个拥有预置样式的按钮组件。</p>
 <ul>
 <li><strong>该组件拥有的特色属性和文本组件 Text 完全相同</strong></li>
 </ul>
-<p> <strong>当按钮被按下时将会触发 <code>click</code> 事件，关于事件的使用方法下文会详细说明。</strong></p>
-<p> <img src="./zinc-engine/button.png" alt="Button 示例"></p>
+<p><strong>当按钮被按下时将会触发 <code>click</code> 事件，关于事件的使用方法下文会详细说明。</strong></p>
+<p><img src="./zinc-engine/button.png" alt="Button 示例"></p>
 </li>
-<li><p><strong>单选组件 Radio / 复选组件 Checkbox</strong></p>
-<p> 单选和多选按钮。</p>
-<p> 该组件拥有特色属性：</p>
+<li>
+<p><strong>单选组件 Radio / 复选组件 Checkbox</strong></p>
+<p>单选和多选按钮。</p>
+<p>该组件拥有特色属性：</p>
 <ul>
 <li><strong>值 <code>checkbox</code></strong>：
- <code>true</code> 或 <code>false</code>。表示该组件当前的选择状态，可以读取或者设置这个值。</li>
+<code>true</code> 或 <code>false</code>。表示该组件当前的选择状态，可以读取或者设置这个值。</li>
 </ul>
-<p> <strong>当 Checkbox 组件被点击时会触发事件 <code>changed</code> 并改变它的值，可以通过监听这个事件来得知选择状态发生了改变。</strong></p>
-<p> <img src="./zinc-engine/radio_checkbox.png" alt="Radio and Checkbox"></p>
+<p><strong>当 Checkbox 组件被点击时会触发事件 <code>changed</code> 并改变它的值，可以通过监听这个事件来得知选择状态发生了改变。</strong></p>
+<p><img src="./zinc-engine/radio_checkbox.png" alt="Radio and Checkbox"></p>
 </li>
-<li><p><strong>滑动条 Slider</strong></p>
-<p> 通过滑动来选择数值。</p>
-<p> 该组件拥有特色属性：</p>
+<li>
+<p><strong>滑动条 Slider</strong></p>
+<p>通过滑动来选择数值。</p>
+<p>该组件拥有特色属性：</p>
 <ul>
-<li><strong>最小值 <code>min</code></strong>：<br> 一个数字，是该滑动条可选择数值的最小值。</li>
-<li><strong>最大值 <code>max</code></strong>：<br> 一个数字，是该滑动条可选择数值的最大值。</li>
-<li><strong>值 <code>value</code></strong>：<br> 一个数字。表示滑动条当前的值，可以读取或者设置这个值。</li>
+<li><strong>最小值 <code>min</code></strong>：<br>
+一个数字，是该滑动条可选择数值的最小值。</li>
+<li><strong>最大值 <code>max</code></strong>：<br>
+一个数字，是该滑动条可选择数值的最大值。</li>
+<li><strong>值 <code>value</code></strong>：<br>
+一个数字。表示滑动条当前的值，可以读取或者设置这个值。</li>
 </ul>
-<p> <strong>当该组件的值改变时将会触发事件 <code>slide</code>，可以监听该事件~</strong></p>
-<p> <img src="./zinc-engine/slider.png" alt="Slider 示例"></p>
+<p><strong>当该组件的值改变时将会触发事件 <code>slide</code>，可以监听该事件~</strong></p>
+<p><img src="./zinc-engine/slider.png" alt="Slider 示例"></p>
 </li>
-<li><p><strong>输入框 Input</strong></p>
-<p> 一个输入框。</p>
-<p> 该组件拥有特色属性：</p>
+<li>
+<p><strong>输入框 Input</strong></p>
+<p>一个输入框。</p>
+<p>该组件拥有特色属性：</p>
 <ul>
-<li><strong>值 <code>value</code></strong>：<br> 一个字符串。表示输入框内的值，可以读取或者设置这个值。</li>
-<li><strong>占位符 <code>placeholder</code></strong>：<br> 一个字符串，当值为空时显示该字符串。</li>
+<li><strong>值 <code>value</code></strong>：<br>
+一个字符串。表示输入框内的值，可以读取或者设置这个值。</li>
+<li><strong>占位符 <code>placeholder</code></strong>：<br>
+一个字符串，当值为空时显示该字符串。</li>
 <li><strong>该组件也支持文本组件 Text 所支持的属性</strong></li>
 </ul>
-<p> <strong>当该组件的值改变时将会触发事件 <code>input</code>，可以监听该事件。</strong></p>
-<p> <img src="./zinc-engine/input.png" alt=""></p>
+<p><strong>当该组件的值改变时将会触发事件 <code>input</code>，可以监听该事件。</strong></p>
+<p><img src="./zinc-engine/input.png" alt=""></p>
 </li>
-<li><p><strong>换行 Br</strong></p>
-<p> 可换行的（属性 <code>wrap</code> 为 <code>true</code>）盒子组件 Box 在该组件处会立刻换行。</p>
+<li>
+<p><strong>换行 Br</strong></p>
+<p>可换行的（属性 <code>wrap</code> 为 <code>true</code>）盒子组件 Box 在该组件处会立刻换行。</p>
 </li>
 </ul>
 <h3>属性</h3>
 <p>通过设置组件的<strong>属性</strong>可以自定义组件的样式，对于可交互组件如滑动条 Slider、复选框 Checkbox 和输入框 Input，还可以通过属性 <code>value</code> 来获取该组件的当前的值。下面是<strong>所有组件都拥有的可选属性</strong>：</p>
 <ul>
-<li><p><strong>组件宽度 <code>width</code>、组件高度 <code>height</code></strong>：<br><em>一个数字，即组件的宽度 / 高度</em>。该属性未被设置时，默认按内容大小确定组件宽度 / 高度。<br>例：属性 <code>width</code> 为 <code>20</code> 即设置组件的宽度为 20，可换行的（<code>warp</code> 属性为 <code>true</code>）盒子组件 Box 或者文本组件 Text 的宽度达到 20 后便会自动换行，如果不设置宽度、便不会自动换行。</p>
+<li>
+<p><strong>组件宽度 <code>width</code>、组件高度 <code>height</code></strong>：<br>
+<em>一个数字，即组件的宽度 / 高度</em>。该属性未被设置时，默认按内容大小确定组件宽度 / 高度。<br>
+例：属性 <code>width</code> 为 <code>20</code> 即设置组件的宽度为 20，可换行的（<code>warp</code> 属性为 <code>true</code>）盒子组件 Box 或者文本组件 Text 的宽度达到 20 后便会自动换行，如果不设置宽度、便不会自动换行。</p>
 </li>
-<li><p><strong>内间距 <code>padding</code>、外间距 <code>margin</code></strong>：<br>有三种可选值：  </p>
+<li>
+<p><strong>内间距 <code>padding</code>、外间距 <code>margin</code></strong>：<br>
+有三种可选值：</p>
 <ol>
 <li><em>一个数字 <code>[all]</code></em>，如 <code>20</code>，代表该组件的内 / 外间距上下左右均为 20。</li>
 <li><em>两个数字 <code>[x] [y]</code></em>，如 <code>10 20</code>，代表该组件的内 / 外间距上下为 10、左右为 20。</li>
@@ -246,50 +284,85 @@
 </ol>
 <p>也可以设置属性 <code>paddingLeft</code>、<code>marginLeft</code>、<code>paddingRight</code> ......</p>
 </li>
-<li><p><strong>背景颜色 <code>background</code></strong>、<strong>内容颜色 <code>color</code></strong>：<br> <em>一个 RGB 颜色值，为该组件的背景 / 内容颜色</em>。<br> 例：属性 <code>color</code> 为 <code>#00897B</code> 即该组件的内容（如文本）颜色为 <code>#00897B</code>。</p>
+<li>
+<p><strong>背景颜色 <code>background</code></strong>、<strong>内容颜色 <code>color</code></strong>：<br>
+<em>一个 RGB 颜色值，为该组件的背景 / 内容颜色</em>。<br>
+例：属性 <code>color</code> 为 <code>#00897B</code> 即该组件的内容（如文本）颜色为 <code>#00897B</code>。</p>
 </li>
-<li><p><strong>边框 <code>border</code></strong>：<br> <em>一个数字、一个 RGB 颜色值 <code>[borderWidth] [borderColor]</code>，分别是边框宽度和颜色</em>。<br> 例：属性 <code>border</code> 为 <code>2 #000000</code> 即该组件拥有一个宽为 2、颜色为 <code>#000000</code>（黑色）的边框。</p>
+<li>
+<p><strong>边框 <code>border</code></strong>：<br>
+<em>一个数字、一个 RGB 颜色值 <code>[borderWidth] [borderColor]</code>，分别是边框宽度和颜色</em>。<br>
+例：属性 <code>border</code> 为 <code>2 #000000</code> 即该组件拥有一个宽为 2、颜色为 <code>#000000</code>（黑色）的边框。</p>
 </li>
-<li><p><strong>组件圆角 <code>borderRadius</code></strong>：<br> <em>一个数字，为组件的圆角半径</em>。例如 <code>6</code>。</p>
+<li>
+<p><strong>组件圆角 <code>borderRadius</code></strong>：<br>
+<em>一个数字，为组件的圆角半径</em>。例如 <code>6</code>。</p>
 </li>
-<li><p><strong>显示 <code>display</code></strong>：<br> <em><code>true</code> 或 <code>false</code></em>，默认为 <code>true</code>，当设定为 <code>false</code> 时组件将不会显示。</p>
+<li>
+<p><strong>显示 <code>display</code></strong>：<br>
+<em><code>true</code> 或 <code>false</code></em>，默认为 <code>true</code>，当设定为 <code>false</code> 时组件将不会显示。</p>
 </li>
-<li><p><strong>阴影 <code>boxShadow</code></strong>：<br> <em>五个数字 <code>[offsetX] [offsetY] [blur] [opacity] [brightness]</code></em>，分别是阴影在 X 方向上的偏移、在 Y 方向上的偏移、扩散大小、透明度（0 ~ 1）、亮度（0 ~ 100，亮度为 0 时阴影是黑色的、亮度为 100 时则是白色的）。<br> 例：属性 <code>boxShadow</code> 为 <code>0 -2 10 0.15 0</code> 时，组件将拥有一个向下偏移 2、扩散 10、透明度为 0.15 的黑色阴影。</p>
-<p> <img src="./zinc-engine/box-shadow.png" alt="boxShadow 属性"></p>
+<li>
+<p><strong>阴影 <code>boxShadow</code></strong>：<br>
+<em>五个数字 <code>[offsetX] [offsetY] [blur] [opacity] [brightness]</code></em>，分别是阴影在 X 方向上的偏移、在 Y 方向上的偏移、扩散大小、透明度（0 ~ 1）、亮度（0 ~ 100，亮度为 0 时阴影是黑色的、亮度为 100 时则是白色的）。<br>
+例：属性 <code>boxShadow</code> 为 <code>0 -2 10 0.15 0</code> 时，组件将拥有一个向下偏移 2、扩散 10、透明度为 0.15 的黑色阴影。</p>
+<p><img src="./zinc-engine/box-shadow.png" alt="boxShadow 属性"></p>
 </li>
-<li><p><strong>透明度 <code>opacity</code></strong>：<br> 一个数字，范围是 0 ~ 1，代表组件的透明度。（不建议使用）</p>
+<li>
+<p><strong>透明度 <code>opacity</code></strong>：<br>
+一个数字，范围是 0 ~ 1，代表组件的透明度。（不建议使用）</p>
 </li>
-<li><p><strong>对齐方式 <code>align</code></strong>：<br> <em><code>left</code> 或 <code>center</code></em>，默认为 <code>left</code>，当值为 <code>center</code> 时居中对齐。</p>
+<li>
+<p><strong>对齐方式 <code>align</code></strong>：<br>
+<em><code>left</code> 或 <code>center</code></em>，默认为 <code>left</code>，当值为 <code>center</code> 时居中对齐。</p>
 </li>
-<li><p><strong>定位 <code>position</code></strong>：<br> <em><code>default</code>、<code>relative</code>、<code>absolute</code> 或 <code>fixed</code></em>，默认为 <code>default</code>。</p>
+<li>
+<p><strong>定位 <code>position</code></strong>：<br>
+<em><code>default</code>、<code>relative</code>、<code>absolute</code> 或 <code>fixed</code></em>，默认为 <code>default</code>。</p>
 <ul>
 <li>当值为 <em><code>relative</code></em> 时，支持使用 <code>left</code>、<code>right</code> 使该元素<em>在原本位置的基础上</em>进行偏移；</li>
 <li>为 <em><code>absolute</code></em> 时，元素“被移出文档流”、不占用空间，使用 <code>left</code>、<code>right</code> 可使该元素<em>在其父组件位置的基础上</em>进行偏移；</li>
 <li>为 <em><code>fixed</code></em> 时，元素“被移出文档流”、不占用空间，使用 <code>left</code>、<code>right</code> 可使该元素<em>在根组件位置的基础上</em>进行偏移。</li>
 </ul>
-<p> <img src="./zinc-engine/position.png" alt="position 对图中按钮定位方式的影响"></p>
+<p><img src="./zinc-engine/position.png" alt="position 对图中按钮定位方式的影响"></p>
 </li>
-<li><p><strong>监听鼠标悬停 <code>listenHover</code></strong>：<br> <code>false</code> 或 <code>true</code>。默认为 <code>false</code>。<br> 当值为 <code>true</code> 时，鼠标悬停在组件上时会触发事件 <code>mouseover</code>、离开组件时会触发事件 <code>mouseleave</code>。</p>
+<li>
+<p><strong>监听鼠标悬停 <code>listenHover</code></strong>：<br>
+<code>false</code> 或 <code>true</code>。默认为 <code>false</code>。<br>
+当值为 <code>true</code> 时，鼠标悬停在组件上时会触发事件 <code>mouseover</code>、离开组件时会触发事件 <code>mouseleave</code>。</p>
 </li>
 </ul>
-<p>同时 Zinc Engine 还支持<strong>动态属性</strong>，使用<strong>动态属性</strong>可以在鼠标悬停或按下时应用不同的属性，类似 CSS 中的选择器。若要设置动态属性，请先将组件的 <code>listenHover</code> 属性设为 <code>true</code>，并设置属性名前带有 <code>hover:</code> 或 <code>active:</code> 的属性。<br>若属性 <code>hover:background</code> 的值为 <code>#f6f6f6</code>，则当鼠标悬停在该元素上时，就将该元素的背景 <code>background</code> 设为 <code>#f6f6f6</code>。</p>
+<p>同时 Zinc Engine 还支持<strong>动态属性</strong>，使用<strong>动态属性</strong>可以在鼠标悬停或按下时应用不同的属性，类似 CSS 中的选择器。若要设置动态属性，请先将组件的 <code>listenHover</code> 属性设为 <code>true</code>，并设置属性名前带有 <code>hover:</code> 或 <code>active:</code> 的属性。<br>
+若属性 <code>hover:background</code> 的值为 <code>#f6f6f6</code>，则当鼠标悬停在该元素上时，就将该元素的背景 <code>background</code> 设为 <code>#f6f6f6</code>。</p>
 <p><img src="./zinc-engine/active.png" alt=""></p>
 <h3>事件</h3>
 <p>当用户和组件发生交互时会触发<strong>事件</strong>。当触发事件时，列表 [ Engine - 事件 ] 中会新增一项 <code>@[ID] [Event]</code> 并广播 [ Zinc Engine - 触发事件]。</p>
 <p>如一个 ID 为 <code>Button1</code> 的按钮触发点击事件 <code>click</code> 时，列表中就会新增一项 <code>@Button1 click</code>，并广播 [ Zinc Engine - 触发事件 ]。</p>
 <p>现在有这些事件：</p>
 <ul>
-<li><p><strong>点击事件 <code>click</code></strong>：<br>当组件被点击时触发。所有组件都会触发。</p>
+<li>
+<p><strong>点击事件 <code>click</code></strong>：<br>
+当组件被点击时触发。所有组件都会触发。</p>
 </li>
-<li><p><strong>鼠标按下 <code>mousedown</code>、鼠标松开 <code>mouseup</code></strong>：<br>当鼠标在该组件处按下 / 按下后松开时触发。所有组件都会触发。</p>
+<li>
+<p><strong>鼠标按下 <code>mousedown</code>、鼠标松开 <code>mouseup</code></strong>：<br>
+当鼠标在该组件处按下 / 按下后松开时触发。所有组件都会触发。</p>
 </li>
-<li><p><strong>输入 <code>input</code></strong>：<br>当输入组件 Input 的值改变时触发。所有的输入组件 Input 都会触发。</p>
+<li>
+<p><strong>输入 <code>input</code></strong>：<br>
+当输入组件 Input 的值改变时触发。所有的输入组件 Input 都会触发。</p>
 </li>
-<li><p><strong>复选组件的值改变 <code>changed</code></strong>：<br>当复选框组件 Checkbox 的值改变时触发。所有的复选框组件 Checkbox 都会触发。</p>
+<li>
+<p><strong>复选组件的值改变 <code>changed</code></strong>：<br>
+当复选框组件 Checkbox 的值改变时触发。所有的复选框组件 Checkbox 都会触发。</p>
 </li>
-<li><p><strong>滑动条的值改变 <code>changed</code></strong>：<br>当滑动条组件 Slider 的值改变时触发。所有的滑动条组件 Slider 都会触发。</p>
+<li>
+<p><strong>滑动条的值改变 <code>changed</code></strong>：<br>
+当滑动条组件 Slider 的值改变时触发。所有的滑动条组件 Slider 都会触发。</p>
 </li>
-<li><p><strong>鼠标悬停 <code>mousehover</code>、鼠标离开 <code>mouseleave</code></strong>：<br>当鼠标在该组件上悬停 / 悬停后离开时触发。只有属性 <code>listenHover</code> 为 <code>true</code> 的组件会触发。</p>
+<li>
+<p><strong>鼠标悬停 <code>mousehover</code>、鼠标离开 <code>mouseleave</code></strong>：<br>
+当鼠标在该组件上悬停 / 悬停后离开时触发。只有属性 <code>listenHover</code> 为 <code>true</code> 的组件会触发。</p>
 </li>
 </ul>
 <p><img src="./zinc-engine/listen-event.png" alt="监听事件的示例"></p>
@@ -306,8 +379,8 @@
 </code></pre>
 <p>可选配置项有：</p>
 <ul>
-<li>渲染质量 <code>@quailty</code>：正整数，0 ~ 10 之间。  </li>
-<li>平滑滚动 <code>@smoothScroll</code>：默认启用平滑滚动。当这项设为 <code>0</code> 时禁用平滑滚动，适合卡顿时使用。  </li>
+<li>渲染质量 <code>@quailty</code>：正整数，0 ~ 10 之间。</li>
+<li>平滑滚动 <code>@smoothScroll</code>：默认启用平滑滚动。当这项设为 <code>0</code> 时禁用平滑滚动，适合卡顿时使用。</li>
 <li>开发者模式 <code>@devMode</code>：默认禁用开发者模式。当这项设为 <code>1</code> 时按下空格可以查看渲染所用时间（毫秒）。</li>
 <li>自动渲染 <code>@autoRender</code>：默认启用自动渲染。当这项设为 <code>0</code> 时关闭自动渲染，此时用户滚动、组件属性改变都不会自动重新渲染页面，只有广播 [ Zinc Engine - 渲染] 时才会渲染。</li>
 </ul>
@@ -322,20 +395,17 @@
          hljs.highlightAll();
       </script>
       <script>
-         // 单行图片
+         // 单行图片处理
          document.querySelectorAll('.post-content > .content p > img:only-child').forEach((img) => {
-            // 确定确实为 only child（而不是文字夹带 img）
             if (img.parentNode.childNodes.length > 1) return;
-            // 设置 img 及其父元素 class
             img.parentElement.classList.add('figure');
             img.classList.add('only-child');
-            // 添加 alt
             const alt = document.createElement('div');
             alt.classList.add('image-alt');
             alt.innerText = img.getAttribute('alt');
             img.parentElement.append(alt);
          });
-         // 图片放大
+         // 图片点击放大
          document.querySelectorAll('.post-content > .content img').forEach((img) => {
             img.addEventListener('click', () => {
                window.open(img.getAttribute('src'));

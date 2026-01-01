@@ -1,27 +1,28 @@
-@import url("https://fonts.googleapis.com/css2?family=Noto+Sans+SC&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=JetBrains+Mono:ital,wght@0,100..800;1,100..800&family=Noto+Sans+SC:wght@100..900&display=swap");
 
 body {
    --page-background-color: #fafafa;
    --content-background-color: #fff;
-   --content-color: #000;
+   --content-color: rgba(0, 0, 0, 87%);
    -webkit-tap-highlight-color: rgb(0, 0, 0, 0);
 }
 
 a:not(a[class], a[id]) {
    color: #0069c2;
    text-decoration: none;
+   transition: box-shadow 0.05s;
 }
 
 a:hover:not(a[class], a[id]) {
-   border-bottom: 1px solid #0069c280;
+   box-shadow: 0 1px 0 0 #0069c2bb;
 }
 
 @media (prefers-color-scheme: dark) {
    a:not(a[class], a[id]) {
-      color: #42A5F5;
+      color: #42a5f5;
    }
    a:hover:not(a[class], a[id]) {
-      border-bottom-color: #42A5F5bf;
+      border-bottom-color: #42a5f5bf;
    }
 }
 
@@ -33,7 +34,7 @@ a:hover:not(a[class], a[id]) {
    }
 
    a {
-      color: #eeeeff;   
+      color: #eeeeff;
    }
 }
 
@@ -59,14 +60,21 @@ hr {
 .card {
    border-radius: 8px;
    padding: 1em 1.5em;
-   box-shadow: 0.5px 0.5px 6px rgb(0, 0, 0, 0.1);
+   box-shadow: 0 1px 4px rgba(0, 0, 0, 0.12);
    background-color: var(--content-background-color);
+   border: 1px solid #eaeaea;
    overflow-wrap: break-word;
    transition: box-shadow 0.25s ease-in-out;
 }
 
+@media (prefers-color-scheme: dark) {
+   .card {
+      border: 1px solid #222222;
+   }
+}
+
 .card:hover {
-   box-shadow: 1px 1px 8px rgb(0, 0, 0, 0.125);
+   box-shadow: 0 4px 4px rgba(0, 0, 0, 0.12);
 }
 
 .chip {
@@ -89,16 +97,20 @@ ul {
 }
 
 @media screen and (max-width: 360px) {
-   ul, ol {
+   ul,
+   ol {
       padding-inline-start: 1.5em;
    }
 }
 
 .title {
    font-size: 1.1em;
-   line-height: 2em;
    font-weight: 600;
    margin-bottom: 0.5em;
+}
+
+.index-projects > .title, .index-posts > .title {
+   min-height: 2em;
 }
 
 ::-webkit-scrollbar {
@@ -128,7 +140,7 @@ ul {
    opacity: 0;
    background: var(--content-background-color);
    padding: 0.25em 0.75em;
-   box-shadow: 0 0 7.5px rgb(0, 0, 0, 0.15);
+   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.12);
    border-radius: 6px;
    font-size: 0.8em;
    transition: all 0.15s;
@@ -147,18 +159,21 @@ ul {
    --content-color: #fff;
    --content-background-color: #283593;
    background: linear-gradient(#1a237ecc, #283593cc);
+   border: 1px solid #1a237e;
    color: var(--content-color);
 }
 
 .index-about[time="sunrise_sunset"] {
    --content-color: #000;
    background: linear-gradient(#fff3e080, #ffe0b280);
+   border: 1px solid #fff3e0;
    color: var(--content-color);
 }
 
 .index-about[time="day"] {
    --content-color: #000;
    background: linear-gradient(#bbdefb60, #e3f2fd80);
+   border: 1px solid #bbdefb;
    color: var(--content-color);
 }
 
@@ -167,12 +182,20 @@ ul {
       --content-color: #fff !important;
       --content-background-color: #263238;
       background: #263238 !important;
+      border: 1px solid #222222 !important;
       color: var(--content-color);
    }
 }
 
 .index-about {
    position: relative;
+   display: flex;
+   align-items: center;
+   flex-direction: column;
+}
+
+.index-about > * {
+   text-align: center;
 }
 
 .index-about > .title {
@@ -181,8 +204,19 @@ ul {
    margin-bottom: 0;
 }
 
+.title .subtitle {
+   font-size: 0.75em;
+   font-weight: 500;
+   opacity: 0.75;
+   text-wrap-mode: nowrap;
+}
+
 .index-about > .title .name {
    font-size: 1.4em;
+}
+
+.index-about > .about {
+   margin-top: 0.25em;
 }
 
 .index-about > .contact {
@@ -195,11 +229,11 @@ ul {
 
 .index-about > .contact > .chip {
    background: rgb(255, 255, 255, 0.9);
-   box-shadow: 1px 1px 5px rgb(0, 0, 0, 0.1);
+   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.12);
 }
 
 .index-about > .contact > .chip:hover {
-   box-shadow: 1.5px 1.5px 5px rgb(0, 0, 0, 0.125);
+   box-shadow: 0 4px 4px rgba(0, 0, 0, 0.12);
 }
 
 .index-about[time="night"] > .contact > .chip {
@@ -210,10 +244,6 @@ ul {
    max-height: 0.8em;
    filter: brightness(0);
    user-select: none;
-}
-
-.index-about > .contact > .chip > ion-icon.icon {
-   max-height: 1em;
 }
 
 .index-about > .contact > .chip > .chip-text {
@@ -238,8 +268,8 @@ ul {
    display: flex;
    flex-direction: column;
    justify-content: space-between;
-   max-width: 24em;
-   opacity: 0.9   ;
+   max-width: 12em;
+   opacity: 0.9;
    font-size: 0.9em;
 }
 
@@ -305,6 +335,8 @@ ul {
    max-height: 1.5rem;
    font-size: 4rem;
    margin-right: 0.5rem;
+   user-select: none;
+   -webkit-user-drag: none;
 }
 
 .index-projects .projects .project .title {
@@ -463,15 +495,8 @@ ul {
    align-items: center;
    font-size: 0.9em;
    gap: 0.5em;
-   font-weight: 600;
-}
-
-.index-posts > .posts > .post > .post-info > .time {
-   margin-right: 0.75em;
-}
-
-.index-posts > .posts > .post > .post-info > .tag {
-   cursor: pointer;
+   line-height: 1em;
+   font-family: "JetBrains Mono", monospace;
 }
 
 .index-footer {
@@ -488,9 +513,6 @@ ul {
    .index-posts > .posts > .post > .post-info {
       flex-direction: column;
       align-items: flex-start;
-   }
-   .index-posts > .posts > .post ion-icon {
-      display: none;
    }
 }
 
@@ -536,6 +558,7 @@ ul {
    align-items: center;
    font-size: 0.9em;
    gap: 0.25em;
+   font-family: "JetBrains Mono", monospace;;
 }
 
 .post-content > .subtitle > .time {
@@ -569,64 +592,21 @@ ul {
    }
 }
 
-.katex-display {
-   overflow: hidden;
-}
-
-.post-content > .content table {
-   overflow-x: auto;
-}
-
-.post-content > .content td {
-   padding: 0.3em 1em;
-   margin: 0;
-   background: #f7f7f7;
-}
-
-.post-content > .content th {
-   background: #f3f3f3;
-   padding: 0.5em 1em;
-}
-
-@media (prefers-color-scheme: dark) {
-   .post-content > .content td {
-      background: #546e7a;
-   }
-   .post-content > .content th {
-      background: #455a64;
-   }
-}
-
-.post-content > .content code {
-   background-color: var(--page-background-color);
-   font-size: 0.9em;
-   padding: 0 0.5em;
-   border-radius: 8px;
-   white-space: break-spaces;
-   font-family: Consolas, "Courier New", Courier, monospace;
-}
-
-.post-content > .content pre > code:only-child {
-   padding: 1em 1.5em;
-}
-
-.post-content > .content p > img {
-   vertical-align: bottom;
-}
-
-.post-content > .content p.figure {
-   display: flex;
-   width: 100%;
-   align-items: center;
-   flex-direction: column;
+.post-content > .content p.figure:has(img.only-child) {
+   text-align: center;
 }
 
 .post-content > .content p.figure > img.only-child {
    margin: 0.5em 2em;
    border-radius: 8px;
-   box-shadow: 0px 0px 8px rgb(0, 0, 0, 0.1);
+   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.12);
    max-height: min(20em, 100%);
    max-width: calc(100% - 4em);
+   transition: box-shadow 0.4s;
+}
+
+.post-content > .content p.figure > img.only-child:hover {
+   box-shadow: 0 4px 4px rgba(0, 0, 0, 0.12);
 }
 
 .post-content > .content p.figure > div.image-alt {
@@ -636,7 +616,6 @@ ul {
    opacity: 0.6;
    justify-content: center;
    text-align: center;
-   max-width: 75%;
 }
 
 .post-content > .content p.figure > div.image-alt > p {
@@ -644,17 +623,49 @@ ul {
    margin: 0.5em;
 }
 
-.post-content > .content blockquote {
-   margin-inline: 0;
-   margin-block: 0;
-   border-left: rgb(0, 0, 0, 0.1) solid 0.3em;
-   padding: 0.1em 1em;
-   font-size: 0.95em;
+.markdown-body {
+   font-family: "Noto Sans SC" !important;
+   color: var(--content-color) !important;
 }
 
-.post-content > .content blockquote p {
-   margin: 0.5em;
-   line-height: 1.4em;
+.markdown-body a {
+   text-decoration: none !important;
+}
+
+.markdown-body pre,
+.markdown-body code {
+   font-family: "JetBrains Mono", "Noto Sans SC", monospace !important;
+   text-wrap: auto !important;
+   background-color: var(--page-background-color) !important;
+}
+
+.markdown-body pre:has(.language-mermaid) {
+   background: none;
+}
+
+.post-content section.footnotes {
+   font-family: "JetBrains Mono", "Noto Sans SC", monospace !important;
+   font-size: 0.75em !important;
+}
+
+.post-content hr.footnotes-sep {
+   display: none !important;
+}
+
+.post-content section.footnotes .footnote-backref {
+   text-decoration: none !important;
+}
+
+.post-content sup.footnote-ref a {
+   text-decoration: none !important;
+   margin-left: 0.1em !important;
+   color: #0069c2 !important;
+}
+
+@media (prefers-color-scheme: dark) {
+   .post-content sup.footnote-ref a {
+      color: #42a5f5 !important;
+   }
 }
 
 @media screen and (max-width: 360px) {

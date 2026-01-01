@@ -6,28 +6,25 @@
       <link rel="stylesheet" type="text/css" href="/assets/styles.css" />
       <link rel="icon" type="image/png" href="/assets/icon.png" />
       <meta name="description" content="记录和分析 Scratch 社区阿儿法营（A 营）的发展历程" />
+      
       <script
          type="module"
-         src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"
+         src="https://cdn.jsdelivr.net/npm/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"
       ></script>
       <script
          nomodule
-         src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"
+         src="https://cdn.jsdelivr.net/npm/ionicons@7.1.0/dist/ionicons/ionicons.js"
       ></script>
+
       <link
          rel="stylesheet"
-         href="https://unpkg.com/katex@0.16.8/dist/katex.min.css"
+         href="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/katex.min.css"
       />
       <script
          defer
-         src="https://unpkg.com/katex@0.16.8/dist/katex.min.js"
+         src="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/katex.min.js"
       ></script>
-      <script
-         defer
-         src="https://unpkg.com/katex@0.16.8/dist/contrib/auto-render.min.js"
-         onload="renderMathInElement(document.body, {delimiters: [{left: '$$', right: '$$', display: true},{left: '$', right: '$'}]});"
-      ></script>
-      <!-- Google tag (gtag.js) -->
+
       <script
          async
          src="https://www.googletagmanager.com/gtag/js?id=G-YFC9SHL1Q7"
@@ -40,18 +37,25 @@
          gtag("js", new Date());
          gtag("config", "G-YFC9SHL1Q7");
       </script>
+
       <link
          rel="stylesheet"
-         href="//unpkg.com/@highlightjs/cdn-assets@11.7.0/styles/default.min.css"
+         href="https://cdn.jsdelivr.net/npm/github-markdown-css@4.0.0/github-markdown.min.css"
+      />
+      <link
+         rel="stylesheet"
+         href="https://cdn.jsdelivr.net/npm/highlight.js@11.11.1/styles/github.min.css"
          id="highlightjs-css"
       />
+      <script src="https://cdn.jsdelivr.net/npm/highlight.js@11.11.1/lib/highlight.min.js"></script>
+
       <script>
          if (window.matchMedia("(prefers-color-scheme: dark)").matches) {
             document.querySelector("#highlightjs-css").href =
-               "https://unpkg.com/@highlightjs/cdn-assets@11.7.0/styles/atom-one-dark.min.css";
+               "https://cdn.jsdelivr.net/npm/highlight.js@11.11.1/styles/atom-one-dark.min.css";
          }
       </script>
-      <script src="//unpkg.com/@highlightjs/cdn-assets@11.7.0/highlight.min.js"></script>
+
       <style>
          @media screen and (max-width: 512px) {
             body {
@@ -87,6 +91,13 @@
             max-width: 56em;
          }
       </style>
+      
+      <script type="module">
+         import mermaid from "https://cdn.jsdelivr.net/npm/mermaid@11.4.1/dist/mermaid.esm.min.mjs";
+         mermaid.run({
+            querySelector: ".language-mermaid",
+         });
+      </script>
    </head>
    <body>
       <a class="post-header" href="/">
@@ -96,35 +107,33 @@
       <div class="card post-content">
          <div class="title">2020 年至今的 A 营：见证一个 Scratch 社区的兴衰</div>
          <div class="subtitle">
-            <ion-icon name="time"></ion-icon>
-            <span class="time">2024-03-24 15:09</span>
-            
-            <ion-icon name="pricetag"></ion-icon>
-             
-            <span class="tag">Scratch</span>
-            
+            2024-03-24 15:09
          </div>
-         <div class="content"><h2>目录</h2>
+         <div class="content markdown-body"><h2>目录</h2>
 <ul>
 <li><a href="#%E5%89%8D%E8%A8%80"><strong>前言</strong></a></li>
-<li><a href="#2020%20%E5%B9%B4%E5%88%9D%E5%8F%8A%E4%BB%A5%E5%89%8D%E7%9A%84%20A%20%E8%90%A5"><strong>2020 年初及以前的 A 营</strong></a><ul>
+<li><a href="#2020%20%E5%B9%B4%E5%88%9D%E5%8F%8A%E4%BB%A5%E5%89%8D%E7%9A%84%20A%20%E8%90%A5"><strong>2020 年初及以前的 A 营</strong></a>
+<ul>
 <li><a href="#A%20%E8%90%A5%E7%A4%BE%E5%8C%BA%E7%9A%84%E5%88%9D%E5%88%9B">A 营社区的初创</a></li>
 <li><a href="#2020%20%E5%B9%B4%E4%BB%A5%E5%89%8D%20A%20%E8%90%A5%E7%9A%84%E7%A4%BE%E5%8C%BA%E6%9C%BA%E5%88%B6">2020 年以前 A 营的社区机制</a></li>
 </ul>
 </li>
-<li><a href="#2020%20%E5%B9%B4%20-%20A%20%E8%90%A5%E7%9A%84%E5%85%B4%E7%9B%9B"><strong>2020 年 - A 营的兴盛</strong></a><ul>
+<li><a href="#2020%20%E5%B9%B4%20-%20A%20%E8%90%A5%E7%9A%84%E5%85%B4%E7%9B%9B"><strong>2020 年 - A 营的兴盛</strong></a>
+<ul>
 <li><a href="#%E8%B5%B0%E5%90%91%E2%80%9C%E5%A4%A7%E4%BC%97%E7%A4%BE%E5%8C%BA%E2%80%9D%E7%9A%84%20A%20%E8%90%A5">走向“大众社区”的 A 营</a></li>
 <li><a href="#2020%20%E5%B9%B4%E9%97%B4%E7%9A%84%E5%8A%9F%E8%83%BD%E6%9B%B4%E6%96%B0">2020 年间的功能更新</a></li>
 <li><a href="#A%20%E8%90%A5%E7%9A%84%E7%AE%A1%E7%90%86%E5%91%98%E5%88%B6%E5%BA%A6%E5%92%8C%E7%A4%BE%E5%8C%BA%E6%97%A5%E5%B8%B8%E7%AE%A1%E7%90%86">A 营的管理员制度和社区日常管理</a></li>
 </ul>
 </li>
-<li><a href="#2021%20%E5%B9%B4%20-%20A%20%E8%90%A5%E7%9A%84%E8%BD%AC%E6%8A%98"><strong>2021 年 - A 营的转折</strong></a><ul>
+<li><a href="#2021%20%E5%B9%B4%20-%20A%20%E8%90%A5%E7%9A%84%E8%BD%AC%E6%8A%98"><strong>2021 年 - A 营的转折</strong></a>
+<ul>
 <li><a href="#%E4%BB%8E%E2%80%9C%E5%8A%9F%E8%83%BD%E5%88%9B%E6%96%B0%E2%80%9D%E5%88%B0%E2%80%9C%E7%BC%9D%E7%BC%9D%E8%A1%A5%E8%A1%A5%E2%80%9D">从“功能创新”到“缝缝补补”</a></li>
 <li><a href="#%E7%B2%BE%E5%8D%8E%E4%BD%9C%E5%93%81%E7%9A%84%E5%8F%98%E5%8C%96">精华作品的变化</a></li>
 <li><a href="#%E7%A4%BE%E5%8C%BA%E7%8E%AF%E5%A2%83%E4%B8%8E%E6%96%87%E5%8C%96%E7%9A%84%E5%8F%91%E5%B1%95%E4%B8%8E%E8%BD%AC%E5%8F%98">社区环境与文化的发展与转变</a></li>
 </ul>
 </li>
-<li><a href="#2022%20%E5%B9%B4%20-%20%E5%A4%B1%E8%90%BD%E7%9A%84%E5%BC%80%E7%AB%AF"><strong>2022 年 - 失落的开端</strong></a><ul>
+<li><a href="#2022%20%E5%B9%B4%20-%20%E5%A4%B1%E8%90%BD%E7%9A%84%E5%BC%80%E7%AB%AF"><strong>2022 年 - 失落的开端</strong></a>
+<ul>
 <li><a href="#%E6%81%B6%E6%80%A7%E4%BA%8B%E4%BB%B6%E5%AF%B9%E7%A4%BE%E5%8C%BA%E9%80%A0%E6%88%90%E5%86%B2%E5%87%BB">恶性事件对社区造成冲击</a></li>
 <li><a href="#%E2%80%9C%E4%BB%85%E5%A5%BD%E5%8F%8B%E5%8F%AF%E8%A7%81%E2%80%9D%E6%9C%BA%E5%88%B6%E5%8F%8A%E5%85%B6%E4%BA%89%E8%AE%AE">“仅好友可见”机制及其争议</a></li>
 </ul>
@@ -132,7 +141,8 @@
 <li><a href="#2023%20%E5%B9%B4%E5%92%8C%202024%20%E5%B9%B4%20-%20%E8%B5%B0%E5%90%91%E6%B7%B7%E4%B9%B1"><strong>2023 年和 2024 年 - 走向混乱</strong></a></li>
 <li><a href="#2025%20%E5%B9%B4"><strong>2025 年</strong></a></li>
 <li><a href="#%E5%86%99%E5%9C%A8%E6%9C%80%E5%90%8E"><strong>写在最后</strong></a></li>
-<li><a href="#%E9%99%84%E5%BD%95%20-%20%E7%A4%BE%E5%8C%BA%E5%8A%9F%E8%83%BD%E8%AF%A6%E8%A7%A3"><strong>附录 - 社区功能详解</strong></a><ul>
+<li><a href="#%E9%99%84%E5%BD%95%20-%20%E7%A4%BE%E5%8C%BA%E5%8A%9F%E8%83%BD%E8%AF%A6%E8%A7%A3"><strong>附录 - 社区功能详解</strong></a>
+<ul>
 <li><a href="#%E7%B2%BE%E5%8D%8E%E4%BD%9C%E5%93%81">精华作品</a></li>
 <li><a href="#%E9%81%93%E5%85%B7%E3%80%81%E8%B4%A7%E5%B8%81%E5%92%8C%E4%BB%BB%E5%8A%A1%E7%B3%BB%E7%BB%9F">道具、货币和任务系统</a></li>
 <li><a href="#%E2%80%9C%E8%83%BD%E5%8A%9B%E5%9B%BE%E2%80%9D%E3%80%81%E7%AD%89%E7%BA%A7%E5%92%8C%20VIP">“能力图”、等级和 VIP</a></li>
@@ -141,7 +151,8 @@
 </li>
 </ul>
 <h2>前言</h2>
-<p><u>“A 营”的全称是<strong>阿儿法营</strong>（Aerfaying），是一个 Scratch 社区</u>。<br>作者从 2020 年开始在 A 营活跃，2020 年中旬开始参加 A 营的管理员工作，这篇文章在 2023 年 9 月初开始编写，旨在尽可能客观、完整、系统性的阐释 A 营社区的发展历程。</p>
+<p><u>“A 营”的全称是<strong>阿儿法营</strong>（Aerfaying），是一个 Scratch 社区</u>。<br>
+作者从 2020 年开始在 A 营活跃，2020 年中旬开始参加 A 营的管理员工作，这篇文章在 2023 年 9 月初开始编写，旨在尽可能客观、完整、系统性的阐释 A 营社区的发展历程。</p>
 <p><img src="aerfaying-history/Untitled.png" alt="A 营社区的主页（注：有两个域名 aerfaying.com 和 gitblock.cn 可以访问 A 营社区，图中是通过 gitblock.cn 即“稽木世界”渠道访问的 A 营社区） "></p>
 <h2>2020 年初及以前的 A 营</h2>
 <p>2010 年，宇（余宙华老师）创办“阿尔法营--魔抓编程培训基地”，主要经营少儿编程教育。2013 年，北京阿儿法营教育科技有限责任公司成立。</p>
@@ -161,15 +172,19 @@
 <h3>2020 年以前 A 营的社区机制</h3>
 <p><u>A 营在 2020 年以前就有着<strong>丰富的社区机制和功能</strong></u>，主要包括：</p>
 <ul>
-<li><p><u><strong>精华作品</strong>：社区内的优秀作品会被授予初级、中级、高级、史诗或传说级的“精华作品”。精华作品在 2020 年后主要通过用户“投票”的方式来评选，作品被授予精华作品后作品作者会获得奖励和作品被推荐的机会，同时精华作品也被认为是荣誉与创作能力的证明。</u></p>
+<li>
+<p><u><strong>精华作品</strong>：社区内的优秀作品会被授予初级、中级、高级、史诗或传说级的“精华作品”。精华作品在 2020 年后主要通过用户“投票”的方式来评选，作品被授予精华作品后作品作者会获得奖励和作品被推荐的机会，同时精华作品也被认为是荣誉与创作能力的证明。</u></p>
 <p><img src="aerfaying-history/Untitled%2026.png" alt="精华作品的投票页面"></p>
 </li>
-<li><p><u><strong>道具、货币和任务系统</strong>：在社区中通过以完成任务为主的途径获取经验值、社区内货币（金币）和社区内道具，并使用社区内货币购买社区内道具。</u></p>
+<li>
+<p><u><strong>道具、货币和任务系统</strong>：在社区中通过以完成任务为主的途径获取经验值、社区内货币（金币）和社区内道具，并使用社区内货币购买社区内道具。</u></p>
 <p><img src="aerfaying-history/Untitled%2027.png" alt="关于社区任务和道具系统"></p>
 </li>
-<li><p><u><strong>“能力图”、等级和 VIP</strong>：社区会根据用户在社区内的表现生成量化的能力图。</u></p>
+<li>
+<p><u><strong>“能力图”、等级和 VIP</strong>：社区会根据用户在社区内的表现生成量化的能力图。</u></p>
 </li>
-<li><p><u><strong>Scratch 扩展</strong>：A 营有相对同期其他社区较为丰富的 Scratch 扩展，为依赖于社区扩展的作品的出现奠定了基础。</u></p>
+<li>
+<p><u><strong>Scratch 扩展</strong>：A 营有相对同期其他社区较为丰富的 Scratch 扩展，为依赖于社区扩展的作品的出现奠定了基础。</u></p>
 </li>
 </ul>
 <p><strong>（在附录中有以上社区功能的详细介绍，对社区功能和机制不了解的朋友可以移步文章末尾阅读附录中的介绍）</strong></p>
@@ -201,7 +216,8 @@
 <p>管理员预备役的招新、转正考试以考察社区知识、管理能力为主，考查编程及学科能力为辅，一般在假期举办，由社区内的正式或预备役管理员命题。</p>
 <blockquote>
 <ol start="7">
-<li>处理违规，要根据情况选择惩罚。下列不属于提醒或警告的是（   ）<br>A. 路障无罚单     B. 禁言     C. 留言劝阻     D. 私聊劝阻</li>
+<li>处理违规，要根据情况选择惩罚。下列不属于提醒或警告的是（   ）<br>
+A. 路障无罚单     B. 禁言     C. 留言劝阻     D. 私聊劝阻</li>
 </ol>
 <p>（2022年1月阿儿法营预管第六届综合素养测评，节选）</p>
 </blockquote>
@@ -213,7 +229,8 @@
 <p>普通用户非辱骂性质的使用“草”原则上属于非违规行为</p>
 <p>（<a href="https://gitblock.cn/Studios/10002/Forum/PostView?postId=19345">阿儿法营/稽木世界普通用户使用规则及处罚条例（草案）</a>，节选）</p>
 </blockquote>
-<p>2020 年末，流行语“草”在社区内流行，意为“笑”。守护煮认为“草”与不文明用语谐音，提出禁止预备役及正式管理员使用“草”，引发了大量的讨论，有用户认为守护煮此举体现出他与年轻用户间存在着“时代鸿沟”。<br>时至今日，发布包含“艹”等“疑似不文明用语”的内容时仍会被提示：“正在提交的内容中包含疑似不文明用语，请仔细核实并慎重选择用词方式！如果是正常表达，可以点击确定按钮继续提交”。</p>
+<p>2020 年末，流行语“草”在社区内流行，意为“笑”。守护煮认为“草”与不文明用语谐音，提出禁止预备役及正式管理员使用“草”，引发了大量的讨论，有用户认为守护煮此举体现出他与年轻用户间存在着“时代鸿沟”。<br>
+时至今日，发布包含“艹”等“疑似不文明用语”的内容时仍会被提示：“正在提交的内容中包含疑似不文明用语，请仔细核实并慎重选择用词方式！如果是正常表达，可以点击确定按钮继续提交”。</p>
 <h3>从“功能创新”到“缝缝补补”</h3>
 <p>2020 年下旬，全国线上教学基本结束，大部分地区恢复正常教学。线上教学结束后，<u>社区活跃度下降</u>，但是社区环境上已经存在的乱象和问题却并未随着活跃度下降而褪去，反而还<u>出现了更多的“<strong>捣乱</strong>”（即恶意违规破坏社区秩序）行为</u>，如大规模发布广告的“广告机”和“盗号捣乱”现象。</p>
 <p><img src="aerfaying-history/Untitled%2011.png" alt="2021 年初的部分举报"></p>
@@ -221,25 +238,31 @@
 <p><img src="aerfaying-history/Untitled%2012.png" alt="能量条（右下）"></p>
 <p>社区环境的乱象和“捣乱”现象仍未得到解决，守护煮又<u>在 2021 年 2 月先后推出了<strong>亲密度机制</strong>和<strong>真人认证</strong>机制</u>。亲密度机制允许用户通过点踩其“不喜欢”的用户的评论以禁止该用户再给自己评论；<u>真人认证类似于一种“担保”</u>，这里着重介绍一下：</p>
 <ul>
-<li><p>真人认证的目的</p>
+<li>
+<p>真人认证的目的</p>
 <p><u>守护煮在《真人认证试行草案》中表示：“为了净化稽木世界的环境，我们需要发起一场真人认证的运动，确保违规者不会隐藏在假面具之后逍遥法外”。</u></p>
 </li>
-<li><p>真人认证的进行方式</p>
+<li>
+<p>真人认证的进行方式</p>
 <p>按规定，没有真人认证的用户 A 可以向拥有真人认证的用户 B <u>请求真人认证</u>，用户 A 向用户 B <u>提供自己的真实信息</u>后，用户 B 方可向用户 A <u>授予真人认证</u>。</p>
 <ul>
 <li>每个人只允许拥有一个真人认证账号（即不允许给自己的小号真人认证）。没有真人认证的用户在使用社区时会受到限制。</li>
 <li>若被认证者 A 违规，认证者 B 需要配合管理员提供 A 真人认证时所提供的信息进行调查。</li>
 </ul>
 </li>
-<li><p>关于真人认证的争议</p>
+<li>
+<p>关于真人认证的争议</p>
 <ol>
-<li><p>在实际执行中，认证者很难确保被认证者提供的手机号、姓名等的个人信息属实，并且也有部分用户在不知道被认证者的真实信息的情况下直接授予真人认证，这使得真人认证机制的<u>运行偏离了原本的设计，甚至“形同虚设”</u>。</p>
+<li>
+<p>在实际执行中，认证者很难确保被认证者提供的手机号、姓名等的个人信息属实，并且也有部分用户在不知道被认证者的真实信息的情况下直接授予真人认证，这使得真人认证机制的<u>运行偏离了原本的设计，甚至“形同虚设”</u>。</p>
 </li>
-<li><p>有用户担心真人认证可能会泄露个人隐私，守护煮在草案中解释：“不用担心，因为认证者在认证时无需提交被认证者的相关信息，仅需要做出承诺即可。只有被认证者违规时，才需要向管理员提供信息配合调查。”</p>
+<li>
+<p>有用户担心真人认证可能会泄露个人隐私，守护煮在草案中解释：“不用担心，因为认证者在认证时无需提交被认证者的相关信息，仅需要做出承诺即可。只有被认证者违规时，才需要向管理员提供信息配合调查。”</p>
 <p>（不过，这个问题应该是“可能会向网络上的陌生人泄露个人隐私”、而不是守护煮解答的“可能会向社区泄露个人隐私”）</p>
 <p>（此外，有用户指出 A 营和用户间缺少用户协议和隐私协议）</p>
 </li>
-<li><p>真人认证对“捣乱”行为有遏制作用，“捣乱”者的小号或他们盗得的账号在“捣乱”时会受到限制，但是这也<u>给用户和管理员带来了一定的负担</u>，如新用户加入社区寸步难行、给小号真人认证的现象丛生等。</p>
+<li>
+<p>真人认证对“捣乱”行为有遏制作用，“捣乱”者的小号或他们盗得的账号在“捣乱”时会受到限制，但是这也<u>给用户和管理员带来了一定的负担</u>，如新用户加入社区寸步难行、给小号真人认证的现象丛生等。</p>
 <p>（而实际上，要求绑定手机号就可以起到遏制“捣乱”的作用了）</p>
 </li>
 </ol>
@@ -255,16 +278,20 @@
 <p><u>初级、中级精华标准的降低和“精华直通车”（即绕过精华投票、守护煮直接授予的精华作品）对创作热情造成了一定程度的打击</u>，精华的“贬值”尤其体现在初级精华作品上，守护煮对此的解释是：</p>
 <blockquote>
 <ol>
-<li><p><strong>为什么已经有了选票机制，还会有精华直通车？</strong></p>
+<li>
+<p><strong>为什么已经有了选票机制，还会有精华直通车？</strong></p>
 <p>首先，选票制度很容易导致社区用户形成一个个小圈子，而圈子之外的人很难被照顾到，需要精华直通车作为补充；另外，选票和货币一样可能出现通货膨胀或者通货紧缩，需要精华直通车作为选票发行的一种机制；</p>
 </li>
-<li><p><strong>不同等级精华的评价标准是什么？</strong></p>
+<li>
+<p><strong>不同等级精华的评价标准是什么？</strong></p>
 <p>初级和中级精华重在鼓励和导向，让相当部分的普通用户都能够经过一定的努力而获取；高级和史诗级精华是真正的挑战，只有综合实力强劲的作品才能够获得；传说级精华定位为一种特殊荣誉，奖励给为社区做出开创性特殊贡献的史诗级别的作品。</p>
 </li>
-<li><p><strong>只是简单的动画也能获得精华？</strong></p>
+<li>
+<p><strong>只是简单的动画也能获得精华？</strong></p>
 <p>动画是最重要的程序创作类型之一，通常也被称为互动艺术。精华评选尤其是初级和中级，不应该过度追求专业的艺术感、程序复杂度和难度。</p>
 </li>
-<li><p><strong>感觉精华标准降低了，这会让已经成为精华的作品贬值吗？</strong></p>
+<li>
+<p><strong>感觉精华标准降低了，这会让已经成为精华的作品贬值吗？</strong></p>
 <p>首先，社区不能因为部分精华获得者的所谓“保值”而压制更多有热情有能力的创作者；另外，已经获得较低级别精华的作品仍然可以继续努力不断迭代改进，争取成为更高级别的精华。</p>
 </li>
 </ol>
@@ -307,7 +334,8 @@
 <p>（QQ 群【A营·创意编程】群公告，守护煮，2022 年 8 月 7 日）</p>
 </blockquote>
 <h3>“仅好友可见”机制及其争议</h3>
-<p>“知心屋事件”基本平息后，守护煮为“阻止违规信息的传播并减少社区中无益的争论”，<u>推出了“仅好友可见”机制</u>，<u>使得大量新发布的评论被设定为“仅好友可见”状态</u>。<br>守护煮认为“仅好友可见”和评论精选类似，页面所有者可以自行排除违规内容、有利于降低官方的压力。</p>
+<p>“知心屋事件”基本平息后，守护煮为“阻止违规信息的传播并减少社区中无益的争论”，<u>推出了“仅好友可见”机制</u>，<u>使得大量新发布的评论被设定为“仅好友可见”状态</u>。<br>
+守护煮认为“仅好友可见”和评论精选类似，页面所有者可以自行排除违规内容、有利于降低官方的压力。</p>
 <p><img src="aerfaying-history/Untitled%2024.png" alt="关于社区评论功能新增【好友可见】相关规则的说明，守护煮"></p>
 <p>当用户 A 在用户 B 的评论区发布评论时，如果用户 A 和用户 B 不是好友（没有互关），则用户 A 的评论就会被自动设定为“仅好友可见”状态，需要用户 B 手动公开评论才能使得该评论对所有用户均可见。</p>
 <p><img src="aerfaying-history/Untitled%2035.png" alt="“仅好友可见”状态的评论"></p>
@@ -322,12 +350,13 @@
 <p>首先，<strong>讽刺作品在a营产生了一定的积极作用</strong>：改善纠正了部分不良风气，改善了a营环境，让更多人了解到不良风气的危害。不过，<strong>当过度的讽刺出现时，它的弊端也开始显现</strong>：激发与扩大了本可以和解的矛盾，使冲突中的其中一方收到声誉损失(尽管有时候罪有应得)，并且讽刺作品本身在某种程度上符合水作的定义。</p>
 <p>（<a href="https://gitblock.cn/Studios/24291/Forum/PostView?postId=33383">关于“讽刺作品”</a>，<a href="https://gitblock.cn/Users/1160044">奇妙的大鹅</a>，节选）</p>
 </blockquote>
-<p>伴随着社区的失落，A 营官方的力量也开始逐渐衰落。<u>活跃的管理员及预备役管理员减少，数个管理员预备役小组陷入了停摆状态，举报积压等现象出现</u>。<br><u>一些用户在社区内外结成了群体</u>，其中部分用户对原有的社区秩序形成了冲击。</p>
+<p>伴随着社区的失落，A 营官方的力量也开始逐渐衰落。<u>活跃的管理员及预备役管理员减少，数个管理员预备役小组陷入了停摆状态，举报积压等现象出现</u>。<br>
+<u>一些用户在社区内外结成了群体</u>，其中部分用户对原有的社区秩序形成了冲击。</p>
 <p>在社区走向衰落的过程中，有许多用户曾提出过拯救社区的方法、并尝试付诸实践，但都未曾取得较为明显的成效。</p>
 <h2>2025 年</h2>
 <p>2025 年 6 月，<strong>aerfaying.com</strong> 域名（即原先 A 营主要使用的域名）下的首页、发现页被隐藏；同年 8 月，该域名下的注册通道关闭；12 月，在该域名下登录会显示“aerfaying.com 域名即将停用”的通知。</p>
 <p><img src="aerfaying-history/aerfaying-dot-com-closed.png" alt="aerfaying.com 域名即将停用的通知"></p>
-<p><strong>gitblock.cn</strong> 域名仍保持正常运行，但需要登录才能查看社区首页。  </p>
+<p><strong>gitblock.cn</strong> 域名仍保持正常运行，但需要登录才能查看社区首页。</p>
 <h2>写在最后</h2>
 <p>到了这里，故事暂告一段落，A 营社区已经建立将近十年了，它曾有过一段兴盛繁荣的时期，那时的 A 营社区人心所向、引人青睐，但后来的它却一次次在错误的决策中走向歧途、一次次在混乱中受到冲击，而现在已然“清角吹寒，都在空城”，令人惋惜和感叹。</p>
 <table>
@@ -339,24 +368,30 @@
 <th>2021 年及以后 - 衰落</th>
 </tr>
 </thead>
-<tbody><tr>
+<tbody>
+<tr>
 <td>表现</td>
 <td>社区基本功能、机制逐步完善。</td>
 <td>用户及作品数量激增、作品及讨论质量提升，社区进入发展的黄金时代。</td>
 <td>在错误的决策和恶性事件中走向混乱和衰落。</td>
 </tr>
-</tbody></table>
+</tbody>
+</table>
 <h2>附录 - 社区功能详解</h2>
 <p>A 营的社区功能较为复杂，需要花费较大篇幅来进行解释，为了兼顾文章的连贯性和介绍的完整性，故将 A 营社区功能的详细介绍放在了附录中，对 A 营社区功能不了解的朋友可以阅读这部分以了解社区的基本功能和机制。</p>
 <h3>精华作品</h3>
 <ul>
-<li><p>精华作品在社区内被认为是一份<u>荣誉和创作能力的证明</u>，并且精华作品可以<u>获得在主页得到推荐的机会和逐级递增的奖励</u>（8 张不同等级的精华选票、金币、经验和 VIP 升级卡）。</p>
+<li>
+<p>精华作品在社区内被认为是一份<u>荣誉和创作能力的证明</u>，并且精华作品可以<u>获得在主页得到推荐的机会和逐级递增的奖励</u>（8 张不同等级的精华选票、金币、经验和 VIP 升级卡）。</p>
 </li>
-<li><p>在社区前期，大量的精华作品是由守护煮或其他社区管理员直接授予的；而<u>在 2020 年及以后，绝大多数的精华作品都是通过“投票”成为精华作品的</u>：拥有精华选票的用户可以给其他优秀的作品使用精华选票并给出评分和评价，当作品获得了 4 张及以上的选票（且平均评分均大于 3 分）以后就可以由有权审核精华的用户或管理员进行审核并授予精华作品。  </p>
+<li>
+<p>在社区前期，大量的精华作品是由守护煮或其他社区管理员直接授予的；而<u>在 2020 年及以后，绝大多数的精华作品都是通过“投票”成为精华作品的</u>：拥有精华选票的用户可以给其他优秀的作品使用精华选票并给出评分和评价，当作品获得了 4 张及以上的选票（且平均评分均大于 3 分）以后就可以由有权审核精华的用户或管理员进行审核并授予精华作品。</p>
 </li>
-<li><p>2021 年 5 月，在经过提名、评选后，作品 <a href="https://gitblock.cn/Projects/235552">魔能的源点</a> 成为了社区中的第一个传说级精华。</p>
+<li>
+<p>2021 年 5 月，在经过提名、评选后，作品 <a href="https://gitblock.cn/Projects/235552">魔能的源点</a> 成为了社区中的第一个传说级精华。</p>
 </li>
-<li><p>截止 2023 年 9 月中旬，在发现页中统计的各级别的作品的数量如下：</p>
+<li>
+<p>截止 2023 年 9 月中旬，在发现页中统计的各级别的作品的数量如下：</p>
 <table>
 <thead>
 <tr>
@@ -368,7 +403,8 @@
 <th>全部发现页作品</th>
 </tr>
 </thead>
-<tbody><tr>
+<tbody>
+<tr>
 <td>1655</td>
 <td>409</td>
 <td>71</td>
@@ -376,12 +412,14 @@
 <td>3</td>
 <td>157348</td>
 </tr>
-</tbody></table>
+</tbody>
+</table>
 </li>
 </ul>
 <h3>道具、货币和任务系统</h3>
 <ul>
-<li><p><strong>任务系统</strong>：社区中的任务类型主要有：</p>
+<li>
+<p><strong>任务系统</strong>：社区中的任务类型主要有：</p>
 <ul>
 <li>谜题任务：通过 Scratch 编程解决问题以完成任务。</li>
 <li>社区任务：完成某些目标以完成任务，如达到特定粉丝数。</li>
@@ -389,25 +427,31 @@
 <li>挖掘任务：2020 年中旬推出，用户通过类似数字货币挖矿的方法来完成任务获得奖励。</li>
 </ul>
 <blockquote>
-<p>请记得每天在背包中<strong>使用打卡机器人领取金币和谜题奖励</strong>。<strong>谜题</strong>是一种编程任务，您可以在谜题页面阅读左下角的题目要求，并在右侧编程区按题目要求完成相应代码，最后点击题目要求上方的开始按键来验证答案是否正确，如果答案正确，您将可以<strong>获得谜题任务的金币、经验或勋章奖励</strong>！<br>...</p>
+<p>请记得每天在背包中<strong>使用打卡机器人领取金币和谜题奖励</strong>。<strong>谜题</strong>是一种编程任务，您可以在谜题页面阅读左下角的题目要求，并在右侧编程区按题目要求完成相应代码，最后点击题目要求上方的开始按键来验证答案是否正确，如果答案正确，您将可以<strong>获得谜题任务的金币、经验或勋章奖励</strong>！<br>
+...</p>
 <p><img src="aerfaying-history/Untitled%2036.png" alt=""></p>
 <p>（<a href="https://gitblock.cn/Studios/24291/Forum/PostView?postId=35421">阿儿法营/稽木世界用户入门指南</a>，<a href="https://gitblock.cn/Users/1068072">waterblock</a>，节选）</p>
 </blockquote>
 <p><u>完成任务的用户将会获得包括社区经验值、金币、勋章、道具等在内的奖励，任务奖励是大多数用户获取社区内资源的重要途径</u>。</p>
 </li>
-<li><p><strong>道具系统和货币系统</strong>：<u>社区会提供给用户基础的道具（如打卡机器人等），在此之上，用户可以通过金币（社区内的基础货币）和比特石（充值代币，1 人民币约等于 8~9 比特石）两种社区货币购买社区内的其他道具（如可以使作品得到推荐的奥的灰烬等），这些用途多样的道具丰富了用户的社区使用体验</u>。</p>
+<li>
+<p><strong>道具系统和货币系统</strong>：<u>社区会提供给用户基础的道具（如打卡机器人等），在此之上，用户可以通过金币（社区内的基础货币）和比特石（充值代币，1 人民币约等于 8~9 比特石）两种社区货币购买社区内的其他道具（如可以使作品得到推荐的奥的灰烬等），这些用途多样的道具丰富了用户的社区使用体验</u>。</p>
 </li>
-<li><p>用户可以在作品中向作品作者支付金币、在工作室来向其他用户“转账”，或在“拍卖行”交易矿物、挂件或图纸道具，这些特性使金币得以在用户间流通。</p>
+<li>
+<p>用户可以在作品中向作品作者支付金币、在工作室来向其他用户“转账”，或在“拍卖行”交易矿物、挂件或图纸道具，这些特性使金币得以在用户间流通。</p>
 </li>
 </ul>
 <h3><strong>“能力图”、等级和 VIP</strong></h3>
 <ul>
-<li><p><u>社区会根据用户在社区内的行为生成用户的能力图</u>。在能力图中，<u>“声望”一项备受关注</u>，“声望”的介绍是：“声望代表诚信、公正及特殊贡献”，用户违规时将可能被扣除“声望”、而首个成功举报违规（即举报被“采纳”）或投出有效的精华选票将可能提升“声望”，而当用户的“声望”小于 0.01（初始值）时就会受到诸多限制（如商店购买物品涨价等）。与其他社区会自动恢复的“信誉值”不同，<u>恢复“声望”的方式更为困难</u>。</p>
+<li>
+<p><u>社区会根据用户在社区内的行为生成用户的能力图</u>。在能力图中，<u>“声望”一项备受关注</u>，“声望”的介绍是：“声望代表诚信、公正及特殊贡献”，用户违规时将可能被扣除“声望”、而首个成功举报违规（即举报被“采纳”）或投出有效的精华选票将可能提升“声望”，而当用户的“声望”小于 0.01（初始值）时就会受到诸多限制（如商店购买物品涨价等）。与其他社区会自动恢复的“信誉值”不同，<u>恢复“声望”的方式更为困难</u>。</p>
 <p><img src="aerfaying-history/Untitled%2028.png" alt="能力图"></p>
 </li>
-<li><p>社区中用户可以通过完成任务等方式获取经验、提升等级。</p>
+<li>
+<p>社区中用户可以通过完成任务等方式获取经验、提升等级。</p>
 </li>
-<li><p>社区的 VIP 可以通过充值、精华作品奖励等渠道得到，VIP 用户可以获得一些优惠资格。</p>
+<li>
+<p>社区的 VIP 可以通过充值、精华作品奖励等渠道得到，VIP 用户可以获得一些优惠资格。</p>
 </li>
 </ul>
 <p><img src="aerfaying-history/Untitled%2029.png" alt="VIP 升级绿卡"></p>
@@ -431,20 +475,17 @@
          hljs.highlightAll();
       </script>
       <script>
-         // 单行图片
+         // 单行图片处理
          document.querySelectorAll('.post-content > .content p > img:only-child').forEach((img) => {
-            // 确定确实为 only child（而不是文字夹带 img）
             if (img.parentNode.childNodes.length > 1) return;
-            // 设置 img 及其父元素 class
             img.parentElement.classList.add('figure');
             img.classList.add('only-child');
-            // 添加 alt
             const alt = document.createElement('div');
             alt.classList.add('image-alt');
             alt.innerText = img.getAttribute('alt');
             img.parentElement.append(alt);
          });
-         // 图片放大
+         // 图片点击放大
          document.querySelectorAll('.post-content > .content img').forEach((img) => {
             img.addEventListener('click', () => {
                window.open(img.getAttribute('src'));
