@@ -626,6 +626,7 @@ ul {
 .markdown-body {
    font-family: "Noto Sans SC" !important;
    color: var(--content-color) !important;
+   background: var(--content-background-color) !important;
 }
 
 .markdown-body a {
@@ -636,7 +637,6 @@ ul {
 .markdown-body code {
    font-family: "JetBrains Mono", "Noto Sans SC", monospace !important;
    text-wrap: auto !important;
-   background-color: var(--page-background-color) !important;
 }
 
 .markdown-body pre:has(.language-mermaid) {
@@ -665,6 +665,9 @@ ul {
 @media (prefers-color-scheme: dark) {
    .post-content sup.footnote-ref a {
       color: #42a5f5 !important;
+   }
+   code.language-mermaid {
+      filter: invert(0.88);
    }
 }
 
