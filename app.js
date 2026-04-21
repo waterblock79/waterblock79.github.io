@@ -99,6 +99,7 @@ fs.readdirSync("sources", {
          tags: postMetadata.tags || [],
          id: postMetadata.id,
          image: postMetadata.image,
+         recommended: postMetadata.recommended ?? ''
       });
       fs.writeFileSync(
          `docs/posts/${postMetadata.id}.html`,

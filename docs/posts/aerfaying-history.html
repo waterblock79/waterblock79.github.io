@@ -105,6 +105,14 @@
          <div class="back">❮ 返回</div>
          <div class="site">waterblock79 的小站</div>
       </a>
+      <div class="post-menu card">
+         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" class="icon"><path d="M3,6H21V8H3V6M3,11H21V13H3V11M3,16H21V18H3V16Z"></path></svg>
+         <div class="titles-container">
+            <div class="titles">
+               <!--<h3 style="margin: 0 0 0.25em 0;">目录</h3>-->
+            </div>
+         </div>
+      </div>
       <div class="card post-content">
          <div class="title">2020 年至今的 A 营：见证一个 Scratch 社区的兴衰</div>
          <div class="subtitle">
@@ -354,8 +362,8 @@ A. 路障无罚单     B. 禁言     C. 留言劝阻     D. 私聊劝阻</li>
 <p>伴随着社区的失落，A 营官方的力量也开始逐渐衰落。<u>活跃的管理员及预备役管理员减少，数个管理员预备役小组陷入了停摆状态，举报积压等现象出现</u>。<br>
 <u>一些用户在社区内外结成了群体</u>，其中部分用户对原有的社区秩序形成了冲击。</p>
 <p>在社区走向衰落的过程中，有许多用户曾提出过拯救社区的方法、并尝试付诸实践，但都未曾取得较为明显的成效。</p>
-<h2>2025 年</h2>
-<p>2025 年 6 月，<strong>aerfaying.com</strong> 域名（即原先 A 营主要使用的域名）下的首页、发现页被隐藏；同年 8 月，该域名下的注册通道关闭；12 月，在该域名下登录会显示“aerfaying.com 域名即将停用”的通知。</p>
+<h2>2025 年与 2026 年 - 归于平静</h2>
+<p>2025 年 6 月，<strong>aerfaying.com</strong> 域名（即原先 A 营主要使用的域名）下的首页、发现页被隐藏；同年 8 月，该域名下的注册通道关闭；12 月，在该域名下登录会显示“aerfaying.com 域名即将停用”的通知；<u>2026 年 3 月起，无法再使用 aerfaying.com 域名访问社区</u>。</p>
 <p><img src="aerfaying-history/aerfaying-dot-com-closed.png" alt="aerfaying.com 域名即将停用的通知"></p>
 <p><strong>gitblock.cn</strong> 域名仍保持正常运行，但需要登录才能查看社区首页。</p>
 <h2>写在最后</h2>
@@ -493,9 +501,48 @@ A. 路障无罚单     B. 禁言     C. 留言劝阻     D. 私聊劝阻</li>
             })
          });
          // 为标题添加 id
-         document.querySelectorAll('h1, h2, h3').forEach((title) => {
+         document.querySelectorAll('h1, h2, h3, h4').forEach((title) => {
             title.id = title.innerText;
          })
+         // 文章目录
+         const postTitles = document.querySelector('.post-menu .titles');
+         const titleElements = document.querySelectorAll('.markdown-body h1, .markdown-body h2, .markdown-body h3, .markdown-body h4');
+         if (titleElements.length > 1) {
+            // 查找标题、插入到 .titles 中，并根据类型设置加粗 / 左间距
+            let titleElementMin = "H9";
+            titleElements.forEach(el => {
+               if (el.tagName < titleElementMin) titleElementMin = el.tagName;
+            });
+            titleElements.forEach(el => {
+               const a = document.createElement('a');
+               a.href = `#${el.id}`;
+               a.innerText = el.innerText;
+               if (el.tagName == titleElementMin) a.style.fontWeight = '600';
+               a.style.marginLeft = { "H1": '0', "H2": '0.5rem', "H3": '1rem', "H4": '1.5rem' }[el.tagName];
+               postTitles.appendChild(a);
+            });
+            // Hover 左下角按钮时展开
+            const ptContainer = document.querySelector('.post-menu .titles-container');
+            ptContainer.style['--width'] = `${postTitles.offsetWidth}px`;
+            ptContainer.style['--height'] = `${postTitles.offsetHeight}px`;
+            new ResizeObserver(entries => {
+               for (let entry of entries) {
+                  if (entry.target == postTitles) {
+                     ptContainer.style['--width'] = `${postTitles.offsetWidth}px`;
+                     ptContainer.style['--height'] = `${postTitles.offsetHeight}px`;
+                  }
+               }
+            }).observe(postTitles);
+            // 回到顶部
+            document.querySelector('.post-menu .icon').addEventListener('click', () => {
+               window.scrollTo({
+                  top: 0,
+                  behavior: "smooth"
+               });
+            });
+         } else {
+            document.querySelector('.post-menu').remove();
+         }
       </script>
    </body>
 </html>

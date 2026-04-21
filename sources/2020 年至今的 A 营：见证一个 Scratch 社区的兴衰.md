@@ -4,6 +4,7 @@ date: 2024-3-24 15:09:00
 tags: [Scratch]
 excerpt: 记录和分析 Scratch 社区阿儿法营（A 营）的发展历程
 id: aerfaying-history
+recommended: recommended
 ---
 
 ## 目录
@@ -307,9 +308,9 @@ id: aerfaying-history
 
 在社区走向衰落的过程中，有许多用户曾提出过拯救社区的方法、并尝试付诸实践，但都未曾取得较为明显的成效。
 
-## 2025 年
+## 2025 年与 2026 年 - 归于平静
 
-2025 年 6 月，**aerfaying.com** 域名（即原先 A 营主要使用的域名）下的首页、发现页被隐藏；同年 8 月，该域名下的注册通道关闭；12 月，在该域名下登录会显示“aerfaying.com 域名即将停用”的通知。
+2025 年 6 月，**aerfaying.com** 域名（即原先 A 营主要使用的域名）下的首页、发现页被隐藏；同年 8 月，该域名下的注册通道关闭；12 月，在该域名下登录会显示“aerfaying.com 域名即将停用”的通知；<u>2026 年 3 月起，无法再使用 aerfaying.com 域名访问社区</u>。
 
 ![aerfaying.com 域名即将停用的通知](aerfaying-history/aerfaying-dot-com-closed.png)
 

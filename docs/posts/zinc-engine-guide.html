@@ -105,6 +105,14 @@
          <div class="back">❮ 返回</div>
          <div class="site">waterblock79 的小站</div>
       </a>
+      <div class="post-menu card">
+         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" class="icon"><path d="M3,6H21V8H3V6M3,11H21V13H3V11M3,16H21V18H3V16Z"></path></svg>
+         <div class="titles-container">
+            <div class="titles">
+               <!--<h3 style="margin: 0 0 0.25em 0;">目录</h3>-->
+            </div>
+         </div>
+      </div>
       <div class="card post-content">
          <div class="title">Zinc Engine 指南</div>
          <div class="subtitle">
@@ -413,9 +421,48 @@
             })
          });
          // 为标题添加 id
-         document.querySelectorAll('h1, h2, h3').forEach((title) => {
+         document.querySelectorAll('h1, h2, h3, h4').forEach((title) => {
             title.id = title.innerText;
          })
+         // 文章目录
+         const postTitles = document.querySelector('.post-menu .titles');
+         const titleElements = document.querySelectorAll('.markdown-body h1, .markdown-body h2, .markdown-body h3, .markdown-body h4');
+         if (titleElements.length > 1) {
+            // 查找标题、插入到 .titles 中，并根据类型设置加粗 / 左间距
+            let titleElementMin = "H9";
+            titleElements.forEach(el => {
+               if (el.tagName < titleElementMin) titleElementMin = el.tagName;
+            });
+            titleElements.forEach(el => {
+               const a = document.createElement('a');
+               a.href = `#${el.id}`;
+               a.innerText = el.innerText;
+               if (el.tagName == titleElementMin) a.style.fontWeight = '600';
+               a.style.marginLeft = { "H1": '0', "H2": '0.5rem', "H3": '1rem', "H4": '1.5rem' }[el.tagName];
+               postTitles.appendChild(a);
+            });
+            // Hover 左下角按钮时展开
+            const ptContainer = document.querySelector('.post-menu .titles-container');
+            ptContainer.style['--width'] = `${postTitles.offsetWidth}px`;
+            ptContainer.style['--height'] = `${postTitles.offsetHeight}px`;
+            new ResizeObserver(entries => {
+               for (let entry of entries) {
+                  if (entry.target == postTitles) {
+                     ptContainer.style['--width'] = `${postTitles.offsetWidth}px`;
+                     ptContainer.style['--height'] = `${postTitles.offsetHeight}px`;
+                  }
+               }
+            }).observe(postTitles);
+            // 回到顶部
+            document.querySelector('.post-menu .icon').addEventListener('click', () => {
+               window.scrollTo({
+                  top: 0,
+                  behavior: "smooth"
+               });
+            });
+         } else {
+            document.querySelector('.post-menu').remove();
+         }
       </script>
    </body>
 </html>

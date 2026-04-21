@@ -5,6 +5,7 @@ body {
    --content-background-color: #fff;
    --content-color: rgba(0, 0, 0, 87%);
    -webkit-tap-highlight-color: rgb(0, 0, 0, 0);
+   scroll-behavior: smooth;
 }
 
 a:not(a[class], a[id]) {
@@ -543,11 +544,11 @@ ul {
 
 .post-content > .title {
    font-size: 1.25em;
-   width: 100%;
-   display: flex;
-   justify-content: center;
+   max-width: 100%;
    line-height: 1em;
    margin-top: 0.75em;
+   text-align: center;
+   padding: 0 1em;
 }
 
 .post-content > .subtitle {
@@ -686,4 +687,53 @@ u {
    u {
       border-bottom-color: rgba(255, 255, 255, 0.75);
    }
+}
+
+.post-menu {
+   left: 1.5em;
+   bottom: 1em;
+   position: fixed;
+   padding: 1em;
+   border-radius: 9999px;
+   display: flex;
+   flex-direction: column-reverse;
+   background: #ffffffcc;
+   z-index: 99999;
+   backdrop-filter: blur(8px);
+   transition: borderRadius 0.2s;
+}
+
+.post-menu .icon {
+   width: 1.25rem;
+   height: 1.25rem;
+   display: block;
+   margin: 0 auto;
+   cursor: pointer;
+}
+
+.post-menu .titles {
+   display: flex;
+   flex-direction: column;
+   padding: 0 0.5em 1em 0.5em;
+   overflow: hidden;
+   align-items: flex-start;
+   max-height: 36em;
+   min-width: 8em;
+   overflow-y: scroll;
+}
+
+.titles-container {
+   overflow: hidden;
+   width: 0;
+   height: 0;
+   transition: width 0.2s, height 0.2s;
+}
+
+.post-menu:hover {
+   border-radius: 8px;
+}
+
+.post-menu:hover .titles-container, .post-menu:active .titles-container {
+   width: var(--width) !important;
+   height: var(--height) !important;
 }

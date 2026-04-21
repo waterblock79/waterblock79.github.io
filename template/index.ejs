@@ -28,7 +28,7 @@
          </div>
          <div class="about">
             这是一名在 <b>北京</b> 的 <b>大学生</b>，目前正在修读计算机相关的专业。<br/>
-            喜欢写点代码，主要做 <b>前端开发</b>，最近在 <b>准备算法竞赛</b>。
+            喜欢写点代码，主要做 <b>前端开发</b>。
          </div>
          <div class="contact">
             <a
@@ -163,7 +163,11 @@
                   <div class="post-excerpt"><%= post.excerpt %></div>
                </div>
                <div class="post-info">
-                  > <%= post.dateString %>
+                  > 
+                  <%= post.dateString %>
+                  <% if(post.recommended == 'recommended') { %> 
+                     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" style="width: 1em; height: 1em;"><title>star</title><path d="M12,17.27L18.18,21L16.54,13.97L22,9.24L14.81,8.62L12,2L9.19,8.62L2,9.24L7.45,13.97L5.82,21L12,17.27Z"></path></svg>
+                  <% } %>
                </div>
             </a>
             <% }) %>
