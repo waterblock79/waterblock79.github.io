@@ -5,6 +5,7 @@ https://waterblock79.github.io/posts/future-login.html
 https://waterblock79.github.io/posts/data-uri.html
 https://waterblock79.github.io/posts/build-hexo.html
 https://waterblock79.github.io/posts/websocket.html
+https://waterblock79.github.io/posts/icpc-dictionary.html
 https://waterblock79.github.io/posts/non-linear-in-scratch-and-geometric-sequence.html
 https://waterblock79.github.io/posts/windows-subsystem-android.html
 https://waterblock79.github.io/posts/zinc-engine-guide.html
