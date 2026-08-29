@@ -8,7 +8,7 @@ id: icpc-dictionary
 
 苦于英语词汇量有限，加上第一次参加英文题面的比赛，遂统计并整理了这一词汇表，以便打印出来并在赛时参考。
 
-这一词汇表包含超过 1000 个英文词语及其中文释义，注重收录在 ICPC 比赛中出现频率显著较高、且具有一定难度的词汇，例如：*vertice 顶点 (scored 9.6), isomorph 同构 (scored 2.9), permutation 排列 (scored 5.5)*...
+这一词汇表包含超过 1000 个英文词语及其中文释义，注重收录在 ICPC（International Collegiate Programming Contest）比赛中出现频率显著较高、且具有一定难度的词汇，例如：*`vertice 顶点 (scored 9.6)`, `isomorph 同构 (scored 2.9)`, `permutation 排列 (scored 5.5)`*... 而像 *`connect (scored 5.1)`* 这样的简单词汇或者低频词汇如 *`fiction (scored -4.8)`* 则不会被收录。
 
 <div align="center">
 

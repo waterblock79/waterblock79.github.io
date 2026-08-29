@@ -98,8 +98,9 @@ fs.readdirSync("sources", {
          datetimeString: dayjs(postMetadata.date).format("YYYY-MM-DD HH:mm"),
          tags: postMetadata.tags || [],
          id: postMetadata.id,
-         image: postMetadata.image,
-         recommended: postMetadata.recommended ?? ''
+         image: postMetadata.image ? path.join("posts", postMetadata.image).replace(/\\/g, "/") : "",
+         recommended: postMetadata.recommended ?? '',
+         sourceUrl: `https://cdn.jsdelivr.net/gh/waterblock79/waterblock79.github.io@main/sources/${file.name}`,
       });
       fs.writeFileSync(
          `docs/posts/${postMetadata.id}.html`,
@@ -111,6 +112,7 @@ fs.readdirSync("sources", {
             tags: postMetadata.tags || [],
             description: postMetadata.excerpt,
             content: MarkdownIt.render(postContent),
+            sourceUrl: `https://cdn.jsdelivr.net/gh/waterblock79/waterblock79.github.io@main/sources/${file.name}`
          })
       );
       sitemap.push(`posts/${postMetadata.id}.html`);

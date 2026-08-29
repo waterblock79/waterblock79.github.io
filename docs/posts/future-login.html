@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="zh">
    <head>
-      <title>2FA、无密码和账户登录的未来 - Waterblock79's website</title>
+      <title>2FA、无密码和身份验证的未来 - Waterblock79's website</title>
       <meta name="viewport" content="width=device-width,initial-scale=1" />
       <link rel="stylesheet" type="text/css" href="/assets/styles.css" />
       <link rel="icon" type="image/png" href="/assets/icon.png" />
@@ -105,20 +105,29 @@
          <div class="back">❮ 返回</div>
          <div class="site">waterblock79 的小站</div>
       </a>
-      <div class="post-menu card">
+      <div class="post-menu">
          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" class="icon"><path d="M3,6H21V8H3V6M3,11H21V13H3V11M3,16H21V18H3V16Z"></path></svg>
          <div class="titles-container">
             <div class="titles">
+               <span class="btn" id="share-btn">
+                  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" class="btn-icon"><title>share</title><path d="M21,12L14,5V9C7,10 4,15 3,20C5.5,16.5 9,14.9 14,14.9V19L21,12Z" /></svg>
+                  <span>分享</span>
+               </span>
+               <span class="btn" id="view-source-btn">
+                  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" class="btn-icon"><title>code-tags</title><path d="M14.6,16.6L19.2,12L14.6,7.4L16,6L22,12L16,18L14.6,16.6M9.4,16.6L4.8,12L9.4,7.4L8,6L2,12L8,18L9.4,16.6Z" /></svg>
+                  <span>查看源代码</span>
+               </span>
                <!--<h3 style="margin: 0 0 0.25em 0;">目录</h3>-->
             </div>
+            
          </div>
       </div>
       <div class="card post-content">
-         <div class="title">2FA、无密码和账户登录的未来</div>
+         <div class="title">2FA、无密码和身份验证的未来</div>
          <div class="subtitle">
             2026-01-01 15:33
          </div>
-         <div class="content markdown-body"><h2>从 SFA 到 2FA</h2>
+         <div class="content markdown-body"><h2>从 SFA（单因素验证）到 2FA（双因素验证）</h2>
 <p>输入用户名、密码，然后点击“登录”。<br>
 <strong>密码</strong> 无疑是最常用的账号登录方式，符合直觉、也并不繁琐，基于密码的 <strong>SFA</strong><sup class="footnote-ref"><a href="#fn1" id="fnref1">[1]</a></sup>、即 <strong>单因素验证</strong> 是许多网站使用的主要登录方式。<br>
 但弱口令、密码泄露等问题正使得纯密码的身份验证变得越来越不可信。<br>
@@ -126,8 +135,8 @@
 <p><img src="./future-login/chrome-password-generate.png" alt="Chrome 生成密码"></p>
 <p>即便如此，单因素验证也并非账号登录的最优解。在此之上，为了更安全地验证“你是你”，<strong>2FA</strong><sup class="footnote-ref"><a href="#fn2" id="fnref2">[2]</a></sup>、即 <strong>双因素验证</strong> 应运而生。在密码的基础上，从登录 QQ 和微信时的短信验证码、到 Steam 令牌都属于 2FA。<br>
 2FA 通过两个验证因素来验证用户的身份，这些因素包括：知识（密码、验证问题）、拥有（物理密钥、OTP）、固有（生物特征）、地点（物理位置）等<sup class="footnote-ref"><a href="#fn3" id="fnref3">[3]</a></sup>。2FA 能降低密码泄露、弱密码等情况下账户被盗的风险。</p>
-<h2>OTP<sup class="footnote-ref"><a href="#fn4" id="fnref4">[4]</a></sup></h2>
-<p>上面提到的短信验证码和 Steam 令牌都属于 <strong>OTP</strong>、即 <strong>一次性密码</strong>，是 2FA 中的一种因素，通过一个具有时效性的密码来验证用户身份，这是一种被广泛使用的验证方式，银行 U 盾（硬件令牌）生成的验证码也属于 OTP。</p>
+<h2>OTP / 一次性密码</h2>
+<p>上面提到的短信验证码和 Steam 令牌都属于 <strong>OTP</strong><sup class="footnote-ref"><a href="#fn4" id="fnref4">[4]</a></sup>、即 <strong>一次性密码</strong>，是 2FA 中的一种因素，通过一个具有时效性的密码来验证用户身份，这是一种被广泛使用的验证方式，银行 U 盾（硬件令牌）生成的验证码也属于 OTP。</p>
 <p><strong>短信、邮箱等验证码验证</strong> 非常常用，但也存在着费用高昂、被滥用等问题。国内一些平台采用了“无感知校验”的“号码认证服务”（PNVS），实现了无验证码的手机验证。</p>
 <p><strong>基于 HMAC 的一次性密码算法</strong>（<strong>HOTP</strong><sup class="footnote-ref"><a href="#fn5" id="fnref5">[5]</a></sup>） / <strong>基于时间的一次性密码算法</strong>（<strong>TOTP</strong><sup class="footnote-ref"><a href="#fn6" id="fnref6">[6]</a></sup>）是另外一种常用的 OTP 类型，用户需要提交客户端显示的验证代码来证明自己的身份，Steam 令牌就采用了类似的算法<sup class="footnote-ref"><a href="#fn7" id="fnref7">[7]</a></sup>。<br>
 这里介绍一种 Github 等平台使用的开源 TOTP 方法：</p>
@@ -256,7 +265,7 @@
 </li>
 </ol>
 <p>以 HOTP / TOTP 作为 2FA 相比短信、邮箱验证码验证可能更具优势，例如能避免手机短信被恶意软件获取导致账号被盗、避免账号和手机号绑定、减少更换手机号时带来的麻烦，以及成本较低等。</p>
-<h2>Passkey</h2>
+<h2>Passkey / 通行密钥</h2>
 <p>近年来，Google、微软等公司都在推动“无密码登录”<sup class="footnote-ref"><a href="#fn11" id="fnref11">[11]</a></sup><sup class="footnote-ref"><a href="#fn12" id="fnref12">[12]</a></sup>，被称为 <strong>通行密钥</strong>，即 <strong>Passkey</strong>。通行密钥的核心是非对称加密算法，其中私钥始终储存在用户端；在登陆时，服务端向客户端发起 Challenge（质询 / 挑战），客户端使用私钥对请求进行签名并返回以证明身份<sup class="footnote-ref"><a href="#fn13" id="fnref13">[13]</a></sup>。</p>
 <pre><code class="language-mermaid">---
 title: 通行密钥验证
@@ -324,6 +333,36 @@ sequenceDiagram
          hljs.highlightAll();
       </script>
       <script>
+         // 弹出 Toast
+         let toastTimer = null;
+         let toastEl = null;
+         const toast = (innerHTML, timeoutMs = 2000) => {
+            if (!toastEl) {
+               toastEl = document.createElement('div');
+               toastEl.id = 'toast';
+               document.body.appendChild(toastEl);
+            }
+
+            if (toastTimer) {
+               clearTimeout(toastTimer);
+               toastTimer = null;
+            }
+
+            toastEl.classList.remove('show', 'hide');
+            void toastEl.offsetWidth;
+            toastEl.innerHTML = innerHTML;
+            toastEl.classList.add('show');
+            toastTimer = setTimeout(() => {
+               toastEl.classList.remove('show');
+               toastEl.classList.add('hide');
+               const onFinish = () => {
+               toastEl.removeEventListener('animationend', onFinish);
+               toastEl.classList.remove('hide');
+               };
+               toastEl.addEventListener('animationend', onFinish);
+               toastTimer = null;
+            }, timeoutMs);
+         }
          // 单行图片处理
          document.querySelectorAll('.post-content > .content p > img:only-child').forEach((img) => {
             if (img.parentNode.childNodes.length > 1) return;
@@ -356,20 +395,21 @@ sequenceDiagram
             titleElements.forEach(el => {
                const a = document.createElement('a');
                a.href = `#${el.id}`;
-               a.innerText = el.innerText;
+               a.innerText = el.innerText.replace(/\[[^\]]+\]/g, '');
                if (el.tagName == titleElementMin) a.style.fontWeight = '600';
                a.style.marginLeft = { "H1": '0', "H2": '0.5rem', "H3": '1rem', "H4": '1.5rem' }[el.tagName];
                postTitles.appendChild(a);
             });
+         }
             // Hover 左下角按钮时展开
             const ptContainer = document.querySelector('.post-menu .titles-container');
-            ptContainer.style['--width'] = `${postTitles.offsetWidth}px`;
-            ptContainer.style['--height'] = `${postTitles.offsetHeight}px`;
+            ptContainer.style.setProperty('--width', `${postTitles.offsetWidth}px`);
+            ptContainer.style.setProperty('--height', `${postTitles.offsetHeight}px`);
             new ResizeObserver(entries => {
                for (let entry of entries) {
                   if (entry.target == postTitles) {
-                     ptContainer.style['--width'] = `${postTitles.offsetWidth}px`;
-                     ptContainer.style['--height'] = `${postTitles.offsetHeight}px`;
+                     ptContainer.style.setProperty('--width', `${postTitles.offsetWidth}px`);
+                     ptContainer.style.setProperty('--height', `${postTitles.offsetHeight}px`);
                   }
                }
             }).observe(postTitles);
@@ -379,10 +419,17 @@ sequenceDiagram
                   top: 0,
                   behavior: "smooth"
                });
-            });
-         } else {
-            document.querySelector('.post-menu').remove();
-         }
+            })
+         // 分享文章 & 查看源代码
+         document.querySelector('#share-btn').addEventListener('click', () => {
+            navigator.clipboard.writeText(`${document.title}\n${window.location.href}`)
+               .then(() => {
+                  toast('已复制到剪贴板');
+               })
+         });
+         document.querySelector('#view-source-btn').addEventListener('click', () => {
+            window.open('https://cdn.jsdelivr.net/gh/waterblock79/waterblock79.github.io@main/sources/2FA、“无密码”和账户登录的未来.md');
+         });
       </script>
    </body>
 </html>

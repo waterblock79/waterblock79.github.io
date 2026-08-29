@@ -105,12 +105,21 @@
          <div class="back">❮ 返回</div>
          <div class="site">waterblock79 的小站</div>
       </a>
-      <div class="post-menu card">
+      <div class="post-menu">
          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" class="icon"><path d="M3,6H21V8H3V6M3,11H21V13H3V11M3,16H21V18H3V16Z"></path></svg>
          <div class="titles-container">
             <div class="titles">
+               <span class="btn" id="share-btn">
+                  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" class="btn-icon"><title>share</title><path d="M21,12L14,5V9C7,10 4,15 3,20C5.5,16.5 9,14.9 14,14.9V19L21,12Z" /></svg>
+                  <span>分享</span>
+               </span>
+               <span class="btn" id="view-source-btn">
+                  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" class="btn-icon"><title>code-tags</title><path d="M14.6,16.6L19.2,12L14.6,7.4L16,6L22,12L16,18L14.6,16.6M9.4,16.6L4.8,12L9.4,7.4L8,6L2,12L8,18L9.4,16.6Z" /></svg>
+                  <span>查看源代码</span>
+               </span>
                <!--<h3 style="margin: 0 0 0.25em 0;">目录</h3>-->
             </div>
+            
          </div>
       </div>
       <div class="card post-content">
@@ -191,6 +200,36 @@
          hljs.highlightAll();
       </script>
       <script>
+         // 弹出 Toast
+         let toastTimer = null;
+         let toastEl = null;
+         const toast = (innerHTML, timeoutMs = 2000) => {
+            if (!toastEl) {
+               toastEl = document.createElement('div');
+               toastEl.id = 'toast';
+               document.body.appendChild(toastEl);
+            }
+
+            if (toastTimer) {
+               clearTimeout(toastTimer);
+               toastTimer = null;
+            }
+
+            toastEl.classList.remove('show', 'hide');
+            void toastEl.offsetWidth;
+            toastEl.innerHTML = innerHTML;
+            toastEl.classList.add('show');
+            toastTimer = setTimeout(() => {
+               toastEl.classList.remove('show');
+               toastEl.classList.add('hide');
+               const onFinish = () => {
+               toastEl.removeEventListener('animationend', onFinish);
+               toastEl.classList.remove('hide');
+               };
+               toastEl.addEventListener('animationend', onFinish);
+               toastTimer = null;
+            }, timeoutMs);
+         }
          // 单行图片处理
          document.querySelectorAll('.post-content > .content p > img:only-child').forEach((img) => {
             if (img.parentNode.childNodes.length > 1) return;
@@ -223,20 +262,21 @@
             titleElements.forEach(el => {
                const a = document.createElement('a');
                a.href = `#${el.id}`;
-               a.innerText = el.innerText;
+               a.innerText = el.innerText.replace(/\[[^\]]+\]/g, '');
                if (el.tagName == titleElementMin) a.style.fontWeight = '600';
                a.style.marginLeft = { "H1": '0', "H2": '0.5rem', "H3": '1rem', "H4": '1.5rem' }[el.tagName];
                postTitles.appendChild(a);
             });
+         }
             // Hover 左下角按钮时展开
             const ptContainer = document.querySelector('.post-menu .titles-container');
-            ptContainer.style['--width'] = `${postTitles.offsetWidth}px`;
-            ptContainer.style['--height'] = `${postTitles.offsetHeight}px`;
+            ptContainer.style.setProperty('--width', `${postTitles.offsetWidth}px`);
+            ptContainer.style.setProperty('--height', `${postTitles.offsetHeight}px`);
             new ResizeObserver(entries => {
                for (let entry of entries) {
                   if (entry.target == postTitles) {
-                     ptContainer.style['--width'] = `${postTitles.offsetWidth}px`;
-                     ptContainer.style['--height'] = `${postTitles.offsetHeight}px`;
+                     ptContainer.style.setProperty('--width', `${postTitles.offsetWidth}px`);
+                     ptContainer.style.setProperty('--height', `${postTitles.offsetHeight}px`);
                   }
                }
             }).observe(postTitles);
@@ -246,10 +286,17 @@
                   top: 0,
                   behavior: "smooth"
                });
-            });
-         } else {
-            document.querySelector('.post-menu').remove();
-         }
+            })
+         // 分享文章 & 查看源代码
+         document.querySelector('#share-btn').addEventListener('click', () => {
+            navigator.clipboard.writeText(`${document.title}\n${window.location.href}`)
+               .then(() => {
+                  toast('已复制到剪贴板');
+               })
+         });
+         document.querySelector('#view-source-btn').addEventListener('click', () => {
+            window.open('https://cdn.jsdelivr.net/gh/waterblock79/waterblock79.github.io@main/sources/在 Scratch 中使用列表管理图层.md');
+         });
       </script>
    </body>
 </html>

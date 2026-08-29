@@ -4,6 +4,7 @@ body {
    --page-background-color: #fafafa;
    --content-background-color: #fff;
    --content-color: rgba(0, 0, 0, 87%);
+   --background-color-zero: #ffffff00;
    -webkit-tap-highlight-color: rgb(0, 0, 0, 0);
    scroll-behavior: smooth;
 }
@@ -30,8 +31,9 @@ a:hover:not(a[class], a[id]) {
 @media (prefers-color-scheme: dark) {
    body {
       --page-background-color: #121212;
-      --content-background-color: #263238;
+      --content-background-color: #222;
       --content-color: #fff;
+      --background-color-zero: #22222200;
    }
 
    a {
@@ -123,6 +125,7 @@ ul {
 }
 ::-webkit-scrollbar-thumb {
    background-color: #dddddd;
+   background-color: color-mix(in srgb, var(--content-background-color), var(--content-color) 25%);
    border-radius: 6px;
 }
 
@@ -181,8 +184,8 @@ ul {
 @media (prefers-color-scheme: dark) {
    .index-about {
       --content-color: #fff !important;
-      --content-background-color: #263238;
-      background: #263238 !important;
+      --content-background-color: #222;
+      background: #222 !important;
       border: 1px solid #222222 !important;
       color: var(--content-color);
    }
@@ -314,6 +317,7 @@ ul {
 
 .index-projects .projects .project {
    background-color: var(--page-background-color);
+   background-color: color-mix(in srgb, var(--content-background-color), var(--content-color) 2.8%);
    padding: 1em 1.5em;
    border-radius: 8px;
    text-decoration: none;
@@ -325,6 +329,7 @@ ul {
    gap: 1em;
    min-width: min(15em, 50%);
    transition: filter 0.2s;
+   position: relative;
 }
 .index-projects .projects .project:hover {
    filter: brightness(0.975);
@@ -338,6 +343,7 @@ ul {
    margin-right: 0.5rem;
    user-select: none;
    -webkit-user-drag: none;
+   fill: color-mix(in srgb, var(--content-color), #00000088);
 }
 
 .index-projects .projects .project .title {
@@ -428,12 +434,43 @@ ul {
    gap: 1em;
 }
 
+.index-posts > .posts > .post::before, .index-projects > .projects > .project::before {
+   content: "";
+   position: absolute;
+   height: 75%;
+   width: 75%;
+   right: 0.5em;
+   bottom: 12.5%;
+   opacity: 0.075;
+   background-image: var(--background-image);
+   background-size:contain;
+   background-position-x:right;
+   background-position-y:bottom;
+   background-repeat: no-repeat;
+   filter: drop-shadow(0px 4px 8px #000000aa);
+}
+
+@media (prefers-color-scheme: dark) {
+   .index-posts > .posts > .post::before, .index-projects > .projects > .project::before {
+      filter: invert(1);
+      filter: drop-shadow(0px 4px 8px #ffffff88);
+   }
+}
+
+
 .index-posts > .posts > .post {
    background-color: var(--page-background-color);
+   background-color: color-mix(in srgb, var(--content-background-color), var(--content-color) 2.8%);
    padding: 1em 1.5em;
    border-radius: 8px;
    text-decoration: none;
    color: var(--content-color);
+   --stoke-width: 1px;
+   text-shadow: 
+      calc(var(--stoke-width) * 1) calc(var(--stoke-width) * -1) 0 var(--content-background-color),  
+      calc(var(--stoke-width) * 1) calc(var(--stoke-width) * -1) 0 var(--content-background-color),
+      calc(var(--stoke-width) * -1) calc(var(--stoke-width) * 1) 0 var(--content-background-color),
+      calc(var(--stoke-width) * 1) calc(var(--stoke-width) * 1) 0 var(--content-background-color);
    gap: 1em;
    min-width: min(15em, calc(100% - 3em));
    width: auto;
@@ -644,6 +681,10 @@ ul {
    background: none;
 }
 
+.markdown-body .katex-block {
+   overflow: auto;
+}
+
 .post-content section.footnotes {
    font-family: "JetBrains Mono", "Noto Sans SC", monospace !important;
    font-size: 0.75em !important;
@@ -694,13 +735,19 @@ u {
    bottom: 1em;
    position: fixed;
    padding: 1em;
-   border-radius: 9999px;
+   border-radius: 1.625rem;
    display: flex;
    flex-direction: column-reverse;
    background: #ffffffcc;
+   background: color-mix(in srgb, var(--content-background-color), #ffffff00);
    z-index: 99999;
    backdrop-filter: blur(8px);
-   transition: borderRadius 0.2s;
+   transition: border-radius 0.2s;
+   box-shadow: 0 1px 4px rgba(0, 0, 0, 0.12);
+   border: 1px solid color-mix(in srgb, var(--content-background-color), #ffffff33);
+   overflow-wrap: break-word;
+   animation: bounce-once 0.3s 1;
+   animation-delay: 0.2s; 
 }
 
 .post-menu .icon {
@@ -709,6 +756,7 @@ u {
    display: block;
    margin: 0 auto;
    cursor: pointer;
+   fill: var(--content-color);
 }
 
 .post-menu .titles {
@@ -718,8 +766,48 @@ u {
    overflow: hidden;
    align-items: flex-start;
    max-height: 36em;
-   min-width: 8em;
+   min-width: 16em;
    overflow-y: scroll;
+}
+
+.post-menu .titles a {
+   color: color-mix(in srgb, var(--content-color), #0069c2 16%);
+}
+
+.post-menu .titles a:hover {
+   box-shadow: 0 1px 0 0 color-mix(in srgb, var(--content-color), #0069c2 16%);
+}
+
+.post-menu .btn {
+   display: flex;
+   width: 100%;
+   align-items: center;
+   gap: 0.25em;
+   opacity: 0.75;
+   user-select: none;
+   cursor: pointer;
+   justify-content: center;
+   border: 1px solid color-mix(in srgb, var(--content-color), var(--background-color-zero) 80%);
+   padding: 0.25em 0;
+   border-radius: 8px;
+   background: var(--content-background-color);
+   margin-bottom: 0.5em;
+}
+
+.post-menu .btn .btn-icon {
+   height: 1.125em;
+   fill: var(--content-color);
+}
+
+@keyframes bounce-once {
+  0%, 100% {
+    transform: translateY(0);
+    animation-timing-function: ease-out;
+  }
+  50% {
+    transform: translateY(-12px);
+    animation-timing-function: ease-in;
+  }
 }
 
 .titles-container {
@@ -736,4 +824,36 @@ u {
 .post-menu:hover .titles-container, .post-menu:active .titles-container {
    width: var(--width) !important;
    height: var(--height) !important;
+}
+
+#toast {
+   position: fixed;
+   top: 1.6em;
+   left: 50%;
+   padding: 0.5em 1em;
+   background: var(--content-background-color, #ffffff);
+   background: 
+color-mix(in srgb, var(--background-color-zero) 10%, var(--content-background-color));
+   backdrop-filter: blur(8px);
+   box-shadow: 0 2px 12px rgba(0, 0, 0, 0.16);
+   border-radius: 8px;
+   white-space: nowrap;
+   max-width: 50%;
+   overflow: hidden;
+   text-overflow: ellipsis;
+   font-size: 0.95rem;
+   z-index: 10000000000;
+   transform: translateX(-50%) translateY(-100%);
+   opacity: 0;
+   transition: transform 0.35s cubic-bezier(0.22, 1, 0.36, 1), opacity 0.35s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+#toast.show {
+   transform: translateX(-50%) translateY(0);
+   opacity: 1;
+}
+
+#toast.hide {
+   transform: translateX(-50%) translateY(-100%);
+   opacity: 0;
 }

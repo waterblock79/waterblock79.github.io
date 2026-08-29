@@ -20,6 +20,9 @@ id: as-a-scratcher
 - [**Edge**](https://turbowarp.org/editor?project_url=waterblock79.github.io/posts/as-a-scratcher/edge.sb3)（2022 年 2 月）  
    一个开放世界生存题材游戏，已弃坑。也在 [A 营](https://gitblock.cn/Projects/900999) 发布，是更早的版本。
 
+- **FreeJSON**（2021 年 8 月）  
+   发布在 [A 营](https://gitblock.cn/Posts/6601/View)，是一个社区内项目，实现了在作品内获取一言、天气、用户头像等功能。
+
 - **猫基百科**（2021 年 5 月）  
    发布在 [A 营](https://gitblock.cn/Projects/815003)，一个百科全书社区作品。也可以 [下载作品](as-a-scratcher/wikiscratch.sb3)、[查看截图](as-a-scratcher/wikiscratch.png) 或 [下载百科数据](https://paste.ubuntu.com/p/bJB4DQkfMG/)。 
 
