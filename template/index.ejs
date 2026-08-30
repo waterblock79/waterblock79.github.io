@@ -45,7 +45,7 @@
                target="_blank"
                tooltip="阿儿法营 / 稽木世界"
             >
-               <img src="./assets/a-icon.png" class="icon" />
+               <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24"><title>alpha-a-box</title><path d="M3,5A2,2 0 0,1 5,3H19A2,2 0 0,1 21,5V19A2,2 0 0,1 19,21H5C3.89,21 3,20.1 3,19V5M11,7A2,2 0 0,0 9,9V17H11V13H13V17H15V9A2,2 0 0,0 13,7H11M11,9H13V11H11V9Z" /></svg>
             </a>
             <a
                class="chip"
@@ -158,6 +158,22 @@
             <% }) %>
          </div>
       </div>
+      <div class="index-nav-container">
+         <div class="index-nav">
+            <div class="index-nav-item">
+               <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><title>emoticon-happy-outline</title><path d="M20,12A8,8 0 0,0 12,4A8,8 0 0,0 4,12A8,8 0 0,0 12,20A8,8 0 0,0 20,12M22,12A10,10 0 0,1 12,22A10,10 0 0,1 2,12A10,10 0 0,1 12,2A10,10 0 0,1 22,12M10,9.5C10,10.3 9.3,11 8.5,11C7.7,11 7,10.3 7,9.5C7,8.7 7.7,8 8.5,8C9.3,8 10,8.7 10,9.5M17,9.5C17,10.3 16.3,11 15.5,11C14.7,11 14,10.3 14,9.5C14,8.7 14.7,8 15.5,8C16.3,8 17,8.7 17,9.5M12,17.23C10.25,17.23 8.71,16.5 7.81,15.42L9.23,14C9.68,14.72 10.75,15.23 12,15.23C13.25,15.23 14.32,14.72 14.77,14L16.19,15.42C15.29,16.5 13.75,17.23 12,17.23Z" /></svg>
+               关于
+            </div>
+            <div class="index-nav-item">
+               <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><title>application-brackets-outline</title><path d="M9.5,8.5L11,10L8,13L11,16L9.5,17.5L5,13L9.5,8.5M14.5,17.5L13,16L16,13L13,10L14.5,8.5L19,13L14.5,17.5M21,2H3A2,2 0 0,0 1,4V20A2,2 0 0,0 3,22H21A2,2 0 0,0 23,20V4A2,2 0 0,0 21,2M21,20H3V6H21V20Z" /></svg>
+               项目
+            </div>
+            <div class="index-nav-item">
+               <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><title>post-outline</title><path d="M19 5V19H5V5H19M21 3H3V21H21V3M17 17H7V16H17V17M17 15H7V14H17V15M17 12H7V7H17V12Z" /></svg>
+               博客
+            </div>
+         </div>
+      </div>
       <div class="index-footer">更新于 <%= updateDateString %></div>
       <script>
          /**
@@ -176,16 +192,43 @@
          const getPeriod=()=>{const d=new Date(),h=d.getHours()+d.getMinutes()/60,s=Math.sin((Date.now()/864e5-81)*.0172),r=6+s*1.5,t=18+s*1.5;return (h>=r-.5&&h<=r+.5||h>=t-.5&&h<=t+.5)?'sunrise_sunset':h>r&&h<t?'day':'night';} // AI 生成
          $(".index-about")[0].setAttribute("time", getPeriod());
 
-         $('#show-archived-btn')[0].addEventListener('click', () => {
+         const switchShowArchived = (status) => {
             const proj = $('.index-projects .projects')[0];
-            if (proj.classList.contains('show-archived')) {
-               proj.classList.remove('show-archived');
-               $('#show-archived-btn')[0].innerText = "显示已归档项目";
-            } else {
+            if (!proj.classList.contains('show-archived')) {
                proj.classList.add('show-archived');
                $('#show-archived-btn')[0].innerText = "隐藏已归档项目";
+            } else {
+               proj.classList.remove('show-archived');
+               $('#show-archived-btn')[0].innerText = "显示已归档项目";
             }
-         });
+         };
+         $('#show-archived-btn')[0].addEventListener('click', switchShowArchived);
+
+         // 手机端布局
+         const useMobileLayout = window.innerWidth <= 768;
+         if (useMobileLayout) {
+            let pageIndex = 0;
+            const setPage = (index = pageIndex) => { 
+               for (let i = 0; i < $('body > *:not(.index-nav-container)').length; i++) {
+                  if (i === index) $('body > *:not(.index-nav-container)')[i].classList.add('active');
+                  else $('body > *:not(.index-nav-container)')[i].classList.remove('active');
+                  $('body > *:not(.index-nav-container)')[i].style.transform = `translateX(${100 * (i - index)}%)`;
+               }
+               for (let i = 0; i < $('.index-nav-item').length; i++) {
+                  if (i === index) $('.index-nav-item')[i].classList.add('actived');
+                  else $('.index-nav-item')[i].classList.remove('actived');
+               }
+            };
+            new ResizeObserver(() => { setPage() }).observe(document.body);
+            setPage();
+            document.body.classList.add('mobile-layout');
+            for (let i = 0; i < $('.index-nav-item').length; i++) {
+               $('.index-nav-item')[i].addEventListener('click', () => {
+                  pageIndex = i;
+                  setPage();
+               });
+            }
+         }
       </script>
    </body>
 </html>

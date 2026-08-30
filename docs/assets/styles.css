@@ -4,6 +4,7 @@ body {
    --page-background-color: #fafafa;
    --content-background-color: #fff;
    --content-color: rgba(0, 0, 0, 87%);
+   --actived-color: #0069c2;
    --background-color-zero: #ffffff00;
    -webkit-tap-highlight-color: rgb(0, 0, 0, 0);
    scroll-behavior: smooth;
@@ -34,6 +35,7 @@ a:hover:not(a[class], a[id]) {
       --content-background-color: #222;
       --content-color: #fff;
       --background-color-zero: #22222200;
+      --actived-color: #42a5f5;
    }
 
    a {
@@ -152,12 +154,108 @@ ul {
    z-index: 100000;
 }
 
+@media (prefers-color-scheme: dark) {
+   *[tooltip]::before {
+      background: var(--content-background-color);
+      color: var(--content-color);
+   }
+}
+
 *[tooltip]:hover::before {
    top: calc(100% + 0.4em);
    opacity: 1;
 }
 
 /** index.html */
+
+body.mobile-layout {
+   transition: background 0.2s;
+}
+
+body.mobile-layout > *:not(.index-nav-container) {
+   transition: opacity 0.2s ease-out, transform 0.2s ease-out;
+   opacity: 0;
+   position: fixed;
+   width: 100%;
+   height: 100%;
+   left: 0;
+   top: 0;
+   border: none !important;
+   border-radius: 0 !important;
+   margin: 0;
+}
+
+body.mobile-layout > *.card, body.mobile-layout > * > *.card {
+   width: calc(100% - 6em);
+   padding: 2em 3em;
+   border-radius: 0 !important;
+   overflow: auto;
+   height: calc(100% - 4em);
+}
+
+body.mobile-layout > *.active {
+   opacity: 1;
+}
+
+body .index-nav-container {
+   display: none;
+}
+
+body.mobile-layout .index-nav-container {
+   position: fixed;
+   bottom: 2em;
+   left: 0;
+   width: 100%;
+   height: 3em;
+   display: flex;
+   align-items: center;
+   justify-content: center;
+   z-index: 9999;
+}
+
+body.mobile-layout .index-nav {
+   padding: 0.5em 1.25em;
+   display: flex;
+   background: var(--content-background-color);
+   background: color-mix(in srgb, var(--content-background-color), var(--background-color-zero) 60%);
+   backdrop-filter: blur(6px);
+   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+   border-radius: 10000em;
+   border: 1px solid color-mix(in srgb, var(--content-background-color), var(--background-color-zero) 30%);
+}
+
+body.mobile-layout .index-nav-item svg {
+    width: 1.5rem;
+}
+
+body.mobile-layout .index-nav-item {
+   display: flex;
+   flex-direction: column;
+   align-items: center;
+   font-size: 0.75em;
+   gap: 0.25em;
+   cursor: pointer;
+   color: color-mix(in srgb, var(--content-color), var(--background-color-zero) 40%);
+   fill: color-mix(in srgb, var(--content-color), var(--background-color-zero) 10%);
+   transition: color 0.2s, fill 0.2s;
+   user-select: none;
+   padding: 0 1.5em;
+}
+
+body.mobile-layout .index-nav-item.actived {
+   color: var(--actived-color);
+   color: color-mix(in srgb, var(--actived-color), var(--background-color-zero) 20%);
+   fill: var(--actived-color);
+   font-weight: 600;
+}
+
+body:has(.index-about.active[time="night"]) .index-nav {
+   --page-background-color: #121212;
+      --content-background-color: #222;
+      --content-color: #fff;
+      --background-color-zero: #22222200;
+      --actived-color: #42a5f5;
+}
 
 .index-about[time="night"] {
    --content-color: #fff;
@@ -266,6 +364,33 @@ ul {
    .index-about > .contact > .chip > .icon {
       filter: brightness(150) !important;
    }
+}
+
+body.mobile-layout .contact {
+   flex-direction: column;
+   margin-top: 1.5em;
+}
+
+body.mobile-layout .contact {
+   flex-direction: column;
+}
+
+body.mobile-layout .contact > .chip {
+   display: flex;
+   gap: 0.5em;
+   transition: box-shadow 0.2s;
+   background: color-mix(in srgb, var(--content-background-color), var(--background-color-zero) 20%);
+   justify-content: center;
+   padding: 0.25rem 1rem;
+}
+
+body.mobile-layout .contact > .chip::after {
+   content: attr(tooltip);
+   font-size: 0.9em;
+}
+
+body.mobile-layout .contact > .chip::before {
+   display: none !important;
 }
 
 .index-message {
@@ -380,7 +505,7 @@ ul {
    display: flex;
 }
 
-@media screen and (max-width: 360px) {
+@media screen and (max-width: 300px) {
    .index-projects {
       min-width: auto;
       width: calc(100% - 3em);
