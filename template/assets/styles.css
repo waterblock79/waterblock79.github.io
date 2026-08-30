@@ -91,6 +91,7 @@ hr {
    align-items: center;
    text-decoration: none;
    color: var(--content-color);
+   fill: var(--content-color);
    word-break: break-all;
    cursor: pointer;
    user-select: none;
@@ -173,7 +174,7 @@ body.mobile-layout {
 }
 
 body.mobile-layout > *:not(.index-nav-container) {
-   transition: opacity 0.2s ease-out, transform 0.2s ease-out;
+   /* transition: opacity 0.2s ease-out, transform 0.2s ease-out; */
    opacity: 0;
    position: fixed;
    width: 100%;

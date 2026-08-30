@@ -383,6 +383,7 @@
          const useMobileLayout = window.innerWidth <= 768;
          if (useMobileLayout) {
             let pageIndex = 0;
+            // 处理页面 index 更新
             const setPage = (index = pageIndex) => { 
                for (let i = 0; i < $('body > *:not(.index-nav-container)').length; i++) {
                   if (i === index) $('body > *:not(.index-nav-container)')[i].classList.add('active');
@@ -395,6 +396,7 @@
                }
             };
             new ResizeObserver(() => { setPage() }).observe(document.body);
+            // init
             setPage();
             document.body.classList.add('mobile-layout');
             for (let i = 0; i < $('.index-nav-item').length; i++) {
@@ -403,6 +405,39 @@
                   setPage();
                });
             }
+            // 后加 transition 效果，避免进入页面时 index = 2, 3 的页面飘过
+            setInterval(() => {
+               for (const item of $('body > *:not(.index-nav-container)')) {
+                  item.style.transition = 'opacity 0.2s ease-out, transform 0.2s ease-out';
+               }
+            }, 0);
+            window.addEventListener('touchstart', (e) => {
+               const touchStartX = e.touches[0].clientX;
+               const touchStartY = e.touches[0].clientY;
+               let touchEndX = touchStartX;
+               let touchEndY = touchStartY;
+               const onTouchMove = (e) => {
+                  touchEndX = e.touches[0].clientX;
+                  touchEndY = e.touches[0].clientY;
+               };
+               const onTouchEnd = () => {
+                  const deltaX = touchEndX - touchStartX;
+                  const deltaY = touchEndY - touchStartY;
+                  if (Math.abs(deltaX) > Math.abs(deltaY) && Math.abs(deltaX) > 50) {
+                     if (deltaX < 0 && pageIndex < $('.index-nav-item').length - 1) {
+                        pageIndex++;
+                        setPage();
+                     } else if (deltaX > 0 && pageIndex > 0) {
+                        pageIndex--;
+                        setPage();
+                     }
+                  }
+                  window.removeEventListener('touchmove', onTouchMove);
+                  window.removeEventListener('touchend', onTouchEnd);
+               };
+               window.addEventListener('touchmove', onTouchMove);
+               window.addEventListener('touchend', onTouchEnd);
+            });
          }
       </script>
    </body>
