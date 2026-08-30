@@ -105,6 +105,9 @@
          <div class="back">❮ 返回</div>
          <div class="site">waterblock79 的小站</div>
       </a>
+      <div class="post-menu post-menu-home">
+         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" class="icon"><title>home</title><path d="M10,20V14H14V20H19V12H22L12,3L2,12H5V20H10Z"></path></svg>
+      </div>
       <div class="post-menu">
          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" class="icon"><path d="M3,6H21V8H3V6M3,11H21V13H3V11M3,16H21V18H3V16Z"></path></svg>
          <div class="titles-container">
@@ -323,6 +326,16 @@ hexo deploy
          document.querySelector('#view-source-btn').addEventListener('click', () => {
             window.open('https://cdn.jsdelivr.net/gh/waterblock79/waterblock79.github.io@main/sources/How to bulid Hexo.md');
          });
+         // 回到主页
+         document.querySelector('.post-menu-home').addEventListener('click', () => {
+            window.location.href = '/';
+         });
+
+         // 移动端布局
+         const useMobileLayout = window.innerWidth <= 768;
+         if (useMobileLayout) {
+            document.body.classList.add('mobile-layout-post');
+         }
       </script>
    </body>
 </html>

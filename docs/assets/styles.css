@@ -872,7 +872,6 @@ u {
    box-shadow: 0 1px 4px rgba(0, 0, 0, 0.12);
    border: 1px solid color-mix(in srgb, var(--content-background-color), #ffffff33);
    overflow-wrap: break-word;
-   animation: bounce-once 0.3s 1;
    animation-delay: 0.2s; 
 }
 
@@ -883,6 +882,7 @@ u {
    margin: 0 auto;
    cursor: pointer;
    fill: var(--content-color);
+   fill: color-mix(in srgb, var(--content-color), var(--background-color-zero) 10%);
 }
 
 .post-menu .titles {
@@ -925,17 +925,6 @@ u {
    fill: var(--content-color);
 }
 
-@keyframes bounce-once {
-  0%, 100% {
-    transform: translateY(0);
-    animation-timing-function: ease-out;
-  }
-  50% {
-    transform: translateY(-12px);
-    animation-timing-function: ease-in;
-  }
-}
-
 .titles-container {
    overflow: hidden;
    width: 0;
@@ -950,6 +939,18 @@ u {
 .post-menu:hover .titles-container, .post-menu:active .titles-container {
    width: var(--width) !important;
    height: var(--height) !important;
+}
+
+body .post-menu-home { display: none; }
+
+body.mobile-layout-post .post-menu-home {
+   display: flex;
+   right: 1.5em;
+   left: unset;
+   gap: 0.5em;
+   flex-direction: row;
+   align-items: flex-end;
+   cursor: pointer;
 }
 
 #toast {
