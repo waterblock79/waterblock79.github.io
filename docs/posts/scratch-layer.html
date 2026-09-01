@@ -7,24 +7,11 @@
       <link rel="icon" type="image/png" href="/assets/icon.png" />
       <meta name="color-scheme" content="light dark">
       <meta name="description" content="简单解析 Scratch 图层机制，并在列表来更加清晰的管理角色间的图层关系！" />
-      
-      <script
-         type="module"
-         src="https://cdn.jsdelivr.net/npm/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"
-      ></script>
-      <script
-         nomodule
-         src="https://cdn.jsdelivr.net/npm/ionicons@7.1.0/dist/ionicons/ionicons.js"
-      ></script>
 
       <link
          rel="stylesheet"
          href="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/katex.min.css"
       />
-      <script
-         defer
-         src="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/katex.min.js"
-      ></script>
 
       <script
          async
@@ -41,19 +28,19 @@
 
       <link
          rel="stylesheet"
-         href="https://cdn.jsdelivr.net/npm/github-markdown-css@5.8.1/github-markdown.css"
+         href="https://cdn.jsdelivr.net/npm/github-markdown-css/github-markdown.css"
       />
       <link
          rel="stylesheet"
-         href="https://cdn.jsdelivr.net/npm/highlight.js@11.11.1/styles/github.min.css"
+         href="https://cdn.jsdelivr.net/npm/highlight.js/styles/github.min.css"
          id="highlightjs-css"
       />
-      <script src="https://cdn.jsdelivr.net/npm/highlight.js@11.11.1/lib/highlight.min.js"></script>
+      <script src="https://cdn.jsdelivr.net/gh/highlightjs/cdn-release@11.12.0/build/highlight.min.js"></script>
 
       <script>
          if (window.matchMedia("(prefers-color-scheme: dark)").matches) {
             document.querySelector("#highlightjs-css").href =
-               "https://cdn.jsdelivr.net/npm/highlight.js@11.11.1/styles/atom-one-dark.min.css";
+               "https://cdn.jsdelivr.net/npm/highlight.js/styles/atom-one-dark.min.css";
          }
       </script>
 
@@ -78,6 +65,7 @@
          }
 
          body {
+            padding: 1em;
             display: flex;
             flex-direction: column;
             align-items: center;
@@ -199,9 +187,25 @@
 <p>先发布一个广播，让每个角色都能获取到自己的图层（参考上面在图层性质中提到的“<strong>图层越高的角色，越先接收到广播</strong>”），当所有角色、克隆体都接收完广播后，C 将自己的图层高度放在公用变量中，A2 收到 C 的图层高度、还知道自己的图层高度，那么就可以直接通过“上移  <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msub><mi>h</mi><mrow><mi>A</mi><mn>2</mn></mrow></msub><mo>−</mo><msub><mi>h</mi><mi>C</mi></msub></mrow><annotation encoding="application/x-tex">h_{A2}-h_{C}</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.8444em;vertical-align:-0.15em;"></span><span class="mord"><span class="mord mathnormal">h</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.3283em;"><span style="top:-2.55em;margin-left:0em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mathnormal mtight">A</span><span class="mord mtight">2</span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span><span class="mspace" style="margin-right:0.2222em;"></span><span class="mbin">−</span><span class="mspace" style="margin-right:0.2222em;"></span></span><span class="base"><span class="strut" style="height:0.8444em;vertical-align:-0.15em;"></span><span class="mord"><span class="mord mathnormal">h</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.3283em;"><span style="top:-2.55em;margin-left:0em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mathnormal mtight" style="margin-right:0.07153em;">C</span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span></span></span></span> 层”来移到“B 的上方、C 的下方”了。（用 <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msub><mi>h</mi><mi>X</mi></msub></mrow><annotation encoding="application/x-tex">h_{X}</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.8444em;vertical-align:-0.15em;"></span><span class="mord"><span class="mord mathnormal">h</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.3283em;"><span style="top:-2.55em;margin-left:0em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mathnormal mtight" style="margin-right:0.07847em;">X</span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span></span></span></span> 表示 X 的图层高度）</p>
 </div>
       </div>
+      <div class="footer">
+         <a>生成式人工智能使用与原创性声明</a>
+      </div>
+      <div class="dialog-background" id="declaration-generative-ai-and-copyright">
+         <div class="card">
+            <div class="title">
+               生成式人工智能使用与原创性声明
+            </div>
+            <div class="content">
+               除非另有明确说明，此站点的博客内容、源代码均由人类创作。少部分使用人工智能生成的内容均经过人类仔细审核。<br/>
+               默认地，此站点下的原创内容遵循 <a href="https://creativecommons.org/licenses/by-nc/4.0/">Creative Commons Attribution-NonCommercial 4.0 International</a> 许可证。<br />
+               此站点的源代码开源于 <a href="https://github.com/waterblock79/waterblock79.github.io/">GitHub</a>。<br />
+            </div>
+         </div>
+      </div>
       <script>
          hljs.highlightAll();
       </script>
+      <script src="/assets/scripts.js"></script>
       <script>
          // 弹出 Toast
          let toastTimer = null;
@@ -310,6 +314,16 @@
          if (useMobileLayout) {
             document.body.classList.add('mobile-layout-post');
          }
+
+         document.querySelectorAll('.dialog-background').forEach((dialog) => {
+            dialog.addEventListener('click', (e) => {
+               if (e.target === dialog) closeDialog(dialog.id);
+            });
+         });
+
+         document.querySelector('.footer a').addEventListener('click', () => {
+            openDialog('declaration-generative-ai-and-copyright');
+         });
       </script>
    </body>
 </html>

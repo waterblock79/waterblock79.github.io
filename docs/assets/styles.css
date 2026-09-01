@@ -223,7 +223,13 @@ body.mobile-layout .index-nav {
    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
    border-radius: 10000em;
    border: 1px solid color-mix(in srgb, var(--content-background-color), var(--background-color-zero) 30%);
+   transition: box-shadow 0.2s, background 0.2s;
 }
+
+body.mobile-layout .index-nav:active {
+   box-shadow: 0 2px 2px rgba(0, 0, 0, 0.1);
+   background: color-mix(in srgb, var(--content-background-color), var(--background-color-zero) 50%);
+} 
 
 body.mobile-layout .index-nav-item svg {
     width: 1.5rem;
@@ -591,12 +597,6 @@ body.mobile-layout .contact > .chip::before {
    border-radius: 8px;
    text-decoration: none;
    color: var(--content-color);
-   --stoke-width: 1px;
-   text-shadow: 
-      calc(var(--stoke-width) * 1) calc(var(--stoke-width) * -1) 0 var(--content-background-color),  
-      calc(var(--stoke-width) * 1) calc(var(--stoke-width) * -1) 0 var(--content-background-color),
-      calc(var(--stoke-width) * -1) calc(var(--stoke-width) * 1) 0 var(--content-background-color),
-      calc(var(--stoke-width) * 1) calc(var(--stoke-width) * 1) 0 var(--content-background-color);
    gap: 1em;
    min-width: min(15em, calc(100% - 3em));
    width: auto;
@@ -668,6 +668,52 @@ body.mobile-layout .contact > .chip::before {
    font-size: 0.8em;
    text-align: center;
    opacity: 0.75;
+   display: flex;
+   justify-content: center;
+   gap: 0.5em;
+   user-select: none;
+}
+
+.dialog-background {
+   display: none;
+   opacity: 0;
+   cursor: pointer;
+   left: 0;
+   top: 0;
+   width: 100%;
+   height: 100%;
+   position: fixed;
+   backdrop-filter: blur(12px);
+   align-items: center;
+   justify-content: center;
+   z-index: 999999;
+   transition: opacity 0.2s, backdrop-filter 0.1s;
+}
+
+body:has(.dialog-background.active) {
+   user-select: none;
+}
+
+.dialog-background > .card {
+   cursor: auto;
+   max-width: 75%;
+   padding: 1.5em 2em;
+   max-height: 80%;
+   overflow: auto;
+   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.12);
+   user-select: none;
+}
+
+.dialog-background > .card::after {
+   content: "单击空白区域返回";
+   text-align: center;
+   width: 100%;
+   display: block;
+   margin-top: 0.5em;
+   font-size: 0.75em;
+   opacity: 0.36;
+   position: relative;
+   bottom: -1em;
 }
 
 @media screen and (max-width: 360px) {
@@ -684,7 +730,6 @@ body.mobile-layout .contact > .chip::before {
 
 .post-header,
 .footer {
-   margin-top: -1em;
    font-size: 0.9em;
    opacity: 0.6;
    width: 100%;
@@ -697,8 +742,12 @@ body.mobile-layout .contact > .chip::before {
 }
 
 .footer {
-   margin-top: 1em;
+   margin-top: 1.5rem;
+   font-size: 0.85em;
+   opacity: 0.9;
+   cursor: pointer;
    justify-content: center;
+   user-select: none;
 }
 
 .post-content {
@@ -807,6 +856,10 @@ body.mobile-layout .contact > .chip::before {
    background: none;
 }
 
+pre code.hljs {
+   padding: 0 0.5em !important;
+}
+
 .markdown-body .katex-block {
    overflow: auto;
 }
@@ -868,11 +921,16 @@ u {
    background: color-mix(in srgb, var(--content-background-color), #ffffff00);
    z-index: 99999;
    backdrop-filter: blur(8px);
-   transition: border-radius 0.2s;
+   transition: border-radius 0.2s, box-shadow 0.2s, background 0.2s;
    box-shadow: 0 1px 4px rgba(0, 0, 0, 0.12);
-   border: 1px solid color-mix(in srgb, var(--content-background-color), #ffffff33);
+   border: 1px solid color-mix(in srgb, var(--content-background-color), var(--background-color-zero) 30%);
    overflow-wrap: break-word;
-   animation-delay: 0.2s; 
+   animation-delay: 0.2s;
+}
+
+.post-menu:active {
+   box-shadow: 0 2px 2px rgba(0, 0, 0, 0.12);
+   background: color-mix(in srgb, var(--content-background-color), var(--background-color-zero) 50%);
 }
 
 .post-menu .icon {

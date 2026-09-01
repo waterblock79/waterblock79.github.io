@@ -7,24 +7,11 @@
       <link rel="icon" type="image/png" href="/assets/icon.png" />
       <meta name="color-scheme" content="light dark">
       <meta name="description" content="介绍了浏览器中的 data 协议使用方法。" />
-      
-      <script
-         type="module"
-         src="https://cdn.jsdelivr.net/npm/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"
-      ></script>
-      <script
-         nomodule
-         src="https://cdn.jsdelivr.net/npm/ionicons@7.1.0/dist/ionicons/ionicons.js"
-      ></script>
 
       <link
          rel="stylesheet"
          href="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/katex.min.css"
       />
-      <script
-         defer
-         src="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/katex.min.js"
-      ></script>
 
       <script
          async
@@ -41,19 +28,19 @@
 
       <link
          rel="stylesheet"
-         href="https://cdn.jsdelivr.net/npm/github-markdown-css@5.8.1/github-markdown.css"
+         href="https://cdn.jsdelivr.net/npm/github-markdown-css/github-markdown.css"
       />
       <link
          rel="stylesheet"
-         href="https://cdn.jsdelivr.net/npm/highlight.js@11.11.1/styles/github.min.css"
+         href="https://cdn.jsdelivr.net/npm/highlight.js/styles/github.min.css"
          id="highlightjs-css"
       />
-      <script src="https://cdn.jsdelivr.net/npm/highlight.js@11.11.1/lib/highlight.min.js"></script>
+      <script src="https://cdn.jsdelivr.net/gh/highlightjs/cdn-release@11.12.0/build/highlight.min.js"></script>
 
       <script>
          if (window.matchMedia("(prefers-color-scheme: dark)").matches) {
             document.querySelector("#highlightjs-css").href =
-               "https://cdn.jsdelivr.net/npm/highlight.js@11.11.1/styles/atom-one-dark.min.css";
+               "https://cdn.jsdelivr.net/npm/highlight.js/styles/atom-one-dark.min.css";
          }
       </script>
 
@@ -78,6 +65,7 @@
          }
 
          body {
+            padding: 1em;
             display: flex;
             flex-direction: column;
             align-items: center;
@@ -288,9 +276,25 @@ malicious》（没有网页的网上诱骗–研究人员揭示链接自身可�
 限制了，问题不大）</p>
 </div>
       </div>
+      <div class="footer">
+         <a>生成式人工智能使用与原创性声明</a>
+      </div>
+      <div class="dialog-background" id="declaration-generative-ai-and-copyright">
+         <div class="card">
+            <div class="title">
+               生成式人工智能使用与原创性声明
+            </div>
+            <div class="content">
+               除非另有明确说明，此站点的博客内容、源代码均由人类创作。少部分使用人工智能生成的内容均经过人类仔细审核。<br/>
+               默认地，此站点下的原创内容遵循 <a href="https://creativecommons.org/licenses/by-nc/4.0/">Creative Commons Attribution-NonCommercial 4.0 International</a> 许可证。<br />
+               此站点的源代码开源于 <a href="https://github.com/waterblock79/waterblock79.github.io/">GitHub</a>。<br />
+            </div>
+         </div>
+      </div>
       <script>
          hljs.highlightAll();
       </script>
+      <script src="/assets/scripts.js"></script>
       <script>
          // 弹出 Toast
          let toastTimer = null;
@@ -399,6 +403,16 @@ malicious》（没有网页的网上诱骗–研究人员揭示链接自身可�
          if (useMobileLayout) {
             document.body.classList.add('mobile-layout-post');
          }
+
+         document.querySelectorAll('.dialog-background').forEach((dialog) => {
+            dialog.addEventListener('click', (e) => {
+               if (e.target === dialog) closeDialog(dialog.id);
+            });
+         });
+
+         document.querySelector('.footer a').addEventListener('click', () => {
+            openDialog('declaration-generative-ai-and-copyright');
+         });
       </script>
    </body>
 </html>

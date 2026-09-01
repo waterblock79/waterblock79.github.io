@@ -349,7 +349,24 @@
             </div>
          </div>
       </div>
-      <div class="index-footer">更新于 2026-08-30</div>
+      <div class="index-footer">
+         <span>更新于 2026-09-01</span>
+         <span>|</span>
+         <a>生成式人工智能使用与原创性声明</a>
+      </div>
+      <div class="dialog-background" id="declaration-generative-ai-and-copyright">
+         <div class="card">
+            <div class="title">
+               生成式人工智能使用与原创性声明
+            </div>
+            <div class="content">
+               除非另有明确说明，此站点的博客内容、源代码均由人类创作。少部分使用人工智能生成的内容均经过人类仔细审核。<br/>
+               默认地，此站点下的原创内容遵循 <a href="https://creativecommons.org/licenses/by-nc/4.0/">Creative Commons Attribution-NonCommercial 4.0 International</a> 许可证。<br />
+               此站点的源代码开源于 <a href="https://github.com/waterblock79/waterblock79.github.io/">GitHub</a>。<br />
+            </div>
+         </div>
+      </div>
+      <script src="/assets/scripts.js"></script>
       <script>
          /**
           * @return {HTMLElement[]}
@@ -439,6 +456,16 @@
                window.addEventListener('touchend', onTouchEnd);
             });
          }
+
+         document.querySelectorAll('.dialog-background').forEach((dialog) => {
+            dialog.addEventListener('click', (e) => {
+               if (e.target === dialog) closeDialog(dialog.id);
+            });
+         });
+
+         document.querySelector('.index-footer a').addEventListener('click', () => {
+            openDialog('declaration-generative-ai-and-copyright');
+         });
       </script>
    </body>
 </html>

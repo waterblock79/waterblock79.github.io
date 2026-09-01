@@ -1,2 +1,1 @@
 posts/recitation
-posts/vscode-flavored-markdown-preview
